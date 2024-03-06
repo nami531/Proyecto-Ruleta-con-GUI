@@ -1,0 +1,25 @@
+Python
+El intérprete de Python
+Las bibliotecas de Python
+Un error de sintaxis
+Python
+La concatenación de cadenas
+Un bucle
+Python
+Python
+Python
+La función float() o int()
+Un bucle for o while
+La función len()
+La función shuffle() de la biblioteca random
+Un bucle while True
+La función sorted()
+Los métodos upper() o lower()
+La función copy()
+La función split()
+La biblioteca random
+Un diccionario
+El operador in
+Una tupla
+Las funciones max() o min()
+La función round()

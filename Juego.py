@@ -20,7 +20,6 @@ class Juego():
 
     def __init__(self):  
         self.jugada = Jugada()
-        self.enigma = Tarjetas()
         self.vista = Vista()
         self.ruleta = Ruleta()
         self.lista_jugadores = []
@@ -85,9 +84,12 @@ class Juego():
         
         for i in range(3): #Rondas que ns si hacer un bucle while
             tematica = self.vista.establecer_tematica()
-            self.enigma_juego = self.enigma.devolver_enigma_aleatorio(tematica)
+            self.enigma = Tarjetas(tematica)
+            self.enigma_juego = self.enigma.devolver_enigma_aleatorio()
+            self.pista_enigma = self.enigma.devolver_pista()
             self.vista.mostrar_enigma_encriptado(self.enigma_juego)
             self.vista.mostrar_enigma(self.enigma_juego)
+            self.vista.mostrar_pista(self.pista_enigma)
             self.letras = []
             self.vocales = []
             turno = True 

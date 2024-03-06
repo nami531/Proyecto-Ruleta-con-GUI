@@ -1,5 +1,5 @@
 import time
-from Tarjetas import Tarjetas
+from TarjetasAntiguoSinPistas import Tarjetas
 from Jugador import Jugador
 from Ruleta import Ruleta
 
@@ -11,18 +11,15 @@ class Vista():
     enigma_generado : str
 
     def __init__(self):
-        self.enigma = Tarjetas()
         self.enigma_generado = ""
         self.tematicas_disponibles = ["Normal", "San Valentín"]
         self.SALIR = 5
         self.ruleta = Ruleta()
 
-
-
-    def bienvenida(self): 
+    def bienvenida(self)-> None: 
         print("Bienvenido a la ruleta de la fortuna")
     
-    def pedir_nombre_jugador(self, i): 
+    def pedir_nombre_jugador(self, i:int)-> str: 
         nombre = input(f"Jugador {i+1} ¿Cuál es tu nombre?: ")
         return nombre
     
@@ -30,7 +27,7 @@ class Vista():
         letra = input("Introduce una letra: ").lower()
         return letra
     
-    def mostrar_menu(self): 
+    def mostrar_menu(self)-> int: 
         opcion = 0 
         while opcion < 1 or opcion > Vista.SALIR: 
             for opcion_jug in range(len(Vista.OPCIONES_TURNO_JUG)): 
@@ -39,7 +36,7 @@ class Vista():
             opcion = int(input("Escoge una opción: "))      #Hay que comprobar la opción 
         return opcion
 
-    def mostrar_premio(self, puntero: int, ruleta : Ruleta):
+    def mostrar_premio(self, puntero: int, ruleta : Ruleta)-> None:
         lista = ruleta.devuelve_ruleta()
         print("Has caído en", end="")
         for i in range(3): 
@@ -47,31 +44,31 @@ class Vista():
             time.sleep(1)
         print(f"\n{lista[puntero]}")
 
-    def turno(self, jugador: Jugador): 
+    def turno(self, jugador: Jugador)-> None: 
         print(f"Jugador {jugador.nombre} es tu turno, gira la ruleta")
     
-    def establecer_num_jugadores(self):
+    def establecer_num_jugadores(self)-> int:
         num= int(input("¿Cuántos jugadores van a jugar?: "))
         return num
     
-    def establecer_tematica(self): 
+    def establecer_tematica(self)-> int: 
         for i in range(len(self.tematicas_disponibles)): 
             print(i+1,".", self.tematicas_disponibles[i], end="\n")
-        tematica = int(input("De las temáticas anteriores elige una "))
-        return tematica -  1 
-    # def mostrar_enigma(self, tarjeta: Tarjeta): 
-    #     if respuesta_correcta: 
-             
-    #         print(enigma)
-    def mostrar_enigma(self, enigma):
-        
+        tematica = int(input("De las temáticas anteriores elige una: "))
+        return tematica - 1 
+    
+    def mostrar_enigma(self, enigma: str)-> None:
         print(enigma)
     
-    def mostrar_enigma_encriptado(self, enigma): 
+    def mostrar_pista(self, pista: str)-> None: 
+        print(pista)
+    
+    def mostrar_enigma_encriptado(self, enigma)-> None: #Pylance da error si se pone el type hints en tal caso es enigma:str
         enigma = enigma.split() #Lo convertimos en lista
         for palabra in enigma:  
             print(len(palabra)*"_", end=" ")
         print(" ", end="")
+    
     
     
 
