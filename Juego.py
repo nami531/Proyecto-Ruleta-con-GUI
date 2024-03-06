@@ -3,6 +3,8 @@ from Jugador import Jugador
 from Ruleta import Ruleta
 from Tarjetas import Tarjetas
 from Jugada import Jugada
+from Listener import Listener
+import pygame
 from os import system
 import time
 
@@ -19,6 +21,7 @@ class Juego():
 
 
     def __init__(self):  
+        
         self.jugada = Jugada()
         self.vista = Vista()
         self.ruleta = Ruleta()
@@ -88,8 +91,8 @@ class Juego():
             self.enigma_juego = self.enigma.devolver_enigma_aleatorio()
             self.pista_enigma = self.enigma.devolver_pista()
             self.vista.mostrar_enigma_encriptado(self.enigma_juego)
-            self.vista.mostrar_enigma(self.enigma_juego)
-            self.vista.mostrar_pista(self.pista_enigma)
+            self.vista.mostrar_enigma(self.enigma_juego) #Habría que quitar esto, pq si no no tiene gracia jeje
+            self.vista.mostrar_pista(self.pista_enigma) 
             self.letras = []
             self.vocales = []
             turno = True 
@@ -97,11 +100,16 @@ class Juego():
             jugador = self.lista_jugadores[index_jugador]
             # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
 
-            while turno:                 
+            while turno:     
+                fuerza = 0            
                 self.vista.turno(jugador)
                 # time.sleep(1)
                 # system("cls")
-                jugador.girar_ruleta(self.ruleta)  #Se tiene que pasar la ruleta con la que se esta iniciando el juego si no exisitirían 2 ruletas
+                self.vista.aviso_medicion_fuerza()
+                pygame.init()
+                listener = Listener()
+                fuerza = listener.medir_fuerza()
+                jugador.girar_ruleta(self.ruleta, fuerza)  #Se tiene que pasar la ruleta con la que se esta iniciando el juego si no exisitirían 2 ruletas
                 self.vista.mostrar_premio(self.ruleta.puntero, self.ruleta)
                 self.ruleta.ver(self.ruleta.puntero)
                 premio = self.ruleta.devuelve_premio()

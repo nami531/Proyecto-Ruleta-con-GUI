@@ -69,6 +69,8 @@ class Vista():
             print(len(palabra)*"_", end=" ")
         print(" ", end="")
     
+    def aviso_medicion_fuerza(self) -> None: 
+        print("Tendrás 5 segundos para presionar cualquier tecla lo más rápido posible")
     
     
 

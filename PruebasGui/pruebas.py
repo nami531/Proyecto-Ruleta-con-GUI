@@ -1,7 +1,7 @@
 <<<<<<< HEAD
-from pynput import mouse as kb
+from pynput import keyboard as kb
 
-mouse = controler
+
 def pulsa(tecla):
 	print('Se ha pulsado la tecla ' + str(tecla))
 

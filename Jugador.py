@@ -1,5 +1,5 @@
 from Ruleta import Ruleta
-
+from Listener import Listener
 from Jugada import Jugada
 
 
@@ -10,11 +10,12 @@ class Jugador():
 
     def __init__(self, nombre: str) -> None:
         self.jugada = Jugada()
+        
         self.nombre = nombre
         self._puntuacion = [0] #Hay que cifrarlo con propertys y demás 
 
-    def girar_ruleta(self, ruleta: Ruleta)-> None: 
-        fuerza= int(input("Con cuanta fuerza quieres tirar: "))
+    def girar_ruleta(self, ruleta: Ruleta, fuerza : int)-> None: 
+        print(fuerza)
         ruleta.girar(fuerza)
         
     # def introducir_letra_no_vocal(self): #Podemos comprobar que no sea vocal al introducir la letra def es_vocal e iria en jugada
@@ -78,7 +79,7 @@ class Jugador():
         return self.nombre
     
     def resolver_enigma(self, enigma : str, enigma_jugador: str)-> bool: 
-        if enigma.lower()[:-2] == enigma_jugador.lower(): #[:-2] es necesario ya que al leer el enigma acaba con \n y esto afecta a la comparación 
+        if enigma.lower() == enigma_jugador.lower():
             return True
         else: 
             return False
@@ -102,3 +103,5 @@ if __name__ == "__main__":
     print(j1._puntuacion)
     j1.en_quiebra(0)
     print(j1._puntuacion)
+    l = Listener()
+    print(l.medir_fuerza())
