@@ -8,10 +8,11 @@ from os import system
 import sys
 import time
 from Ventana import Ventana
-
+from VentanaTematica import VentanaTematica
+from Vista import Vista
 
 class Juego(): 
-    # vista : Vista
+    vista : Vista
     jugador : Jugador
     ruleta: Ruleta
     enigma : Tarjetas
@@ -25,7 +26,7 @@ class Juego():
 
     def __init__(self):  
         self.controlador = Controlador()
-        # self.vista = Vista()
+        self.vista = Vista()
         self.ruleta = Ruleta()
         self.lista_jugadores = []
         self.vocales_tilde = {"a": "á",
@@ -86,18 +87,18 @@ class Juego():
         # Proceso de añadir jugadores al juego
 
 
-        # tematica = self.vista.establecer_tematica()
-        # self.enigma = Tarjetas(tematica)
-        # self.enigma_juego = self.enigma.devolver_enigma_aleatorio()
-        # self.pista_enigma = self.enigma.devolver_pista()
-        # self.vista.mostrar_enigma_encriptado(self.enigma_juego)
-        # # self.vista.mostrar_enigma(self.enigma_juego) #Habría que quitar esto, pq si no no tiene gracia jeje
-        # self.vista.mostrar_pista(self.pista_enigma) 
-        # self.letras = []
-        # self.vocales = []
-        # turno = True 
-        # index_jugador = 0 
-        # jugador = self.lista_jugadores[index_jugador]
+        tematica = VentanaTematica(800,600).ejecutar()
+        self.enigma = Tarjetas(tematica)
+        self.enigma_juego = self.enigma.devolver_enigma_aleatorio()
+        self.pista_enigma = self.enigma.devolver_pista()
+        self.vista.mostrar_enigma_encriptado(self.enigma_juego)
+        self.vista.mostrar_enigma(self.enigma_juego) #Habría que quitar esto, pq si no no tiene gracia jeje
+        self.vista.mostrar_pista(self.pista_enigma) 
+        self.letras = []
+        self.vocales = []
+        turno = True 
+        index_jugador = 0 
+        jugador = self.lista_jugadores[index_jugador]
         # # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
 
         # while turno:   

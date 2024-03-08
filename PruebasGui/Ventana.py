@@ -36,7 +36,7 @@ class Ventana:
         self.inputs = []
         self.nombres_jug = []
 
-        self.imagen = pygame.image.load("Multimedia\\dados.png") 
+        # self.imagen = pygame.image.load("Multimedia\\dados.png") 
     
     def crear_label(self, num_jug):
         for i in range(num_jug): 
@@ -67,19 +67,19 @@ class Ventana:
                     pygame.quit()
                     sys.exit()
 
-                
-                if self.b2jug.fue_presionado(mouse_pos, event) and not self.b2jug.eliminado:
-                    num_jug = self.b2jug.valor
-                    for boton in self.botones: 
-                        boton.eliminar()
-                    self.crear_label(num_jug)
-                    self.crear_inputs(num_jug)
-                elif self.benviar.fue_presionado(mouse_pos, event): 
+                for boton in self.botones: 
+                    if boton.fue_presionado(mouse_pos, event) and not boton.eliminado:
+                        num_jug = boton.valor
+                        for boton in self.botones: 
+                            boton.eliminar()
+                        self.crear_label(num_jug)
+                        self.crear_inputs(num_jug)
+                if self.benviar.fue_presionado(mouse_pos, event): 
                     for entrada in self.inputs: 
                         self.nombres_jug.append(entrada.text)
-                        print(entrada.text)
-                        print(self.nombres_jug)
-                        nombres = True
+                        # print(entrada.text)
+                    print(self.nombres_jug)
+                    nombres = True
                
                 for entrada in self.inputs: 
                     entrada.update(mouse_pos, event)
@@ -103,7 +103,7 @@ class Ventana:
 
             self.bienvenida.draw(self.screen)
             pygame.draw.rect(self.screen, (0,0,0), (250, 200, 300,300)) #Esto será una imagen en un futuro no muy lejano
-            self.screen.blit(self.imagen, (250, 200))
+            # self.screen.blit(self.imagen, (250, 200))
            
 
             # Actualizar la pantalla
