@@ -1,7 +1,7 @@
 from Jugador import Jugador
 from Ruleta import Ruleta
 from TarjetasAntiguoSinPistas import Tarjetas
-from Jugada import Jugada
+from Controlador import Controlador
 from os import system
 import time
 from Input import InputBox
@@ -23,7 +23,7 @@ class Juego():
 
     def __init__(self):  
         
-        self.jugada = Jugada()
+        self.controlador = Controlador()
         self.enigma = Tarjetas()
         
         self.ruleta = Ruleta()

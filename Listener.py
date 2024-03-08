@@ -95,5 +95,5 @@ if __name__ == "__main__":
     input("Hla")
     pygame.init()
     l = Listener()
-    print(l.medir_fuerza ())
+   
         

@@ -55,8 +55,7 @@ class Ruleta():
             print(self.ruleta[i], end=", ")
         print()
     
-    def devuelve_ruleta(self): 
-        print(self.ruleta)
+    def devuelve_ruleta(self)-> list[str]: 
         return self.ruleta
     
     def devuelve_premio(self) -> int | float : 

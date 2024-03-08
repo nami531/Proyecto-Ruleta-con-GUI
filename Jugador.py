@@ -1,6 +1,6 @@
 from Ruleta import Ruleta
 from Listener import Listener
-from Jugada import Jugada
+from Controlador import Controlador
 
 
 class Jugador(): 
@@ -9,7 +9,7 @@ class Jugador():
 
 
     def __init__(self, nombre: str) -> None:
-        self.jugada = Jugada()
+        self.controlador = Controlador()
         
         self.nombre = nombre
         self._puntuacion = [0] #Hay que cifrarlo con propertys y demás 
@@ -32,12 +32,14 @@ class Jugador():
         else: 
             self._puntuacion[0] = 0
 
-    def comprar_vocal(self, letra: str , precio: int):
-        if self.jugada.es_vocal(letra):
+    def comprar_vocal(self, letra: str , precio: int) -> bool:
+        if self.controlador.es_vocal(letra):
             if self.puntuacion < precio: 
                 print("Lo siento, no puedes comprar la vocal porque no tienes suficiente dinero")
+                return False
             else: 
                 self.puntuacion -= precio
+                return True
     
     def multiplicar_puntuacion(self, premio): 
         self.puntuacion *= premio

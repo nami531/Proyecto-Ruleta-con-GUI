@@ -1,13 +1,13 @@
 from Vista import Vista
 from Juego import Juego
-from Jugada import Jugada
+from Controlador import Controlador
 
 def letra_repetida(letra, letras): 
     return letra in letras
 
 lista_jugadores = ["Nadia", "Veruska"]
 letras = []
-jugada = Jugada()
+controlador = Controlador()
 vista = Vista()
 vocal_sin_comprar = True
 while vocal_sin_comprar: 
@@ -20,7 +20,7 @@ while vocal_sin_comprar:
             if not letra_repetida(letra, letras): 
                 letras.append(letra)
                 
-            if jugada.es_vocal(letra): 
+            if controlador.es_vocal(letra): 
                 vocal_sin_comprar = False
                 vista.vocal_sin_comprar()
 
