@@ -8,7 +8,7 @@ class Tarjetas():
     
     def __init__(self) -> None:
         self.lista_enigmas = []
-        self.tematicas_disponibles = ["Normal", "San Valentín"]
+        self.__tematicas_disponibles = ["Normal", "San Valentín"]
         self.enigma = "" #Hay que protegerlos
         
     def abrir(self, fichero_enigma: str ): 
@@ -21,7 +21,7 @@ class Tarjetas():
         return num
 
     def devolver_enigma_aleatorio(self, tematica):
-        self.abrir(self.tematicas_disponibles[tematica])
+        self.abrir(self.__tematicas_disponibles[tematica])
         num = self.devolver_random()
         self.enigma = self.lista_enigmas[num]
         return self.enigma

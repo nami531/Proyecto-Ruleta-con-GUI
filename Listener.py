@@ -51,7 +51,7 @@ import pygame
 # print(main())
 
 class Listener: 
-    contador : int       
+    __contador : int       
     fps : pygame.time.Clock 
 
 
@@ -59,10 +59,18 @@ class Listener:
         self.pantalla = pygame.display.set_mode((100, 100))
         pygame.display.set_caption("Medidor de fuerza")
         self.fps = pygame.time.Clock()
-        self.contador = 0 
+        self.__contador = 0 
+        
+    @property 
+    def contador(self): 
+        return self.__contador
+
+    @contador.setter
+    def contador(self, contador): 
+        self.__contador = self.__contador 
 
     def medir_fuerza(self): 
-        self.contador = 0 
+        self.__contador = 0 
         salir = False
         tiempo = int(pygame.time.get_ticks() / 1000)
     
@@ -77,7 +85,7 @@ class Listener:
                 if event.type == pygame.QUIT: 
                     salir = True
                 elif event.type == pygame.KEYDOWN  : 
-                        self.contador +=1 
+                        self.__contador +=1 
                 elif event.type == pygame.KEYUP:
                     print("Se ha levantado la tecla")
                 
@@ -87,7 +95,7 @@ class Listener:
             
             pygame.display.update()
         pygame.quit()
-        return self.contador
+        return self.__contador
 
 
     

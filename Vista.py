@@ -63,19 +63,19 @@ class Vista():
         print("Cuando desaparezca este mensaje, tendrás 5 segundos para presionar cualquier tecla lo más rápido posible")
         self.borrar_pantalla()
     
-    def mostrar_premio(self, puntero: int, ruleta : Ruleta)-> None:
+    def mostrar_premio(self, __puntero: int, ruleta : Ruleta)-> None:
         lista = ruleta.devuelve_ruleta()
         print("Has caído en", end="")
         for i in range(3): 
             print(".", end="")
             time.sleep(1)
         time.sleep(2)
-        print(f"\n{lista[puntero]}")
+        print(f"\n{lista[__puntero]}")
   
 
-    def mostrar_ruleta(self, ruleta: list[str], puntero: int = 0)-> None: 
+    def mostrar_ruleta(self, ruleta: list[str], __puntero: int = 0)-> None: 
         for i in range(len(ruleta)):
-            if i == puntero: 
+            if i == __puntero: 
                 print("->", end="")
             print(ruleta[i], end=", ")
         print()

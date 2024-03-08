@@ -18,6 +18,7 @@ class Juego():
     lista_jugadores: list[Jugador] #Hay que protegerlo
     letras : list[str]
     vocales : list[str]
+    vocales_tilde: dict[str, str]
 
 
     def __init__(self):  
@@ -25,6 +26,12 @@ class Juego():
         self.vista = Vista()
         self.ruleta = Ruleta()
         self.lista_jugadores = []
+        self.vocales_tilde = {"a": "á",
+                              "e": "é",
+                              "i": "í",
+                              "o": "ó",
+                              "u" : "úü"
+                              }
         self.precio = 100 
 
     def anhadirJugador(self, jugador: Jugador):
@@ -135,9 +142,13 @@ class Juego():
                         elif self.comprobaciones_al_introducir(letra): 
                             if jugador.comprar_vocal(letra, self.precio):
                                 self.letras.append(letra) 
+
+                                for j in self.vocales_tilde[letra]: 
+                                    self.letras.append(j)
                                 self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
                                 jugador.ganar_puntuacion(premio)
                             mismo_jugador = False
+                            print(self.vocales)
 
                     elif opcion == 4: 
                         jugador.comprobar_puntuacion()
