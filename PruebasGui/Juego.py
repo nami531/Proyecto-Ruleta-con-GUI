@@ -91,6 +91,7 @@ class Juego():
         self.enigma = Tarjetas(tematica)
         self.enigma_juego = self.enigma.devolver_enigma_aleatorio()
         self.pista_enigma = self.enigma.devolver_pista()
+#Hoy toca hacer esta parte
         self.vista.mostrar_enigma_encriptado(self.enigma_juego)
         self.vista.mostrar_enigma(self.enigma_juego) #Habría que quitar esto, pq si no no tiene gracia jeje
         self.vista.mostrar_pista(self.pista_enigma) 
@@ -121,7 +122,7 @@ class Juego():
 
         #     while mismo_jugador: 
         #         if self.comprobaciones_juego(index_jugador, premio): #Esta comprobacion está para que se pueda ejecutar el juego aunque caigas en la mitad
-        #             opcion = self.vista.mostrar_menu()
+        #             opcion = self.vista.mostrar_menu() Substituir por VentanaMenu(800, 600, jugador)
 
         #             if opcion == 1: 
                         

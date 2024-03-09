@@ -44,8 +44,8 @@ class Jugador():
     def multiplicar_puntuacion(self, premio): 
         self.puntuacion *= premio
 
-    def comprobar_puntuacion(self):
-        print(self._puntuacion)
+    def comprobar_puntuacion(self)-> list:
+        return self._puntuacion
         
     def perder_mitad(self, premio: int | float): 
         self.multiplicar_puntuacion(premio)

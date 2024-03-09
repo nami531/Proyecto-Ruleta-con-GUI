@@ -1,6 +1,6 @@
 import time
 # from TarjetasAntiguoSinPistas import Tarjetas
-# from Jugador import Jugador
+from Jugador import Jugador
 # from Ruleta import Ruleta
 import os
 
@@ -43,9 +43,8 @@ class Vista:
 #         self.borrar_pantalla()
 #         return tematica - 1 
     
-#     def turno(self, jugador: Jugador)-> None: 
-#         print(f"Jugador {jugador.nombre} es tu turno, gira la ruleta")
-#         self.borrar_pantalla()
+    def turno(self, jugador: Jugador)-> str: 
+        return f"Jugador {jugador.nombre} es tu turno, gira la ruleta"
     
 #     def aviso_medicion_fuerza(self) -> None: 
 #         print("Cuando desaparezca este mensaje, tendrás 5 segundos para presionar cualquier tecla lo más rápido posible")
@@ -154,7 +153,8 @@ class Vista:
 #         print(f"{jugador.nombre} has ganado. Te llevas {jugador.puntuacion}")
 #         self.borrar_pantalla(5)
 
-    
+    def mostrar_puntuacion(self, puntuacion): 
+        print(puntuacion)
         
 # if __name__ == "__main__": 
 #     vista = Vista()
