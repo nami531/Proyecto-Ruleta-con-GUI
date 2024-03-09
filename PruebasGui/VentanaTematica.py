@@ -31,7 +31,7 @@ class VentanaTematica:
             else: 
                 self.botones.append(Boton(100 + margen * i, 200, 100, 25, (12,23,43), (27,11,5), self.vista.tematicas_disponibles[i], (0,0,0), 24, i))
 
-    def ejecutar(self)-> int:
+    def ejecutar(self)-> int | None:
         eleccion = False
         while not eleccion:
 
