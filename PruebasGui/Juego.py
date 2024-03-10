@@ -14,6 +14,8 @@ from VentanaPanel import VentanaPanel
 from VentanaMenu import VentanaMenu
 from VentanaFuerza import VentanaFuerza
 from VentanaPremio import VentanaPremio
+from VentanaPanelEntrada import VentanaPanelEntrada
+from VentanaError import VentanaError
 
 class Juego(): 
     vista : Vista
@@ -41,6 +43,7 @@ class Juego():
                               }
         self.precio = 100 
         self.ventana = Ventana(800, 600)
+        self.ventanaError = VentanaError(800,600)
 
     def anhadirJugador(self, jugador: Jugador):
         self.lista_jugadores.append(jugador)
@@ -57,19 +60,23 @@ class Juego():
     def acceder_puntos(self, jugador: int) -> list: 
         return self.lista_jugadores[jugador]._puntuacion 
 
-    def comprobaciones_al_introducir(self, letra : str)-> bool : #Comprueba todos los fallos, en caso de no ejecutarse ninguno, devolverá True
+    def comprobaciones_al_introducir(self, letra : str, i= 0)-> bool: #Comprueba todos los fallos, en caso de no ejecutarse ninguno, devolverá True
         if len(letra) > 1: 
-            self.vista.longitud_incorrecta()
+            self.error = 1
+            self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)
             return False
         
         elif self.letra_repetida(letra): 
-            self.vista.decir_letra_esta_repetida(letra)
+            self.error = 2
+            self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)
             return False
 
         elif self.letra_no_aparece(letra):      
-            self.vista.decir_letra_no_aparece(letra)
-            return False
+            self.error = 3
+            self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)            
+            return False 
         return True            
+
 
     def comprobaciones_juego(self,jugador:int,  premio: int |float)-> bool: #Comprueba el premio donde cayó el jugador
         if premio == -1: 
@@ -102,7 +109,7 @@ class Juego():
 
         self.letras = []
         self.vocales = []
-        enigma_encriptado = self.vista.mostrar_panel_cifrado(self.enigma_juego, "", self.letras, self.vocales)
+        self.enigma_encriptado = self.vista.mostrar_panel_cifrado(self.enigma_juego, "", self.letras, self.vocales)
         
         # self.vista.mostrar_enigma(self.enigma_juego) #Habría que quitar esto, pq si no no tiene gracia jeje
         self.vista.mostrar_pista(self.pista_enigma) 
@@ -110,7 +117,7 @@ class Juego():
         
         turno = True 
         index_jugador = 0 
-        # VentanaPanel(800, 600).ejecutar(enigma_encriptado, self.pista_enigma)
+        VentanaPanel(800, 600).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
         
         # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
 
@@ -135,16 +142,19 @@ class Juego():
 
             while mismo_jugador: 
                 if self.comprobaciones_juego(index_jugador, premio): #Esta comprobacion está para que se pueda ejecutar el juego aunque caigas en la mitad
+                    self.error = 0 
                     opcion = VentanaMenu(800, 600, jugador).ejecutar()
 
                     if opcion == 1: 
                         
-                        letra = self.vista.introducir_letra()
+                        letra = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                         if self.controlador.es_vocal(letra): #Esto se encuentra aquí porque no debe estar en las comprobaciones comunes
                             self.vista.vocal_sin_comprar()
+                            self.error = 4
+                            letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[index_jugador], self.error,self.letras, self.vocales)
                         
-
-                        elif self.comprobaciones_al_introducir(letra):  
+    
+                        elif self.comprobaciones_al_introducir(letra, index_jugador):  
                             self.letras.append(letra)
                             self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
                             jugador.ganar_puntuacion(premio, self.apariciones(letra))
@@ -152,42 +162,41 @@ class Juego():
                         else: 
                             index_jugador, mismo_jugador = jugador.perder_turno( index_jugador, self.lista_jugadores)
 
-                    # elif opcion == 2: 
-                    #     letra = self.vista.introducir_letra()
-                    #     if not self.controlador.es_vocal(letra): 
-                    #         self.vista.letra_en_comprar_vocal()
+                    elif opcion == 2: 
+                        letra = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
+                        if not self.controlador.es_vocal(letra): 
+                            self.error = 5
+                            self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, letra)
                             
-                    #     elif self.comprobaciones_al_introducir(letra): 
-                    #         if jugador.comprar_vocal(letra, self.precio):
-                    #             self.letras.append(letra) 
+                        elif self.comprobaciones_al_introducir(letra, index_jugador): 
+                            if jugador.comprar_vocal(letra, self.precio):
+                                self.letras.append(letra) 
 
-                    #             for j in self.vocales_tilde[letra]: 
-                    #                 self.letras.append(j)
-                    #             self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
-                    #             jugador.ganar_puntuacion(premio)
-                    #         mismo_jugador = False
-                    #         print(self.vocales)
+                                for j in self.vocales_tilde[letra]: 
+                                    self.letras.append(j)
+                                self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
+                                jugador.ganar_puntuacion(premio)
+                            mismo_jugador = False
+                            print(self.vocales)
 
-                    # elif opcion == 4: 
-                    #     jugador.comprobar_puntuacion()
                     
-                    # elif opcion == 3: 
+                    elif opcion == 3: 
 
-                    #     enigma_jugador = self.vista.introducir_letra()
-                    #     resuelto = jugador.resolver_enigma(self.enigma_juego, enigma_jugador)
-                    #     if resuelto: 
-                    #         jugador.ganar_puntuacion(premio)
-                    #         self.vista.panel_resuelto()
-                    #         self.vista.has_ganado(jugador) 
-                    #         jugador.comprobar_puntuacion() #Preguntar a marta
-                    #         turno, mismo_jugador = False, False
-                    #     else: 
-                    #         self.vista.no_resolviste_panel()
-                    #         index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
+                        enigma_jugador = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
+                        resuelto = jugador.resolver_enigma(self.enigma_juego, enigma_jugador)
+                        if resuelto: 
+                            jugador.ganar_puntuacion(premio)
+                            self.vista.panel_resuelto() #Ventana
+                            self.vista.has_ganado(jugador) 
+                            jugador.comprobar_puntuacion() #Preguntar a marta
+                            turno, mismo_jugador = False, False
+                        else: 
+                            self.vista.no_resolviste_panel() #Ventana
+                            index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
 
-                    # elif opcion == self.vista.SALIR:
-                    #     print("ADIOS!") 
-                    #     turno, mismo_jugador = False, False
+                    elif opcion == self.vista.SALIR:
+                        #Ventana adios
+                        turno, mismo_jugador = False, False
                 else:
                     index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores)
     

@@ -4,8 +4,9 @@ from Boton import Boton
 from Label import Label
 from EntradasTexto import EntradasTexto
 from Vista import Vista
+from Jugador import Jugador
 
-class VentanaPanel:
+class VentanaError:
 
     labels : list[Label]
     inputs : list[EntradasTexto]
@@ -22,10 +23,14 @@ class VentanaPanel:
         self.tamanho_botones = 120
         self.margen = 150
         
-        self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
         
+        self.intletra = Label(100, 100, self.vista.introducir_letra(), 24, (0,0,0))
+        
+        self.entrada = EntradasTexto(275, 92, 200, 30, (255,255,255), (0,0,0), 24) 
+       
 
- 
+        self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Introducir", (255,255,255), 24)
+        
     
     def crear_rect_encriptados(self):
         enigma_cifrado = self.vista.mostrar_panel_cifrado(self.enigma,self.letra, self.letras, self.vocales)
@@ -50,7 +55,6 @@ class VentanaPanel:
                 pygame.draw.rect(self.screen, (0,0,0), (x + margen_x * j, y, tamanho[0], tamanho[1]))
                 self.screen.blit(text_surface, text_rect)
         return y
-
     @staticmethod
     def filas(i,x , y, margen_y)->tuple[int,int]: 
         if i >= 9: 
@@ -59,11 +63,18 @@ class VentanaPanel:
         return x, y
              
 
-    def ejecutar(self, enigma_juego, pista, letras, vocales, letra=""):
+    def ejecutar(self, enigma_juego, pista,jugador, error, letras, vocales, letra=""):
         self.letras = letras
         self.vocales = vocales
        
         self.letra = letra
+        self.id = Label(100, 50, f"Jugador {jugador.nombre}", 24,(0,0,0))
+        self.puntuacion = Label(300, 50, f"Puntuación: + {jugador.comprobar_puntuacion()}", 24, (0,0,0))
+        self.elementos =  [self.id, self.puntuacion, self.intletra, self.entrada]
+
+        self.error = error
+        self.errores = ["", self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal()]
+
         self.enigma= enigma_juego
         self.pista = pista
         siguiente = False
@@ -77,8 +88,9 @@ class VentanaPanel:
                     pygame.quit()
                     sys.exit()
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
-                    siguiente = True
-            
+                    return self.entrada.text
+                
+                self.entrada.update(mouse_pos, event)
 
             self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
 
@@ -90,6 +102,15 @@ class VentanaPanel:
             pygame.draw.rect(self.screen, (0,0,0), (100, y+100, 500, 100))
             self.screen.blit(superficie_pista, rect_pista)
 
+            for elemento in self.elementos: 
+                elemento.draw(self.screen)
+
+            sup_error = self.font.render(self.errores[self.error], True, (255,255,255))
+            rect_error = sup_error.get_rect()
+            rect_error.center = (100 + 500 // 2, 150 + 100 // 2)
+            pygame.draw.rect(self.screen, (0,0,0), (100,150, 500, 100))
+            self.screen.blit(sup_error, rect_error)
+
             self.bsiguiente.draw(self.screen)
         
             self.bsiguiente.update(mouse_pos) 
@@ -97,8 +118,7 @@ class VentanaPanel:
             pygame.display.flip()
  
 if __name__ == "__main__":
+    j1 = Jugador("Nadia")
     pygame.init()
-    letras = ["a", "h"]
-    vocales = []
-    ventana = VentanaPanel(800, 600,letras, vocales )
-    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre"))
+    ventana = VentanaError(800, 600)
+    print(ventana.ejecutar("__l_ __ ll___ n____", "Mi nombre", j1, 1))

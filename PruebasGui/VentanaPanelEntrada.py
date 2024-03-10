@@ -23,31 +23,32 @@ class VentanaPanelEntrada:
         self.tamanho_botones = 120
         self.margen = 150
         
-        self.id = Label(100, 100, f"Jugador {jugador.nombre}", 24,(0,0,0))
-        self.puntuacion = Label(300, 100, f"Puntuación: + {jugador.comprobar_puntuacion()}", 24, (0,0,0))
-        self.letra = Label(100, 300, self.vista.introducir_letra(), 24, (0,0,0))
+        self.id = Label(100, 50, f"Jugador {jugador.nombre}", 24,(0,0,0))
+        self.puntuacion = Label(300, 50, f"Puntuación: + {jugador.comprobar_puntuacion()}", 24, (0,0,0))
+        self.letra = Label(100, 100, self.vista.introducir_letra(), 24, (0,0,0))
         
-        self.entrada = EntradasTexto(150, 300, 200, 50, (255,255,255), (0,0,0), 24) 
+        self.entrada = EntradasTexto(275, 92, 200, 30, (255,255,255), (0,0,0), 24) 
         self.elementos =  [self.id, self.puntuacion, self.letra, self.entrada]
 
 
         self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Introducir", (255,255,255), 24)
+      
 
         
     
     def crear_rect_encriptados(self):
-        self.textos = [self.vista.decir_letra_esta_repetida(self.letra.text), self.vista.decir_letra_no_aparece(self.letra.text), self.vista.vocal_sin_comprar(), self.vista.comprar_letra_no_vocal(), self.vista.letra_en_comprar_vocal(), self.vista.saldo_insuficiente()]
-
+       
+        enigma_cifrado = self.vista.mostrar_panel_cifrado(self.enigma,self.letra, self.letras, self.vocales)
         margen_y = 120
         x = 100
-       
+        
         tamanho = (20,50)
-        for i in range(len(self.enigma)):
+        for i in range(len(enigma_cifrado)):
             j = i % 9
             y = 200
             margen_x = 50
             x, y= self.filas(i,x, y , margen_y)
-            letra = self.enigma[i]
+            letra = enigma_cifrado[i]
             if letra == "_": 
                 pygame.draw.rect(self.screen, (0,0,0), (x + margen_x * j, y, tamanho[0], tamanho[1]))
             elif letra == " ": 
@@ -68,7 +69,10 @@ class VentanaPanelEntrada:
         return x, y
              
 
-    def ejecutar(self, enigma_juego, pista):
+    def ejecutar(self, enigma_juego, pista,  letras, vocales,letra=""):
+        self.letras = letras
+        self.vocales = vocales
+        self.letra = letra
         self.enigma= enigma_juego
         self.pista = pista
         siguiente = False
@@ -82,7 +86,7 @@ class VentanaPanelEntrada:
                     pygame.quit()
                     sys.exit()
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
-                    if len(self.entrada.text):
+                    return self.entrada.text.lower()
                 
                 self.entrada.update(mouse_pos, event)
 

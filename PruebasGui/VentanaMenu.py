@@ -47,7 +47,7 @@ class VentanaMenu:
                 for boton in self.botones: 
                     if boton.fue_presionado(mouse_pos, event) and not boton.eliminado:
                         accion = True
-                        return boton.valor
+                        return boton.valor +1
                
                     
             for boton in self.botones:
