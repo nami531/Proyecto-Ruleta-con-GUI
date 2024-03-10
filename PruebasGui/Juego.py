@@ -11,6 +11,7 @@ from Ventana import Ventana
 from VentanaTematica import VentanaTematica
 from Vista import Vista
 from VentanaPanel import VentanaPanel
+from VentanaMenu import VentanaMenu
 from VentanaFuerza import VentanaFuerza
 from VentanaPremio import VentanaPremio
 
@@ -130,61 +131,61 @@ class Juego():
 
             while mismo_jugador: 
                 if self.comprobaciones_juego(index_jugador, premio): #Esta comprobacion está para que se pueda ejecutar el juego aunque caigas en la mitad
-                    opcion = self.vista.mostrar_menu() Substituir por VentanaMenu(800, 600, jugador)
+                    opcion = VentanaMenu(800, 600, jugador).ejecutar()
 
-        #             if opcion == 1: 
+                    if opcion == 1: 
                         
-        #                 letra = self.vista.introducir_letra()
-        #                 if self.controlador.es_vocal(letra): #Esto se encuentra aquí porque no debe estar en las comprobaciones comunes
-        #                     self.vista.vocal_sin_comprar()
+                        letra = self.vista.introducir_letra()
+                        if self.controlador.es_vocal(letra): #Esto se encuentra aquí porque no debe estar en las comprobaciones comunes
+                            self.vista.vocal_sin_comprar()
                         
 
-        #                 elif self.comprobaciones_al_introducir(letra):  
-        #                     self.letras.append(letra)
-        #                     self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
-        #                     jugador.ganar_puntuacion(premio, self.apariciones(letra))
-        #                     mismo_jugador = False 
-        #                 else: 
-        #                     index_jugador, mismo_jugador = jugador.perder_turno( index_jugador, self.lista_jugadores)
+                        elif self.comprobaciones_al_introducir(letra):  
+                            self.letras.append(letra)
+                            self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
+                            jugador.ganar_puntuacion(premio, self.apariciones(letra))
+                            mismo_jugador = False 
+                        else: 
+                            index_jugador, mismo_jugador = jugador.perder_turno( index_jugador, self.lista_jugadores)
 
-        #             elif opcion == 2: 
-        #                 letra = self.vista.introducir_letra()
-        #                 if not self.controlador.es_vocal(letra): 
-        #                     self.vista.letra_en_comprar_vocal()
+                    # elif opcion == 2: 
+                    #     letra = self.vista.introducir_letra()
+                    #     if not self.controlador.es_vocal(letra): 
+                    #         self.vista.letra_en_comprar_vocal()
                             
-        #                 elif self.comprobaciones_al_introducir(letra): 
-        #                     if jugador.comprar_vocal(letra, self.precio):
-        #                         self.letras.append(letra) 
+                    #     elif self.comprobaciones_al_introducir(letra): 
+                    #         if jugador.comprar_vocal(letra, self.precio):
+                    #             self.letras.append(letra) 
 
-        #                         for j in self.vocales_tilde[letra]: 
-        #                             self.letras.append(j)
-        #                         self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
-        #                         jugador.ganar_puntuacion(premio)
-        #                     mismo_jugador = False
-        #                     print(self.vocales)
+                    #             for j in self.vocales_tilde[letra]: 
+                    #                 self.letras.append(j)
+                    #             self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
+                    #             jugador.ganar_puntuacion(premio)
+                    #         mismo_jugador = False
+                    #         print(self.vocales)
 
-        #             elif opcion == 4: 
-        #                 jugador.comprobar_puntuacion()
+                    # elif opcion == 4: 
+                    #     jugador.comprobar_puntuacion()
                     
-        #             elif opcion == 3: 
+                    # elif opcion == 3: 
 
-        #                 enigma_jugador = self.vista.introducir_letra()
-        #                 resuelto = jugador.resolver_enigma(self.enigma_juego, enigma_jugador)
-        #                 if resuelto: 
-        #                     jugador.ganar_puntuacion(premio)
-        #                     self.vista.panel_resuelto()
-        #                     self.vista.has_ganado(jugador) 
-        #                     jugador.comprobar_puntuacion() #Preguntar a marta
-        #                     turno, mismo_jugador = False, False
-        #                 else: 
-        #                     self.vista.no_resolviste_panel()
-        #                     index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
+                    #     enigma_jugador = self.vista.introducir_letra()
+                    #     resuelto = jugador.resolver_enigma(self.enigma_juego, enigma_jugador)
+                    #     if resuelto: 
+                    #         jugador.ganar_puntuacion(premio)
+                    #         self.vista.panel_resuelto()
+                    #         self.vista.has_ganado(jugador) 
+                    #         jugador.comprobar_puntuacion() #Preguntar a marta
+                    #         turno, mismo_jugador = False, False
+                    #     else: 
+                    #         self.vista.no_resolviste_panel()
+                    #         index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
 
-        #             elif opcion == self.vista.SALIR:
-        #                 print("ADIOS!") 
-        #                 turno, mismo_jugador = False, False
-        #         else:
-        #             index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores)
+                    # elif opcion == self.vista.SALIR:
+                    #     print("ADIOS!") 
+                    #     turno, mismo_jugador = False, False
+                else:
+                    index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores)
     
 
 if __name__ == "__main__": 

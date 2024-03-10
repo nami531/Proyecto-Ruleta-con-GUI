@@ -33,6 +33,7 @@ class VentanaFuerza:
         self.texto_fuerza = Label(100, 100, self.vista.aviso_medicion_fuerza(), 24,(0,0,0)) 
         self.texto_turno = Label(100, 50, self.vista.turno(jugador), 24, (0,0,0))
         self.labels = [self.texto_fuerza, self.texto_turno]
+        self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
         
         
         
@@ -51,7 +52,7 @@ class VentanaFuerza:
         angulo = 0 
         siguiente = False
         self.__contador = 0 
-        tiempo = 0  #Lo devuelve en milisegundos, por eso se divide entre 1000
+        tiempo =  int(pygame.time.get_ticks() / 1000)   #Lo devuelve en milisegundos, por eso se divide entre 1000
     
         while not siguiente :
             
@@ -66,10 +67,12 @@ class VentanaFuerza:
                     self.bempezar.eliminado = True
                     self.__contador = 0
                     
-                elif event.type == pygame.KEYDOWN and tiempo2 - tiempo <= 15 : 
+                elif event.type == pygame.KEYDOWN and tiempo2 - tiempo <= 5 : 
                     self.__contador +=1 
                 elif event.type == pygame.KEYUP:
                     print("Se ha levantado la tecla")
+                elif self.bsiguiente.fue_presionado(mouse_pos, event): 
+                    siguiente = True
 
             self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
 
@@ -81,18 +84,19 @@ class VentanaFuerza:
 
             self.fuerza = Label(100, 500 , f"¡Guau! Has presionado {self.__contador} veces, ¡increíble!", 24, (0,0,0))
 
-            if tiempo2 - tiempo > 20 and tiempo2 - tiempo < 25: 
+            if tiempo2 - tiempo > 6 and tiempo2 - tiempo< 12: 
                 angulo += velocidad_rotacion
                 imagen_girada = self.girar_imagen(self.imagen, angulo)
-            elif tiempo2 - tiempo > 30 : 
+                
+            if tiempo2 - tiempo >= 5: 
                 self.fuerza.draw(self.screen)
-                siguiente = True
                 
                 
             self.texto_turno.draw(self.screen)  
             self.texto_fuerza.draw(self.screen)
             self.bempezar.draw(self.screen)  
-
+            self.bsiguiente.draw(self.screen)
+            self.bsiguiente.update(mouse_pos) 
 
             # Actualizar la pantalla
             pygame.display.flip()

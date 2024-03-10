@@ -168,6 +168,10 @@ class Vista:
 
     def decir_adios(self): 
         print("ADIÓS!")
+
+    def longitud_incorrecta(self): 
+        print("Entrada inválida, Introduce una letra")
+        self.borrar_pantalla()
     
         
 if __name__ == "__main__": 

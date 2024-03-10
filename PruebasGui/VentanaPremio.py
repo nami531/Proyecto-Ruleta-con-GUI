@@ -47,15 +47,12 @@ class VentanaPremio:
 
             # Obtener la posición del cursor
             mouse_pos = pygame.mouse.get_pos()
-            tiempo = int(pygame.time.get_ticks() / 1000) 
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
-                    siguiente = True
-                elif tiempo > 10: 
                     siguiente = True
             
             

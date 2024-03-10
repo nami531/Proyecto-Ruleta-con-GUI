@@ -76,7 +76,7 @@ if __name__ == "__main__":
     j2 = Jugador("Pepe")
     lista_jugadores = [j1, j2]
     pygame.init()
-    ventana = VentanaMenu(800, 600, j2)
+    ventana = VentanaMenu(800, 600, j1)
     print(ventana.ejecutar())
 
         

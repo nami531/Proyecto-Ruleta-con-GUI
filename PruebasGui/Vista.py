@@ -78,10 +78,8 @@ class Vista:
 #         return opcion
 
 
-#     def introducir_letra(self) -> str: 
-#         letra = input("Introduce una letra: ").lower()
-#         self.borrar_pantalla()
-#         return letra
+    def introducir_letra(self) -> str: 
+        return "Introduce una letra: "
     
     def mostrar_enigma(self, enigma: str)-> None:
         print(enigma)
@@ -109,49 +107,46 @@ class Vista:
                     enigma_encriptado += char 
             enigma_encriptado += " "
         return enigma_encriptado
-#         self.borrar_pantalla(5)
+
     
 
  
         
-#     def decir_letra_esta_repetida(self, letra: str): 
-#         print(f"Lo siento, la letra {letra}, está repetida, has perdido el turno")
-#         self.borrar_pantalla(5)
+    def decir_letra_esta_repetida(self, letra: str): 
+        return f"Lo siento, la letra {letra}, está repetida, has perdido el turno"
 
-#     def decir_letra_no_aparece(self, letra:str): 
-#         print(f"Lo siento, la letra {letra}, no existe en este enigma, has perdido el turno")
-#         self.borrar_pantalla(5)   
+    def decir_letra_no_aparece(self, letra:str): 
+        return f"Lo siento, la letra {letra}, no existe en este enigma, has perdido el turno"   
 
-#     def vocal_sin_comprar(self):
-#         print("Lo siento, no puedes decir una vocal sin haberla comprado antes, vuelve a intentarlo")
-#         self.borrar_pantalla(5)
+    def vocal_sin_comprar(self):
+        return "Lo siento, no puedes decir una vocal sin haberla comprado antes, vuelve a intentarlo"
+    
 
     def decir_letra_pierdeTurno(self):
         return "Lo siento, acabas de caer en pierde Turno, por tanto pierdes el turno"
 
-#     def comprar_letra_no_vocal(self): 
-#         print("Lo siento, no puedes comprar esa letra porque no es una vocal.")
-#         self.borrar_pantalla(5)
+    def comprar_letra_no_vocal(self): 
+        "Lo siento, no puedes comprar esa letra porque no es una vocal."
+        
 
-#     def letra_en_comprar_vocal(self): 
-#         print("Lo siento, has intentado comprar una letra la cual no es vocal, vuelve a intentarlo")
-#         self.borrar_pantalla(5)
+    def letra_en_comprar_vocal(self): 
+        "Lo siento, has intentado comprar una letra la cual no es vocal, vuelve a intentarlo"
+        
 
-#     def saldo_insuficiente(self): 
-#         print("Lo siento, no puedes comprar la vocal porque no tienes suficiente dinero")
-#         self.borrar_pantalla(5)
+    def saldo_insuficiente(self): 
+        "Lo siento, no puedes comprar la vocal porque no tienes suficiente dinero"
+        
 
-#     def no_resolviste_panel(self): 
-#         print("No has resuelto el panel :(")
-#         self.borrar_pantalla(5)
+    def no_resolviste_panel(self): 
+        "No has resuelto el panel :("
+        
 
-#     def panel_resuelto(self):
-#         print("Has resuelto el panel!")
-#         self.borrar_pantalla(5)
+    def panel_resuelto(self):
+        "Has resuelto el panel!"
+        
 
-#     def has_ganado(self, jugador: Jugador): 
-#         print(f"{jugador.nombre} has ganado. Te llevas {jugador.puntuacion}")
-#         self.borrar_pantalla(5)
+    def has_ganado(self, jugador: Jugador): 
+        f"{jugador.nombre} has ganado. Te llevas {jugador.puntuacion}"
 
     def mostrar_puntuacion(self, puntuacion): 
         print(puntuacion)
