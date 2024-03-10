@@ -58,14 +58,18 @@ class Juego():
         return self.lista_jugadores[jugador]._puntuacion 
 
     def comprobaciones_al_introducir(self, letra : str)-> bool : #Comprueba todos los fallos, en caso de no ejecutarse ninguno, devolverá True
-        if self.letra_repetida(letra): 
+        if len(letra) > 1: 
+            self.vista.longitud_incorrecta()
+            return False
+        
+        elif self.letra_repetida(letra): 
             self.vista.decir_letra_esta_repetida(letra)
             return False
 
         elif self.letra_no_aparece(letra):      
             self.vista.decir_letra_no_aparece(letra)
             return False
-        return True         
+        return True            
 
     def comprobaciones_juego(self,jugador:int,  premio: int |float)-> bool: #Comprueba el premio donde cayó el jugador
         if premio == -1: 

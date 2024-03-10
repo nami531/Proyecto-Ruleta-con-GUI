@@ -150,6 +150,9 @@ class Vista:
 
     def mostrar_puntuacion(self, puntuacion): 
         print(puntuacion)
+
+    def longitud_incorrecta(self): 
+        return "Entrada inválida, Introduce una letra"
         
 # if __name__ == "__main__": 
 #     vista = Vista()
