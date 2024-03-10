@@ -1,50 +1,71 @@
 import pygame
 import sys
+from Boton import Boton
+from Label import Label
+from EntradasTexto import EntradasTexto
+from Vista import Vista
+from os import path
+import os 
 
-# Inicializar Pygame
-pygame.init()
+class VentanaFuerza:
 
-# Definir las dimensiones de la ventana
-width, height = 800, 600
-screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Rectángulo con Texto")
+    labels: list[Label]
+    inputs: list[EntradasTexto]
 
-# Definir el color del rectángulo y del texto
-rect_color = (0, 0, 255)  # Azul
-text_color = (255, 255, 255)  # Blanco
+    def __init__(self, width, height):
+        self.vista = Vista()
+        self.width = width
+        self.height = height
+        self.screen = pygame.display.set_mode((self.width, self.height))
+        pygame.display.set_caption("Ruleta de la suerte")
 
-# Definir las coordenadas y dimensiones del rectángulo
-rect_x, rect_y = 100, 100
-rect_width, rect_height = 200, 150
+        self.__contador = 0 
+        directorio_actual = os.path.dirname(os.path.abspath(__file__))
 
-# Definir el texto y la fuente
-font = pygame.font.Font(None, 36)  # Fuente predeterminada con tamaño 36
-texto = "Hola, mundo!"
+        # Concatenar la ruta del directorio actual con la ruta de la imagen
+        ruta_imagen = os.path.join(directorio_actual, "Multimedia", "ruleta.png")
 
-# Renderizar el texto como una superficie
-text_surface = font.render(texto, True, text_color)
+        # Cargar la imagen
+        self.imagen = pygame.image.load(directorio_actual + "\\Multimedia\\ruleta.png")
 
-# Obtener el rectángulo que enmarca el texto
-text_rect = text_surface.get_rect()
+        self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
 
-# Centrar el rectángulo de texto en el rectángulo
-text_rect.center = (rect_x + rect_width // 2, rect_y + rect_height // 2)
+    def girar_imagen(self, imagen, angulo):
+        # Rotar la imagen
+        imagen_girada = pygame.transform.rotate(imagen, angulo)
+        return imagen_girada
 
-# Ejecución del bucle principal
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+    def ejecutar(self):
+        imagen_girada = self.imagen
+        siguiente = False
+        angulo = 0
+        velocidad_rotacion = 2  # Velocidad de rotación en grados por iteración
+    
+        while not siguiente:
+            for event in pygame.event.get(): 
+                if event.type == pygame.QUIT: 
+                    siguiente = True
 
-    # Limpia la pantalla con un color de fondo
-    screen.fill((255, 255, 255))  # Blanco
+            self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
 
-    # Dibuja el rectángulo en la pantalla
-    pygame.draw.rect(screen, rect_color, (rect_x, rect_y, rect_width, rect_height))
+            # Girar la imagen
+            imagen_girada = self.girar_imagen(self.imagen, angulo)
 
-    # Dibuja el texto en el rectángulo
-    screen.blit(text_surface, text_rect)
+            # Obtener la superficie de la imagen girada
+            sup_imagen_girada = imagen_girada.get_rect()
+            sup_imagen_girada.center = (self.width // 2, self.height // 2)  # Centrar la imagen en la pantalla
+            self.screen.blit(imagen_girada, sup_imagen_girada)  # Blit la imagen en la pantalla
 
-    # Actualiza la pantalla
-    pygame.display.flip()
+            # Actualizar la pantalla
+            pygame.display.flip()
+
+            # Incrementar el ángulo de rotación para la próxima iteración
+            angulo += velocidad_rotacion
+
+            # Restringir el ángulo entre 0 y 360 grados
+            angulo %= 360
+ 
+if __name__ == "__main__":
+    pygame.init()
+    ventana = VentanaFuerza(800, 600)
+    ventana.ejecutar()

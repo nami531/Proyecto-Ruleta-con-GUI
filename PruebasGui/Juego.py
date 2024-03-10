@@ -105,11 +105,12 @@ class Juego():
         index_jugador = 0 
         VentanaPanel(800, 600, enigma_encriptado, self.pista_enigma).ejecutar()
         
-        # # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
+        # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
 
-        # while turno:   
-            # jugador = self.lista_jugadores[index_jugador]
-        #     fuerza = 0            
+        while turno:   
+            jugador = self.lista_jugadores[index_jugador]
+            fuerza = 0            
+            # Aqui tiene que ir la ventana de fuerza
         #     self.vista.turno(jugador)
         #     self.vista.aviso_medicion_fuerza()
         #     time.sleep(1)

@@ -46,9 +46,9 @@ class Vista:
     def turno(self, jugador: Jugador)-> str: 
         return f"Jugador {jugador.nombre} es tu turno, gira la ruleta"
     
-#     def aviso_medicion_fuerza(self) -> None: 
-#         print("Cuando desaparezca este mensaje, tendrás 5 segundos para presionar cualquier tecla lo más rápido posible")
-#         self.borrar_pantalla()
+    def aviso_medicion_fuerza(self) -> str: 
+        return "Midamos fuerzas: Presiona la barra espaciadora tanto como puedas para girar la ruleta"
+
     
 #     def mostrar_premio(self, __puntero: int, ruleta : Ruleta)-> None:
 #         lista = ruleta.devuelve_ruleta()
