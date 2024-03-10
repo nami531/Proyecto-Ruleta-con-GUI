@@ -1,5 +1,5 @@
 from Ruleta import Ruleta
-from Listener import Listener
+
 from Controlador import Controlador
 
 
@@ -32,11 +32,10 @@ class Jugador():
         else: 
             self._puntuacion[0] = 0
 
-    def comprar_vocal(self, letra: str , precio: int) -> bool:
+    def comprar_vocal(self, letra: str , precio: int) -> bool | tuple[bool, int]:
         if self.controlador.es_vocal(letra):
             if self.puntuacion < precio: 
-                print("Lo siento, no puedes comprar la vocal porque no tienes suficiente dinero")
-                return False
+                return False, 6
             else: 
                 self.puntuacion -= precio
                 return True
@@ -105,5 +104,3 @@ if __name__ == "__main__":
     print(j1._puntuacion)
     j1.en_quiebra(0)
     print(j1._puntuacion)
-    l = Listener()
-    print(l.medir_fuerza())

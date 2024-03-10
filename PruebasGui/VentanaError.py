@@ -73,7 +73,7 @@ class VentanaError:
         self.elementos =  [self.id, self.puntuacion, self.intletra, self.entrada]
 
         self.error = error
-        self.errores = ["", self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal()]
+        self.errores = ["", self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal(), self.vista.saldo_insuficiente()]
 
         self.enigma= enigma_juego
         self.pista = pista

@@ -169,15 +169,16 @@ class Juego():
                             self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, letra)
                             
                         elif self.comprobaciones_al_introducir(letra, index_jugador): 
-                            if jugador.comprar_vocal(letra, self.precio):
+                            vocal_comprada, self.error= jugador.comprar_vocal(letra, self.precio)
+                            if not vocal_comprada:
+                                self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, letra)
+                            else: 
                                 self.letras.append(letra) 
-
                                 for j in self.vocales_tilde[letra]: 
                                     self.letras.append(j)
                                 self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
                                 jugador.ganar_puntuacion(premio)
                             mismo_jugador = False
-                            print(self.vocales)
 
                     
                     elif opcion == 3: 

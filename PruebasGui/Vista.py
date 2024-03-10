@@ -66,18 +66,6 @@ class Vista:
 #         print()
 #         self.borrar_pantalla(5)
 
-
-#     def mostrar_menu(self)-> int: 
-#         opcion = 0 
-#         while opcion < 1 or opcion > Vista.SALIR: 
-#             for opcion_jug in range(len(Vista.OPCIONES_TURNO_JUG)): 
-#                 print(Vista.OPCIONES_TURNO_JUG[opcion_jug])
-#                 time.sleep(1)
-#             opcion = int(input("Escoge una opción: "))      #Hay que comprobar la opción 
-#         self.borrar_pantalla(1)
-#         return opcion
-
-
     def introducir_letra(self) -> str: 
         return "Introduce una letra: "
     
@@ -107,10 +95,6 @@ class Vista:
                     enigma_encriptado += char 
             enigma_encriptado += " "
         return enigma_encriptado
-
-    
-
- 
         
     def decir_letra_esta_repetida(self, letra: str): 
         return f"Lo siento, la letra {letra}, está repetida, has perdido el turno"
@@ -126,33 +110,35 @@ class Vista:
         return "Lo siento, acabas de caer en pierde Turno, por tanto pierdes el turno"
 
     def comprar_letra_no_vocal(self): 
-        "Lo siento, no puedes comprar esa letra porque no es una vocal."
+        return "Lo siento, no puedes comprar esa letra porque no es una vocal."
         
 
     def letra_en_comprar_vocal(self): 
-        "Lo siento, has intentado comprar una letra la cual no es vocal, vuelve a intentarlo"
+        return "Lo siento, has intentado comprar una letra la cual no es vocal, vuelve a intentarlo"
         
 
     def saldo_insuficiente(self): 
-        "Lo siento, no puedes comprar la vocal porque no tienes suficiente dinero"
+        return "Lo siento, no puedes comprar la vocal porque no tienes suficiente dinero"
         
 
     def no_resolviste_panel(self): 
-        "No has resuelto el panel :("
+        return "No has resuelto el panel :("
         
 
     def panel_resuelto(self):
-        "Has resuelto el panel!"
+        return "Has resuelto el panel!"
         
 
     def has_ganado(self, jugador: Jugador): 
-        f"{jugador.nombre} has ganado. Te llevas {jugador.puntuacion}"
+        return f"{jugador.nombre} has ganado. Te llevas {jugador.puntuacion}"
 
-    def mostrar_puntuacion(self, puntuacion): 
-        print(puntuacion)
+
 
     def longitud_incorrecta(self): 
         return "Entrada inválida, Introduce una letra"
+    
+    def decir_adios(self, jugador: Jugador): 
+        return f"¡Adiós!, {jugador.nombre}\nTe esperamos de vuelta"
         
 # if __name__ == "__main__": 
 #     vista = Vista()
