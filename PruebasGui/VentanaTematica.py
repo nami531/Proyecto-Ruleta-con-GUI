@@ -45,6 +45,7 @@ class VentanaTematica:
 
                 for boton in self.botones: 
                     if boton.fue_presionado(mouse_pos, event) and not boton.eliminado:
+                        eleccion = True
                         return boton.valor
 
                 for entrada in self.inputs: 
@@ -77,7 +78,7 @@ if __name__ == "__main__":
     j2 = Jugador("Jorge")
     jugadores = [j1, j2]
     pygame.init()
-    ventana = VentanaOpciones(800, 600)
+    ventana = VentanaTematica(800, 600)
     print(ventana.ejecutar())
         
 

@@ -92,22 +92,25 @@ class Vista:
         print(pista)
         self.borrar_pantalla(5)
     
-    def mostrar_enigma_encriptado(self, enigma)-> None: #Pylance da error si se pone el type hints en tal caso es enigma:str
-        enigma = enigma.split() #Lo convertimos en lista
+    def mostrar_enigma_encriptado(self, enigma)-> str: #Pylance da error si se pone el type hints en tal caso es enigma:str
+        enigma = enigma.split()
+        enigma_encriptado = "" #Lo convertimos en lista
         for palabra in enigma:  
-            print(len(palabra)*"_", end=" ")
-        print(" ", end="")
+            enigma_encriptado += (len(palabra)*"_")
+        enigma_encriptado += " " 
+        return enigma_encriptado
     
-#     def mostrar_panel_cifrado(self, enigma:str, letra:str, letras: list[str], vocales: list[str]):  
-#         lista_enigma = enigma.split()
-#         for palabras in lista_enigma: 
-#             for char in palabras:
-#                 if (char.lower() != letra) and ((char.lower() not in letras) and (char.lower() not in vocales)): 
-#                     print("_", end="")
-#                 else: 
-#                     print(char, end="") 
-#             print(" ", end="")
-#         print()
+    def mostrar_panel_cifrado(self, enigma:str, letra:str, letras: list[str], vocales: list[str]):  
+        lista_enigma = enigma.split()
+        enigma_encriptado = ""
+        for palabras in lista_enigma: 
+            for char in palabras:
+                if (char.lower() != letra) and ((char.lower() not in letras) and (char.lower() not in vocales)): 
+                    enigma_encriptado += "_"
+                else: 
+                    enigma_encriptado += char 
+            enigma_encriptado += " "
+        return enigma_encriptado
 #         self.borrar_pantalla(5)
     
 

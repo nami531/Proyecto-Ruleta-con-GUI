@@ -1,4 +1,5 @@
 import random
+from os import path
 random.seed(1)
 
 class Tarjetas(): 
@@ -17,11 +18,12 @@ class Tarjetas():
         self.__enigmas_pistas = {}
 
         #Proceso de generar la lista de pistas y enigmas
-        with open(("./Ficheros/" +  self.__tematicas_disponibles[fichero] +"/"+ self.__tematicas_disponibles[fichero]   + ".txt"), "r", encoding="utf-8") as ficheroEnigma: 
+        directorio = path.dirname(path.abspath(__file__)) 
+        with open((directorio + "/Ficheros/" +  self.__tematicas_disponibles[fichero] +"/"+ self.__tematicas_disponibles[fichero]   + ".txt"), "r", encoding="utf-8") as ficheroEnigma: 
             for linea in ficheroEnigma: 
                 self.lista_enigmas.append(linea.rstrip().replace(", ", " ").replace(". ", " ").replace(": ", " ")) #Elimina el \n y reemplaza cualquier coma y puntos
         
-        with open(("./Ficheros/" + self.__tematicas_disponibles[fichero]  +"/"+ self.__tematicas_disponibles[fichero]  + "Pistas.txt"), "r", encoding="utf-8") as ficheroPistas:
+        with open((directorio + "/Ficheros/" + self.__tematicas_disponibles[fichero]  +"/"+ self.__tematicas_disponibles[fichero]  + "Pistas.txt"), "r", encoding="utf-8") as ficheroPistas:
             for linea in ficheroPistas: 
                 self.lista_pistas.append(linea.rstrip())
 

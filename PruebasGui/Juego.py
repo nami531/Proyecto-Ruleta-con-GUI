@@ -10,6 +10,7 @@ import time
 from Ventana import Ventana
 from VentanaTematica import VentanaTematica
 from Vista import Vista
+from VentanaPanel import VentanaPanel
 
 class Juego(): 
     vista : Vista
@@ -63,7 +64,7 @@ class Juego():
     #         return False
     #     return True         
 
-    # def comprobaciones_juego(self,jugador:int,  premio: int |float)-> bool: 
+    # def comprobaciones_juego(self,jugador:int,  premio: int |float)-> bool: #Comprueba el premio donde cayó el jugador
     #     if premio == -1: 
     #         self.vista.decir_letra_pierdeTurno()
     #         return False
@@ -91,19 +92,23 @@ class Juego():
         self.enigma = Tarjetas(tematica)
         self.enigma_juego = self.enigma.devolver_enigma_aleatorio()
         self.pista_enigma = self.enigma.devolver_pista()
-#Hoy toca hacer esta parte
-        self.vista.mostrar_enigma_encriptado(self.enigma_juego)
-        self.vista.mostrar_enigma(self.enigma_juego) #Habría que quitar esto, pq si no no tiene gracia jeje
-        self.vista.mostrar_pista(self.pista_enigma) 
+
         self.letras = []
         self.vocales = []
+        enigma_encriptado = self.vista.mostrar_panel_cifrado(self.enigma_juego, "", self.letras, self.vocales)
+        
+        # self.vista.mostrar_enigma(self.enigma_juego) #Habría que quitar esto, pq si no no tiene gracia jeje
+        self.vista.mostrar_pista(self.pista_enigma) 
+        
+        
         turno = True 
         index_jugador = 0 
-        jugador = self.lista_jugadores[index_jugador]
+        VentanaPanel(800, 600, enigma_encriptado, self.pista_enigma).ejecutar()
+        
         # # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
 
         # while turno:   
-                
+            # jugador = self.lista_jugadores[index_jugador]
         #     fuerza = 0            
         #     self.vista.turno(jugador)
         #     self.vista.aviso_medicion_fuerza()
