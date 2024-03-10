@@ -1,7 +1,7 @@
 import time
 # from TarjetasAntiguoSinPistas import Tarjetas
 from Jugador import Jugador
-# from Ruleta import Ruleta
+from Ruleta import Ruleta
 import os
 
 class Vista: 
@@ -50,14 +50,12 @@ class Vista:
         return "Midamos fuerzas: Presiona la barra espaciadora tanto como puedas para girar la ruleta"
 
     
-#     def mostrar_premio(self, __puntero: int, ruleta : Ruleta)-> None:
-#         lista = ruleta.devuelve_ruleta()
-#         print("Has caído en", end="")
-#         for i in range(3): 
-#             print(".", end="")
-#             time.sleep(1)
-#         time.sleep(2)
-#         print(f"\n{lista[__puntero]}")
+    def mostrar_premio(self, puntero: int, ruleta : Ruleta)-> str:
+        lista = ruleta.devuelve_ruleta()  
+        return lista[puntero]
+    
+    def caer_en(self): 
+        return "Has caído en..."
   
 
 #     def mostrar_ruleta(self, ruleta: list[str], __puntero: int = 0)-> None: 
@@ -128,9 +126,8 @@ class Vista:
 #         print("Lo siento, no puedes decir una vocal sin haberla comprado antes, vuelve a intentarlo")
 #         self.borrar_pantalla(5)
 
-#     def decir_letra_pierdeTurno(self):
-#         print("Lo siento, acabas de caer en pierde Turno, por tanto pierdes el turno")
-#         self.borrar_pantalla(5)
+    def decir_letra_pierdeTurno(self):
+        return "Lo siento, acabas de caer en pierde Turno, por tanto pierdes el turno"
 
 #     def comprar_letra_no_vocal(self): 
 #         print("Lo siento, no puedes comprar esa letra porque no es una vocal.")

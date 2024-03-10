@@ -10,15 +10,13 @@ class VentanaPanel:
     labels : list[Label]
     inputs : list[EntradasTexto]
 
-    def __init__(self, width, height, enigma_juego, pista):
+    def __init__(self, width, height):
         self.vista = Vista()
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.enigma = enigma_juego 
-        self.pista = pista
         self.font = pygame.font.Font(None, 36)
         self.x_botones = 50
         self.tamanho_botones = 120
@@ -59,7 +57,9 @@ class VentanaPanel:
         return x, y
              
 
-    def ejecutar(self):
+    def ejecutar(self, enigma_juego, pista):
+        self.enigma= enigma_juego
+        self.pista = pista
         siguiente = False
         while not siguiente:
 
@@ -81,7 +81,7 @@ class VentanaPanel:
             superficie_pista = self.font.render(self.pista, True, (255,255,255))
             rect_pista = superficie_pista.get_rect()
             rect_pista.center = (100 + 500 // 2, y + 100 // 2)
-            pygame.draw.rect(self.screen, (0,0,0), (100, y, 500, 100))
+            pygame.draw.rect(self.screen, (0,0,0), (100, y+100, 500, 100))
             self.screen.blit(superficie_pista, rect_pista)
 
             self.bsiguiente.draw(self.screen)
@@ -92,5 +92,5 @@ class VentanaPanel:
  
 if __name__ == "__main__":
     pygame.init()
-    ventana = VentanaPanel(800, 600, "__l_ __ ll___ n____", "Mi nombre")
-    print(ventana.ejecutar())
+    ventana = VentanaPanel(800, 600)
+    print(ventana.ejecutar("__l_ __ ll___ n____", "Mi nombre"))

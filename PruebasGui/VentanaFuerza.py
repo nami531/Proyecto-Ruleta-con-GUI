@@ -6,13 +6,14 @@ from EntradasTexto import EntradasTexto
 from Vista import Vista
 from os import path
 import os 
-
+from Jugador import Jugador
+import time
 class VentanaFuerza:
 
     labels : list[Label]
     inputs : list[EntradasTexto]
 
-    def __init__(self, width, height):
+    def __init__(self, width, height,jugador):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -30,6 +31,10 @@ class VentanaFuerza:
         
         self.bempezar = Boton(0, 0, 100, 100, (0,0,0), (255,255,255), "Empezar", (233,243,1), 24)
         self.texto_fuerza = Label(100, 100, self.vista.aviso_medicion_fuerza(), 24,(0,0,0)) 
+        self.texto_turno = Label(100, 50, self.vista.turno(jugador), 24, (0,0,0))
+        self.labels = [self.texto_fuerza, self.texto_turno]
+        
+        
         
 
     
@@ -38,30 +43,31 @@ class VentanaFuerza:
         imagen_girada = pygame.transform.rotate(imagen, angulo)
         return imagen_girada
 
-    def ejecutar(self):
-
+    def ejecutar(self)->int:
+        
+       
         imagen_girada = self.imagen
         velocidad_rotacion = 1
         angulo = 0 
         siguiente = False
         self.__contador = 0 
-        tiempo = int(pygame.time.get_ticks() / 1000)
+        tiempo = 0  #Lo devuelve en milisegundos, por eso se divide entre 1000
     
         while not siguiente :
-            #Lo devuelve en milisegundos
+            
             mouse_pos = pygame.mouse.get_pos()
-            tiempo2 = int(pygame.time.get_ticks() / 1000)    
+            tiempo2 = int(pygame.time.get_ticks() / 1000) 
 
             for event in pygame.event.get(): 
-                if event.type == pygame.QUIT: 
-                    siguiente = True
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
                 elif self.bempezar.fue_presionado(mouse_pos, event): 
                     self.bempezar.eliminado = True
                     self.__contador = 0
-                    tiempo2 = int(pygame.time.get_ticks() / 1000)  
-                elif event.type == pygame.KEYDOWN and tiempo2 - tiempo <= 5 : 
-                    self.__contador +=1 
                     
+                elif event.type == pygame.KEYDOWN and tiempo2 - tiempo <= 15 : 
+                    self.__contador +=1 
                 elif event.type == pygame.KEYUP:
                     print("Se ha levantado la tecla")
 
@@ -73,23 +79,28 @@ class VentanaFuerza:
 
             angulo %= 360 
 
-            self.fuerza = Label(100, 500 , f"¡Guau! Has presionado {self.__contador} veces, ¡increible!", 24, (0,0,0))
+            self.fuerza = Label(100, 500 , f"¡Guau! Has presionado {self.__contador} veces, ¡increíble!", 24, (0,0,0))
 
-            if tiempo2 - tiempo > 5 and tiempo2 - tiempo < 9: 
+            if tiempo2 - tiempo > 20 and tiempo2 - tiempo < 25: 
                 angulo += velocidad_rotacion
                 imagen_girada = self.girar_imagen(self.imagen, angulo)
-            elif tiempo2 - tiempo > 9 : 
+            elif tiempo2 - tiempo > 30 : 
                 self.fuerza.draw(self.screen)
-            
-            self.texto_fuerza.draw(self.screen)         
-
+                siguiente = True
+                
+                
+            self.texto_turno.draw(self.screen)  
+            self.texto_fuerza.draw(self.screen)
             self.bempezar.draw(self.screen)  
 
 
             # Actualizar la pantalla
             pygame.display.flip()
+       
+        return self.__contador
  
 if __name__ == "__main__":
+    j1 = Jugador("Nadia")
     pygame.init()
-    ventana = VentanaFuerza(800, 600)
-    ventana.ejecutar()
+    ventana = VentanaFuerza(800, 600, j1)
+    print(ventana.ejecutar())

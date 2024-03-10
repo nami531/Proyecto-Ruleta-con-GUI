@@ -11,6 +11,8 @@ from Ventana import Ventana
 from VentanaTematica import VentanaTematica
 from Vista import Vista
 from VentanaPanel import VentanaPanel
+from VentanaFuerza import VentanaFuerza
+from VentanaPremio import VentanaPremio
 
 class Juego(): 
     vista : Vista
@@ -54,26 +56,26 @@ class Juego():
     def acceder_puntos(self, jugador: int) -> list: 
         return self.lista_jugadores[jugador]._puntuacion 
 
-    # def comprobaciones_al_introducir(self, letra : str)-> bool : #Comprueba todos los fallos, en caso de no ejecutarse ninguno, devolverá True
-    #     if self.letra_repetida(letra): 
-    #         self.vista.decir_letra_esta_repetida(letra)
-    #         return False
+    def comprobaciones_al_introducir(self, letra : str)-> bool : #Comprueba todos los fallos, en caso de no ejecutarse ninguno, devolverá True
+        if self.letra_repetida(letra): 
+            self.vista.decir_letra_esta_repetida(letra)
+            return False
 
-    #     elif self.letra_no_aparece(letra):      
-    #         self.vista.decir_letra_no_aparece(letra)
-    #         return False
-    #     return True         
+        elif self.letra_no_aparece(letra):      
+            self.vista.decir_letra_no_aparece(letra)
+            return False
+        return True         
 
-    # def comprobaciones_juego(self,jugador:int,  premio: int |float)-> bool: #Comprueba el premio donde cayó el jugador
-    #     if premio == -1: 
-    #         self.vista.decir_letra_pierdeTurno()
-    #         return False
-    #     elif premio == 0: 
-    #         self.lista_jugadores[jugador].en_quiebra(premio)
-    #         return False
-    #     elif premio == 0.5: 
-    #         self.lista_jugadores[jugador].perder_mitad(premio)
-    #     return True
+    def comprobaciones_juego(self,jugador:int,  premio: int |float)-> bool: #Comprueba el premio donde cayó el jugador
+        if premio == -1: 
+            self.vista.decir_letra_pierdeTurno()
+            return False
+        elif premio == 0: 
+            self.lista_jugadores[jugador].en_quiebra(premio)
+            return False
+        elif premio == 0.5: 
+            self.lista_jugadores[jugador].perder_mitad(premio)
+        return True
               
     def jugar(self): 
        
@@ -103,32 +105,32 @@ class Juego():
         
         turno = True 
         index_jugador = 0 
-        VentanaPanel(800, 600, enigma_encriptado, self.pista_enigma).ejecutar()
+        # VentanaPanel(800, 600).ejecutar(enigma_encriptado, self.pista_enigma)
         
         # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
 
         while turno:   
-            jugador = self.lista_jugadores[index_jugador]
-            fuerza = 0            
-            # Aqui tiene que ir la ventana de fuerza
-        #     self.vista.turno(jugador)
-        #     self.vista.aviso_medicion_fuerza()
-        #     time.sleep(1)
 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            jugador = self.lista_jugadores[index_jugador]        
+            # # Aqui tiene que ir la ventana de fuerza
+            fuerza = VentanaFuerza(800, 600, jugador).ejecutar()
 
-        #     fuerza = Listener().medir_fuerza()
-        #     self.vista.borrar_pantalla()
-        #     jugador.girar_ruleta(self.ruleta, fuerza)  #Se tiene que pasar la ruleta con la que se esta iniciando el juego si no exisitirían 2 ruletas
-        #     self.vista.mostrar_premio(self.ruleta.puntero, self.ruleta)
-        #     self.vista.mostrar_ruleta(self.ruleta.devuelve_ruleta(), self.ruleta.puntero)
-        #     premio = self.ruleta.devuelve_premio()
-        #     # Proceso de girar la ruleta
+            jugador.girar_ruleta(self.ruleta, fuerza)  #Se tiene que pasar la ruleta con la que se esta iniciando el juego si no exisitirían 2 ruletas
             
-        #     mismo_jugador = True
+            # self.vista.mostrar_ruleta(self.ruleta.devuelve_ruleta(), self.ruleta.puntero)
+            premio = self.ruleta.devuelve_premio()
+            VentanaPremio(800,600).ejecutar(self.ruleta.puntero, self.ruleta, premio)
+            # Proceso de girar la ruleta
+            
+            mismo_jugador = True
 
-        #     while mismo_jugador: 
-        #         if self.comprobaciones_juego(index_jugador, premio): #Esta comprobacion está para que se pueda ejecutar el juego aunque caigas en la mitad
-        #             opcion = self.vista.mostrar_menu() Substituir por VentanaMenu(800, 600, jugador)
+            while mismo_jugador: 
+                if self.comprobaciones_juego(index_jugador, premio): #Esta comprobacion está para que se pueda ejecutar el juego aunque caigas en la mitad
+                    opcion = self.vista.mostrar_menu() Substituir por VentanaMenu(800, 600, jugador)
 
         #             if opcion == 1: 
                         
