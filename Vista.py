@@ -1,10 +1,10 @@
 import time
-from TarjetasAntiguoSinPistas import Tarjetas
+from Tarjetas import Tarjetas
 from Jugador import Jugador
 from Ruleta import Ruleta
 import os
 
-class Vista(): 
+class Vista: 
     SALIR = 5
     OPCIONES_TURNO_JUG: list[str] = ["1.Letra", "2.Comprar vocal", "3.Resolver enigma", "4.Comprobar puntuación", "5.Salir"]
     tematicas_disponibles : list[str]
@@ -166,6 +166,8 @@ class Vista():
         print(f"{jugador.nombre} has ganado. Te llevas {jugador.puntuacion}")
         self.borrar_pantalla(5)
 
+    def decir_adios(self): 
+        print("ADIÓS!")
     
         
 if __name__ == "__main__": 

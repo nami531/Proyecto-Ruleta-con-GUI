@@ -9,7 +9,7 @@ from os import system
 import time
 
 
-class Juego(): 
+class Juego: 
     vista : Vista
     jugador : Jugador
     ruleta: Ruleta
@@ -94,11 +94,12 @@ class Juego():
         self.vocales = []
         turno = True 
         index_jugador = 0 
-        jugador = self.lista_jugadores[index_jugador]
+       
         # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
 
         while turno:   
-                
+
+            jugador = self.lista_jugadores[index_jugador]   
             fuerza = 0            
             self.vista.turno(jugador)
             self.vista.aviso_medicion_fuerza()
@@ -168,7 +169,7 @@ class Juego():
                             index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
 
                     elif opcion == self.vista.SALIR:
-                        print("ADIOS!") 
+                        self.vista.decir_adios()
                         turno, mismo_jugador = False, False
                 else:
                     index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores)

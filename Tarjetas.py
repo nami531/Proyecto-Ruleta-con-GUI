@@ -1,7 +1,7 @@
 import random
 random.seed(1)
 
-class Tarjetas(): 
+class Tarjetas: 
     fichero_enigma : str
     __enigmas_pistas: dict[str, str]
     __enigma: str

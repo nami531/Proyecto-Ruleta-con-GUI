@@ -3,7 +3,7 @@ from Listener import Listener
 from Controlador import Controlador
 
 
-class Jugador(): 
+class Jugador: 
     nombre : str
     _puntuacion: list[float|int|str] 
 
