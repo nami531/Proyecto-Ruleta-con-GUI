@@ -15,7 +15,6 @@ class Jugador:
         self._puntuacion = [0] #Hay que cifrarlo con propertys y demás 
 
     def girar_ruleta(self, ruleta: Ruleta, fuerza : int)-> None: 
-        print(fuerza)
         ruleta.girar(fuerza)
         
     # def introducir_letra_no_vocal(self): #Podemos comprobar que no sea vocal al introducir la letra def es_vocal e iria en jugada
