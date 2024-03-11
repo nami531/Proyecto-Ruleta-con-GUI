@@ -4,11 +4,34 @@ from Boton import Boton
 from Label import Label
 from EntradasTexto import EntradasTexto
 from Vista import Vista
+from os import path
+import os
+from pygame import Surface
+
 
 class Ventana:
 
+    vista: Vista
+    width : int
+    height : int
+    screen : Surface
     labels : list[Label]
     inputs : list[EntradasTexto]
+    x_botones : int
+    tamanho_botones: tuple[int,int]
+    margen :int
+    fuente : int
+    colores : dict[str, tuple[int,int,int]]
+    bienvenida : Label
+    jugadores: Label
+    b2jug: Boton
+    b3jug: Boton
+    b4jug: Boton
+    b5jug: Surface
+    b6jug: Surface
+    
+    
+    imagen : Surface
 
     def __init__(self, width, height):
         self.vista = Vista()
@@ -17,39 +40,54 @@ class Ventana:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.bienvenida = Label(250,150, self.vista.bienvenida(), 40, (0,0,0)) 
-
-        self.x_botones = 50
-        self.tamanho_botones = 120
+        self.x_botones = 75
+        self.tamanho_botones = (80, 50)
         self.margen = 150
 
-        self.b2jug = Boton(self.x_botones, 525, self.tamanho_botones, 50,(100,2,25), (9,35,2), "Hola", (0,0,0), 12, 2 )
-        self.b3jug = Boton(self.x_botones + self.margen, 525, self.tamanho_botones, 50,(100,2,25), (9,35,2), "Hola", (0,0,0), 12, 3 )
-        self.b4jug = Boton(self.x_botones + self.margen * 2, 525, self.tamanho_botones, 50,(100,2,25), (9,35,2), "Hola", (0,0,0), 12, 4 )
-        self.b5jug = Boton(self.x_botones + self.margen * 3, 525, self.tamanho_botones, 50,(100,2,25), (9,35,2), "Hola", (0,0,0), 12, 5)
-        self.b6jug = Boton(self.x_botones + self.margen * 4, 525, self.tamanho_botones, 50,(100,2,25), (9,35,2), "Hola", (0,0,0), 1, 6)
-        self.benviar = Boton(700, 525, self.tamanho_botones, 50 , (100,2,25), (9,35,2), "Enviar", (0,0,0), 12)
+        self.fuente = 24
+
+        self.colores = { "fondo" : (234,234,234),
+                        "negro" : (0,0,0),
+                        "blanco": (255,255,255),
+                        "morado": (204, 202, 234),
+                        "morado_hover" : (159, 149, 175),
+                        "azul" : (199, 228, 255) ,
+                        "azul_hover" : (46, 155, 255)
+        }
+
+
+        self.bienvenida = Label(260,80, self.vista.bienvenida(), 40, (0,0,0)) 
+        self.jugadores = Label(300, 450, "Nº Jugadores:", self.fuente, (0,0,0))
+
+        
+
+        self.b2jug = Boton(self.x_botones,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "2", (0,0,0), self.fuente, 2 )
+        self.b3jug = Boton(self.x_botones + self.margen,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "3", (0,0,0), self.fuente, 3 )
+        self.b4jug = Boton(self.x_botones + self.margen * 2,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "4", (0,0,0), self.fuente, 4 )
+        self.b5jug = Boton(self.x_botones + self.margen * 3,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "5", (0,0,0), self.fuente, 5)
+        self.b6jug = Boton(self.x_botones + self.margen * 4,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "6", (0,0,0), self.fuente, 6)
+        self.benviar = Boton(420,430, self.tamanho_botones[0], self.tamanho_botones[1] , self.colores["azul"], self.colores["azul_hover"], "Enviar", (0,0,0), self.fuente)
         self.benviar.eliminado = True
         
         self.botones = [self.b2jug, self.b3jug, self.b4jug, self.b5jug, self.b6jug, self.benviar]
-        self.labels = []
+        self.labels = [self.jugadores]
         self.inputs = []
         self.nombres_jug = []
 
-        # self.imagen = pygame.image.load("Multimedia\\dados.png") 
+        directorio_actual = os.path.dirname(os.path.abspath(__file__))
+        self.imagen = pygame.image.load(directorio_actual + "\\Multimedia\\dados.png")
+        self.imagen = pygame.transform.scale(self.imagen, (250, 250))
+
     
     def crear_label(self, num_jug):
         for i in range(num_jug): 
-            self.labels.append(Label(self.x_botones + self.margen * i, 525, self.vista.pedir_nombre_jugador(i), 25, (0,0,0)))
+            self.labels.append(Label(self.x_botones + self.margen * i, 525, self.vista.pedir_nombre_jugador(i), self.fuente, (0,0,0)))
 
     def crear_inputs(self, num_jug): 
-        print(0,1)
         for i in range(num_jug):
-            self.inputs.append(EntradasTexto(self.x_botones + self.margen * i, 550, 100, 25, (0,0,0), (0,0,0), 12))
-            print(self.inputs)
-        #Hay que crear aqui bootoon enviar
+            self.inputs.append(EntradasTexto(self.x_botones + self.margen * i, 550, 100, 25, self.colores["negro"], self.colores["negro"], self.colores["blanco"] , self.fuente))
         self.benviar.eliminado = False
-        print(10)
+   
         
 
     def devolver_nombres(self)-> list[str]: 
@@ -76,20 +114,23 @@ class Ventana:
                         self.crear_inputs(num_jug)
                 if self.benviar.fue_presionado(mouse_pos, event): 
                     for entrada in self.inputs: 
-                        self.nombres_jug.append(entrada.text)
+                        if entrada.text != "": 
+                            self.nombres_jug.append(entrada.text.capitalize())
+                            nombres = True
+                        else: 
+                            self.error = Label(0,0,"Todos los jugadores deben tener un nombre", self.fuente, self.colores["negro"])
+                            self.labels.append(self.error)
                         # print(entrada.text)
-                    print(self.nombres_jug)
-                    nombres = True
+                    # print(self.nombres_jug)
+                    
                
                 for entrada in self.inputs: 
                     entrada.update(mouse_pos, event)
-                    
+
             for boton in self.botones:
                 boton.update(mouse_pos) 
 
-            
-
-            self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
+            self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
 
             # Dibujar elementos en la pantalla
             for boton in self.botones:
@@ -102,9 +143,7 @@ class Ventana:
                 entrada.draw(self.screen)
 
             self.bienvenida.draw(self.screen)
-            pygame.draw.rect(self.screen, (0,0,0), (250, 200, 300,300)) #Esto será una imagen en un futuro no muy lejano
-            # self.screen.blit(self.imagen, (250, 200))
-           
+            self.screen.blit(self.imagen, (275, 150))
 
             # Actualizar la pantalla
             pygame.display.flip()

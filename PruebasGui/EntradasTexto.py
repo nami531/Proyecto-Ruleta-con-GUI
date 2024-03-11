@@ -2,13 +2,14 @@ import pygame
 import sys
 
 class EntradasTexto:
-    def __init__(self, x, y, width, height, color, text_color, font_size):
+    def __init__(self, x, y, width, height, color, text_color, background_color, font_size):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.color = color
         self.text_color = text_color
+        self.background_color = background_color
         self.font_size = font_size
         self.rect = pygame.Rect(x, y, width, height)
         self.font = pygame.font.Font(None, self.font_size)
@@ -22,6 +23,7 @@ class EntradasTexto:
         else: 
             self.activo = False
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.width, self.height), 2)  # Dibujar el borde del cuadro de texto
+        pygame.draw.rect(screen, self.background_color, (self.x + 2, self.y + 2, self.width - 4, self.height - 4))  # Dibujar el fondo del cuadro de texto
         text_surface = self.font.render(self.text, True, self.text_color)
         screen.blit(text_surface, (self.x + 5, self.y + 5))  # Ajustar el texto para que no esté justo en el borde del cuadro de texto
 
@@ -39,8 +41,8 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((400, 300))
     clock = pygame.time.Clock()
 
-    cuadro_texto = EntradasTexto(150, 100, 200, 50, (255, 255, 255), (255, 255, 255), 24)
-    cuadro_texto2 = EntradasTexto(200, 200, 200, 50, (255, 255, 255), (255, 255, 255), 24)
+    cuadro_texto = EntradasTexto(150, 100, 200, 50, (255, 255, 255), (0,0,0),(255,255,255), 24)
+    cuadro_texto2 = EntradasTexto(200, 200, 200, 50, (255, 255, 255), (255, 255, 255), (255,255,255), 24)
     
     running = True
     while running:

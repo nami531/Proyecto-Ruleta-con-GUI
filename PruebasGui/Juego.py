@@ -2,7 +2,6 @@ from Jugador import Jugador
 from Ruleta import Ruleta
 from Tarjetas import Tarjetas
 from Controlador import Controlador
-from Listener import Listener
 import pygame
 from os import system
 import sys
