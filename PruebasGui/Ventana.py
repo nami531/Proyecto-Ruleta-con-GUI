@@ -29,6 +29,7 @@ class Ventana:
     b4jug: Boton
     b5jug: Boton
     b6jug: Boton
+    benviar : Boton
     imagen : Surface
 
     def __init__(self, width, height):

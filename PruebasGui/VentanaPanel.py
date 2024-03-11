@@ -4,11 +4,25 @@ from Boton import Boton
 from Label import Label
 from EntradasTexto import EntradasTexto
 from Vista import Vista
+from pygame import Surface
+
 
 class VentanaPanel:
 
-    labels : list[Label]
-    inputs : list[EntradasTexto]
+    vista: Vista
+    width : int
+    height : int
+    screen : Surface
+    x_botones : int
+    tamanho_botones: tuple[int,int]
+    margen :int
+    fuente : int
+    colores : dict[str, tuple[int,int,int]]
+    font : font
+    bsiguiente : Boton
+    letras
+    vocales
+
 
     def __init__(self, width, height):
         self.vista = Vista()
@@ -16,9 +30,6 @@ class VentanaPanel:
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
-
-        margen = 150
-        self.botones = []
 
         self.x_botones = 100
         self.tamanho_botones = (120, 50)
@@ -41,35 +52,35 @@ class VentanaPanel:
         
 
  
-    
-    def crear_rect_encriptados(self):
+    #Función que dibuja los rectangulos, del panel
+    def dibujar_rect_encriptados(self):
         enigma_cifrado = self.vista.mostrar_panel_cifrado(self.enigma,self.letra, self.letras, self.vocales)
         margen_y = 120
         x = 100
        
-        tamanho = (20,50)
+        tamanho = (25,50)
         for i in range(len(enigma_cifrado)):
-            j = i % 9
+            j = i % 14 #Reinicia la fila en la que nos encontramos, de tal forma que i= columna, j= fila
             y = 200
             margen_x = 50
             x, y= self.filas(i,x, y , margen_y)
             letra = enigma_cifrado[i]
             if letra == "_": 
-                pygame.draw.rect(self.screen, (0,0,0), (x + margen_x * j, y, tamanho[0], tamanho[1]))
+                pygame.draw.rect(self.screen, self.colores["azul"], (x + margen_x * j, y, tamanho[0], tamanho[1]))
             elif letra == " ": 
                 margen_x += 10
             else: 
-                text_surface = self.font.render(letra, True, (255,255,255))
+                text_surface = self.font.render(letra, True, self.colores["negro"])
                 text_rect = text_surface.get_rect()
                 text_rect.center = (x + margen_x * j + tamanho[0] // 2, y + tamanho[1] // 2)
-                pygame.draw.rect(self.screen, (0,0,0), (x + margen_x * j, y, tamanho[0], tamanho[1]))
+                pygame.draw.rect(self.screen, self.colores["azul"], (x + margen_x * j, y, tamanho[0], tamanho[1]))
                 self.screen.blit(text_surface, text_rect)
         return y
 
     @staticmethod
     def filas(i,x , y, margen_y)->tuple[int,int]: 
-        if i >= 9: 
-            y += margen_y * (i//9) #  define la fila en la que estamos 
+        if i >= 14: 
+            y += margen_y * (i//14) #  define la fila en la que estamos 
             x = 100
         return x, y
              
@@ -81,7 +92,7 @@ class VentanaPanel:
         self.letra = letra
         self.enigma= enigma_juego
         self.pista = pista
-        siguiente = False
+        siguiente = False #Nadia del futuro cambia self.letra y todo eso a una variable que pases a la funcion, asi te evitas de propertys
         while not siguiente:
 
             # Obtener la posición del cursor
@@ -95,25 +106,25 @@ class VentanaPanel:
                     siguiente = True
             
 
-            self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
+            self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
 
-            y = self.crear_rect_encriptados()
+            y = self.dibujar_rect_encriptados()
             
-            superficie_pista = self.font.render(self.pista, True, (255,255,255))
+            superficie_pista = self.font.render(self.pista, True, self.colores["negro"])
             rect_pista = superficie_pista.get_rect()
-            rect_pista.center = (100 + 500 // 2, y + 100 // 2)
-            pygame.draw.rect(self.screen, (0,0,0), (100, y+100, 500, 100))
+            rect_pista.center = (100 + 500 // 2, y + 300 // 2)
+            pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 500, 100))
             self.screen.blit(superficie_pista, rect_pista)
 
             self.bsiguiente.draw(self.screen)
         
             self.bsiguiente.update(mouse_pos) 
-            # Actualizar la pantalla
+            # Actualiza la pantalla
             pygame.display.flip()
  
 if __name__ == "__main__":
     pygame.init()
     letras = ["a", "h"]
     vocales = []
-    ventana = VentanaPanel(800, 600,letras, vocales )
-    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre"))
+    ventana = VentanaPanel(800, 600)
+    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", ["t", "h", "n", "i"],[]))
