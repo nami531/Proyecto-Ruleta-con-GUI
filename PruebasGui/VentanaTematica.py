@@ -1,6 +1,5 @@
 import pygame
 from Vista import Vista
-from Label import Label
 from Jugador import Jugador
 from Boton import Boton
 import sys
@@ -12,7 +11,6 @@ class VentanaTematica:
     width : int
     height : int
     screen : Surface
-    labels : list[Label]
     x_botones : int
     tamanho_botones: tuple[int,int]
     margen :int
