@@ -17,10 +17,25 @@ class VentanaPanel:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.font = pygame.font.Font(None, 36)
-        self.x_botones = 50
-        self.tamanho_botones = 120
+        margen = 150
+        self.botones = []
+
+        self.x_botones = 100
+        self.tamanho_botones = (120, 50)
         self.margen = 150
+
+        self.fuente = 24
+
+        self.colores = { "fondo" : (234,234,234),
+                        "negro" : (0,0,0),
+                        "blanco": (255,255,255),
+                        "morado": (204, 202, 234),
+                        "morado_hover" : (159, 149, 175),
+                        "azul" : (199, 228, 255) ,
+                        "azul_hover" : (46, 155, 255)
+        }
+
+        self.font = pygame.font.Font(None, 36)
         
         self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
         

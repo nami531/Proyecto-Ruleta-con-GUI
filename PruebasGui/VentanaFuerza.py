@@ -36,7 +36,7 @@ class VentanaFuerza:
         self.__contador = 0 
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
 
-         self.x_botones = 100
+        self.x_botones = 100
         self.tamanho_botones = (120, 50)
         self.margen = 150
 

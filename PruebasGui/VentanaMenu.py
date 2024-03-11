@@ -4,35 +4,60 @@ from Jugador import Jugador
 from Label import Label
 from Vista import Vista
 from Boton import Boton 
+from pygame import Surface
 
 class VentanaMenu: 
-    def __init__(self, width, height, jugador: Jugador):
+    vista: Vista
+    width : int
+    height : int
+    screen : Surface
+    x_botones : int
+    tamanho_botones: tuple[int,int]
+    margen :int
+    fuente : int
+    colores : dict[str, tuple[int,int,int]]
+    botones : list[Boton]
+    turno : Label
+    puntuacion : Label
+    labels : list[Label]
+
+    def __init__(self, width : int, height: int, jugador: Jugador):
         self.vista = Vista()
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.x_botones = 120
-        self.tamanho_botones = 120
-        self.margen = 150
-        negro = (0,0,0)
-        blanco= (255,255,255)
-        random = (34,56,78)
+        self.x_botones = 150
+        self.tamanho_botones = (200, 50)
+        self.margen = 300
 
+        self.fuente = 24
+
+        self.colores = { "fondo" : (234,234,234),
+                        "negro" : (0,0,0),
+                        "blanco": (255,255,255),
+                        "morado": (204, 202, 234),
+                        "morado_hover" : (159, 149, 175),
+                        "azul" : (199, 228, 255) ,
+                        "azul_hover" : (46, 155, 255)
+        }
         self.botones = []
        
         for i in range(len(self.vista.OPCIONES_TURNO_JUG)): 
-            self.botones.append(Boton(self.x_botones+ self.margen * i, 200, self.tamanho_botones, 50, random, negro, self.vista.OPCIONES_TURNO_JUG[i], negro, 24, i ))
+            if i >= 2:
+                self.botones.append(Boton(self.x_botones+ self.margen * (i % 2), 300, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], self.vista.OPCIONES_TURNO_JUG[i], self.colores["negro"], self.fuente, i )) 
+            else: 
+                self.botones.append(Boton(self.x_botones+ self.margen * i, 200, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], self.vista.OPCIONES_TURNO_JUG[i], self.colores["negro"], self.fuente, i ))
 
-        self.turno = Label(90, 200, self.vista.turno(jugador), 24, negro)
+        self.turno = Label(90, 100, self.vista.turno(jugador), self.fuente, self.colores["negro"])
 
-        self.puntuacion = Label(90, 500, f"Puntuación: + {jugador.comprobar_puntuacion()}", 24, negro)
+        self.puntuacion = Label(600, 100, f"Puntuación: {jugador.comprobar_puntuacion()[0]}" , self.fuente, self.colores["negro"])
 
         self.labels = [self.turno, self.puntuacion]
 
 
-    def ejecutar(self):
+    def ejecutar(self)-> int | None:
         accion = False
         while not accion:
 
@@ -48,27 +73,20 @@ class VentanaMenu:
                     if boton.fue_presionado(mouse_pos, event) and not boton.eliminado:
                         accion = True
                         return boton.valor +1
-               
-                    
+                                   
             for boton in self.botones:
-                boton.update(mouse_pos) 
+                boton.update(mouse_pos)        
 
-            
-
-            self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
+            self.screen.fill(self.colores["fondo"]) 
 
             # Dibujar elementos en la pantalla
             for boton in self.botones:
                 boton.draw(self.screen) 
 
             for label in self.labels: 
-                label.draw(self.screen)
+                label.draw(self.screen)           
 
-#Esto será una imagen en un futuro no muy lejano
-            # self.screen.blit(self.imagen, (250, 200))
-           
-
-            # Actualizar la pantalla
+            # Actualiza la pantalla
             pygame.display.flip()
 
 if __name__ == "__main__":
