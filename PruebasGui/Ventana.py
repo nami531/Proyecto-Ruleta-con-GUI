@@ -27,10 +27,8 @@ class Ventana:
     b2jug: Boton
     b3jug: Boton
     b4jug: Boton
-    b5jug: Surface
-    b6jug: Surface
-    
-    
+    b5jug: Boton
+    b6jug: Boton
     imagen : Surface
 
     def __init__(self, width, height):
@@ -55,18 +53,15 @@ class Ventana:
                         "azul_hover" : (46, 155, 255)
         }
 
-
         self.bienvenida = Label(260,80, self.vista.bienvenida(), 40, (0,0,0)) 
         self.jugadores = Label(300, 450, "Nº Jugadores:", self.fuente, (0,0,0))
 
-        
-
-        self.b2jug = Boton(self.x_botones,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "2", (0,0,0), self.fuente, 2 )
-        self.b3jug = Boton(self.x_botones + self.margen,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "3", (0,0,0), self.fuente, 3 )
-        self.b4jug = Boton(self.x_botones + self.margen * 2,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "4", (0,0,0), self.fuente, 4 )
-        self.b5jug = Boton(self.x_botones + self.margen * 3,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "5", (0,0,0), self.fuente, 5)
-        self.b6jug = Boton(self.x_botones + self.margen * 4,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "6", (0,0,0), self.fuente, 6)
-        self.benviar = Boton(420,430, self.tamanho_botones[0], self.tamanho_botones[1] , self.colores["azul"], self.colores["azul_hover"], "Enviar", (0,0,0), self.fuente)
+        self.b2jug = Boton(self.x_botones,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "2", self.colores["negro"], self.fuente, 2 )
+        self.b3jug = Boton(self.x_botones + self.margen,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "3", self.colores["negro"], self.fuente, 3 )
+        self.b4jug = Boton(self.x_botones + self.margen * 2,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "4", self.colores["negro"], self.fuente, 4 )
+        self.b5jug = Boton(self.x_botones + self.margen * 3,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "5", self.colores["negro"], self.fuente, 5)
+        self.b6jug = Boton(self.x_botones + self.margen * 4,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "6", self.colores["negro"], self.fuente, 6)
+        self.benviar = Boton(420,430, self.tamanho_botones[0], self.tamanho_botones[1] , self.colores["azul"], self.colores["azul_hover"], "Enviar", self.colores["negro"], self.fuente)
         self.benviar.eliminado = True
         
         self.botones = [self.b2jug, self.b3jug, self.b4jug, self.b5jug, self.b6jug, self.benviar]
@@ -77,23 +72,21 @@ class Ventana:
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
         self.imagen = pygame.image.load(directorio_actual + "\\Multimedia\\dados.png")
         self.imagen = pygame.transform.scale(self.imagen, (250, 250))
-
     
-    def crear_label(self, num_jug):
+    def crear_label(self, num_jug)->None:
         for i in range(num_jug): 
             self.labels.append(Label(self.x_botones + self.margen * i, 525, self.vista.pedir_nombre_jugador(i), self.fuente, (0,0,0)))
 
-    def crear_inputs(self, num_jug): 
+    def crear_inputs(self, num_jug)-> None: 
         for i in range(num_jug):
             self.inputs.append(EntradasTexto(self.x_botones + self.margen * i, 550, 100, 25, self.colores["negro"], self.colores["negro"], self.colores["blanco"] , self.fuente))
         self.benviar.eliminado = False
    
-        
 
     def devolver_nombres(self)-> list[str]: 
         return self.nombres_jug
 
-    def ejecutar(self):
+    def ejecutar(self)-> list[str]:
         nombres = False
         while not nombres:
 
@@ -120,8 +113,6 @@ class Ventana:
                         else: 
                             self.error = Label(0,0,"Todos los jugadores deben tener un nombre", self.fuente, self.colores["negro"])
                             self.labels.append(self.error)
-                        # print(entrada.text)
-                    # print(self.nombres_jug)
                     
                
                 for entrada in self.inputs: 
@@ -130,9 +121,9 @@ class Ventana:
             for boton in self.botones:
                 boton.update(mouse_pos) 
 
-            self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
+            self.screen.fill(self.colores["fondo"])  #Colorear de fondo la pantalla
 
-            # Dibujar elementos en la pantalla
+            # Dibujar los elementos en la pantalla
             for boton in self.botones:
                 boton.draw(self.screen) 
 
