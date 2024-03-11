@@ -8,8 +8,21 @@ from os import path
 import os 
 from Jugador import Jugador
 import time
+from pygame import Surface
+
 class VentanaFuerza:
 
+    vista: Vista
+    width : int
+    height : int
+    screen : Surface
+    labels : list[Label]
+    inputs : list[EntradasTexto]
+    x_botones : int
+    tamanho_botones: tuple[int,int]
+    margen :int
+    fuente : int
+    colores : dict[str, tuple[int,int,int]]
     labels : list[Label]
     inputs : list[EntradasTexto]
 
@@ -23,7 +36,20 @@ class VentanaFuerza:
         self.__contador = 0 
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
 
-        # Concatenar la ruta del directorio actual con la ruta de la imagen
+         self.x_botones = 100
+        self.tamanho_botones = (120, 50)
+        self.margen = 150
+
+        self.fuente = 24
+
+        self.colores = { "fondo" : (234,234,234),
+                        "negro" : (0,0,0),
+                        "blanco": (255,255,255),
+                        "morado": (204, 202, 234),
+                        "morado_hover" : (159, 149, 175),
+                        "azul" : (199, 228, 255) ,
+                        "azul_hover" : (46, 155, 255)
+        }
 
         # Cargar la imagen
         self.imagen = pygame.image.load(directorio_actual + "\\Multimedia\\ruleta.png")
