@@ -1,15 +1,19 @@
 import pygame
 import sys
+from pygame import Surface
 from Boton import Boton
 from Label import Label
-from EntradasTexto import EntradasTexto
 from Vista import Vista
 from Ruleta import Ruleta
 
 class VentanaPremio:
 
-    labels : list[Label]
-    inputs : list[EntradasTexto]
+    vista : Vista
+    width : int
+    height : int
+    screen : Surface
+    colores : dict[str, tuple[int,int,int]]
+    fuente : int
 
     def __init__(self, width, height):
         self.vista = Vista()
@@ -18,35 +22,34 @@ class VentanaPremio:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.bienvenida = Label(250,150, self.vista.bienvenida(), 40, (0,0,0)) 
+        self.colores = { "fondo" : (234,234,234),
+                        "negro" : (0,0,0),
+                        "blanco": (255,255,255),
+                        "morado": (204, 202, 234),
+                        "morado_hover" : (159, 149, 175),
+                        "azul" : (199, 228, 255) ,
+                        "azul_hover" : (46, 155, 255)
+        }
 
+        self.fuente = 50
         
-        self.x_botones = 50
-        self.tamanho_botones = 120
-        self.margen = 150
+        self.tamanho_botones = (100, 40) 
+        self.margen = 275
 
-         
-        self.caida = Label(100, 200, self.vista.caer_en(), 24,(0,0,0))
-        self.pierdeTurno = Label(100, 400, self.vista.decir_letra_pierdeTurno(), 24, (0,0,0))
+        self.caida = Label(self.margen, 200, self.vista.caer_en(), self.fuente,self.colores["negro"])
+        self.pierdeTurno = Label(self.margen, 400, self.vista.decir_letra_pierdeTurno(), self.fuente, self.colores["negro"])
         
-        self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
-       
-        
-    
+        self.bsiguiente =  Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], 24)
 
-    def ejecutar(self, puntero, ruleta: Ruleta, premio):
-        self.puntero = puntero
-        self.ruleta = ruleta
-        self.premio = premio
-        siguiente = False
-        self.texto_premio = Label(100, 250, self.vista.mostrar_premio(self.puntero, self.ruleta), 24, (0,0,0)) 
-        self.labels = [self.caida, self.texto_premio]
+    def ejecutar(self, puntero, ruleta: Ruleta, premio: int):
+
+        self.texto_premio = Label(self.margen, 250, self.vista.mostrar_premio(puntero, ruleta), self.fuente, self.colores["negro"]) 
         
-        
+        siguiente = False        
         while not siguiente:
 
-            # Obtener la posición del cursor
             mouse_pos = pygame.mouse.get_pos()
+            tiempo = int(pygame.time.get_ticks() / 1000) 
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -55,23 +58,18 @@ class VentanaPremio:
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
                     siguiente = True
             
-            
+            self.screen.fill(self.colores["fondo"])
 
-
-            self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
-
-            if self.premio == -1: 
+            if premio == -1: 
                 self.pierdeTurno.draw(self.screen)
 
             # Dibujar elementos en la pantalla
             
-            for label in self.labels:
-                label.draw(self.screen)
+            self.caida.draw(self.screen)
 
-            self.bsiguiente.draw(self.screen)
-
-            # self.pierdeTurno.draw(self.screen)
-            
+            if tiempo > 5: 
+                self.texto_premio.draw(self.screen)
+                self.bsiguiente.draw(self.screen)
 
             self.bsiguiente.update(mouse_pos) 
            

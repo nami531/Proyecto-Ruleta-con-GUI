@@ -10,14 +10,17 @@ class Label:
         self.font = pygame.font.Font(None, self.font_size)
         self.rendered_text = self.font.render(self.text, True, self.color)
         self.rect = self.rendered_text.get_rect(topleft=(self.x, self.y))
+        self.eliminado = False
 
     def update(self, text):
-        self.text = text
-        self.rendered_text = self.font.render(self.text, True, self.color)
-        self.rect = self.rendered_text.get_rect(topleft=(self.x, self.y))
+        if not self.eliminado: 
+            self.text = text
+            self.rendered_text = self.font.render(self.text, True, self.color)
+            self.rect = self.rendered_text.get_rect(topleft=(self.x, self.y))
 
     def draw(self, screen):
-        screen.blit(self.rendered_text, self.rect.topleft)
+        if not self.eliminado: 
+            screen.blit(self.rendered_text, self.rect.topleft)
 
 if __name__ == "__main__":
     pygame.init()

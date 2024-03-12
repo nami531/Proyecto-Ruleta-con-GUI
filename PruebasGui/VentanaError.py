@@ -134,8 +134,12 @@ class VentanaError:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif self.bintroducir.fue_presionado(mouse_pos, event): 
-                    return self.entrada.text
+                elif self.bintroducir.fue_presionado(mouse_pos, event) and error != 3: 
+                    if self.entrada.text != "": 
+                        return self.entrada.text
+                elif self.bintroducir.fue_presionado(mouse_pos, event):
+                    siguiente = True 
+                     
                 
                 self.entrada.update(mouse_pos, event)
 
@@ -150,6 +154,9 @@ class VentanaError:
 
             if error != 0:
                 self.dibujar_error(error) 
+            if error == 3: 
+                self.intletra.eliminado = True
+                self.entrada.eliminado = True
 
             self.bintroducir.draw(self.screen)
         
@@ -161,4 +168,4 @@ if __name__ == "__main__":
     j1 = Jugador("Nadia")
     pygame.init()
     ventana = VentanaError(800, 600)
-    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", j1, 1, ["h", "l", "y", "p"], ["i"]))
+    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", j1, 2, ["h", "l", "y", "p"], ["i"]))
