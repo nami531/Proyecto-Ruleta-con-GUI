@@ -5,7 +5,7 @@ from Label import Label
 from EntradasTexto import EntradasTexto
 from Vista import Vista
 from pygame import Surface
-
+from pygame import font 
 
 class VentanaPanel:
 
@@ -18,10 +18,9 @@ class VentanaPanel:
     margen :int
     fuente : int
     colores : dict[str, tuple[int,int,int]]
-    font : font
+    tipo_fuente : font
     bsiguiente : Boton
-    letras
-    vocales
+    
 
 
     def __init__(self, width, height):
@@ -46,15 +45,15 @@ class VentanaPanel:
                         "azul_hover" : (46, 155, 255)
         }
 
-        self.font = pygame.font.Font(None, 36)
+        self.tipo_fuente = pygame.font.Font(None, 36)
         
         self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
         
 
  
     #Función que dibuja los rectangulos, del panel
-    def dibujar_rect_encriptados(self):
-        enigma_cifrado = self.vista.mostrar_panel_cifrado(self.enigma,self.letra, self.letras, self.vocales)
+    def dibujar_rect_encriptados(self,enigma : str ,letra : str,letras : list[str],vocales : list[str])-> int:
+        enigma_cifrado = self.vista.mostrar_panel_cifrado(enigma,letra, letras, vocales)
         margen_y = 120
         x = 100
        
@@ -70,11 +69,11 @@ class VentanaPanel:
             elif letra == " ": 
                 margen_x += 10
             else: 
-                text_surface = self.font.render(letra, True, self.colores["negro"])
-                text_rect = text_surface.get_rect()
-                text_rect.center = (x + margen_x * j + tamanho[0] // 2, y + tamanho[1] // 2)
+                sup_texto = self.tipo_fuente.render(letra, True, self.colores["negro"])
+                rect_texto = sup_texto.get_rect()
+                rect_texto.center = (x + margen_x * j + tamanho[0] // 2, y + tamanho[1] // 2)
                 pygame.draw.rect(self.screen, self.colores["azul"], (x + margen_x * j, y, tamanho[0], tamanho[1]))
-                self.screen.blit(text_surface, text_rect)
+                self.screen.blit(sup_texto, rect_texto)
         return y
 
     @staticmethod
@@ -85,14 +84,8 @@ class VentanaPanel:
         return x, y
              
 
-    def ejecutar(self, enigma_juego, pista, letras, vocales, letra=""):
-        self.letras = letras
-        self.vocales = vocales
-       
-        self.letra = letra
-        self.enigma= enigma_juego
-        self.pista = pista
-        siguiente = False #Nadia del futuro cambia self.letra y todo eso a una variable que pases a la funcion, asi te evitas de propertys
+    def ejecutar(self, enigma_juego: str, pista: str, letras: list[str], vocales: list[str], letra: str=""):
+        siguiente = False 
         while not siguiente:
 
             # Obtener la posición del cursor
@@ -108,9 +101,9 @@ class VentanaPanel:
 
             self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
 
-            y = self.dibujar_rect_encriptados()
+            y = self.dibujar_rect_encriptados(enigma_juego, pista, letras, vocales, letra)
             
-            superficie_pista = self.font.render(self.pista, True, self.colores["negro"])
+            superficie_pista = self.tipo_fuente.render(self.pista, True, self.colores["negro"])
             rect_pista = superficie_pista.get_rect()
             rect_pista.center = (100 + 500 // 2, y + 300 // 2)
             pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 500, 100))
