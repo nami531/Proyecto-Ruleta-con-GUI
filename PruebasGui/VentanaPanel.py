@@ -18,7 +18,7 @@ class VentanaPanel:
     margen :int
     fuente : int
     colores : dict[str, tuple[int,int,int]]
-    tipo_fuente : font
+    # tipo_fuente : font 
     bsiguiente : Boton
 
 
@@ -108,11 +108,9 @@ class VentanaPanel:
 
             self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
 
-            ultimo_y = self.dibujar_rect_encriptados(enigma_juego, letras, vocales, letra)
+            ultimo_y = self.dibujar_rect_encriptados(enigma_juego, letra, letras, vocales )
             
             self.dibujar_pista(pista, ultimo_y)
-
-            
 
             self.bsiguiente.draw(self.screen)
         

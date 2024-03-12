@@ -19,8 +19,8 @@ class VentanaPanelEntrada:
     margen :int
     fuente : int
     colores : dict[str, tuple[int,int,int]]
-    tipo_fuente : font
-    bsiguiente : Boton
+    # tipo_fuente : font
+    bintroducir : Boton
     id : Label
     puntuacion : Label
     letra : Label
@@ -34,6 +34,17 @@ class VentanaPanelEntrada:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
+        self.colores = { "fondo" : (234,234,234),
+                        "negro" : (0,0,0),
+                        "blanco": (255,255,255),
+                        "morado": (204, 202, 234),
+                        "morado_hover" : (159, 149, 175),
+                        "azul" : (199, 228, 255) ,
+                        "azul_hover" : (46, 155, 255)
+        }
+
+
+        self.fuente = 24
         self.tipo_fuente = pygame.font.Font(None, 36)
         self.x_botones = 50
         self.tamanho_botones = 120
@@ -43,14 +54,14 @@ class VentanaPanelEntrada:
         self.puntuacion = Label(300, 50, f"Puntuación: + {jugador.comprobar_puntuacion()}", self.fuente, self.colores["negro"])
         self.letra = Label(100, 100, self.vista.introducir_letra(), self.fuente, self.colores["negro"])
         
-        self.entrada = EntradasTexto(275, 92, 200, 30, self.colores["blanco"], self.colores["negro"], self.fuente) 
+        self.entrada = EntradasTexto(275, 92, 200, 30, self.colores["negro"], self.colores["negro"], self.colores["blanco"], self.fuente) 
         self.elementos =  [self.id, self.puntuacion, self.letra, self.entrada]
 
-        self.bsiguiente = Boton(700, 500, 75, 25, self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
+        self.bintroducir = Boton(700, 530, 100, 40, self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
 
     #Función que dibuja los rectangulos, del panel
     def dibujar_rect_encriptados(self,enigma : str, pista: str ,letra : str,letras : list[str],vocales : list[str])-> int:
-        enigma_cifrado = self.vista.mostrar_panel_cifrado(enigma, pista, letras, vocales, letra)
+        enigma_cifrado = self.vista.mostrar_panel_cifrado(enigma, pista, letras, vocales)
         margen_y = 120
         x = 100
        
@@ -84,10 +95,10 @@ class VentanaPanelEntrada:
         self.screen.blit(sup_texto, rect_texto)
 
     def dibujar_pista(self, pista: str, y: int)->None: 
-        superficie_pista = self.fuente.render(pista, True, self.colores["blanco"])
+        superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
         rect_pista = superficie_pista.get_rect()
-        rect_pista.center = (100 + 500 // 2, y + 100 // 2)
-        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 500, 100))
+        rect_pista.center = (100 + 630 // 2, y + 300 // 2)
+        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 630, 100))
         self.screen.blit(superficie_pista, rect_pista)
 
     def ejecutar(self, enigma_juego:str, pista: str,  letras: list[str], vocales: list[str],letra: str =""):
@@ -101,23 +112,24 @@ class VentanaPanelEntrada:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif self.bsiguiente.fue_presionado(mouse_pos, event): 
-                    return self.entrada.text.lower()
+                elif self.bintroducir.fue_presionado(mouse_pos, event): 
+                    if self.entrada.text != "":  
+                        return self.entrada.text.lower()
                 
                 self.entrada.update(mouse_pos, event)
 
             self.screen.fill(self.colores["fondo"])  
 
-            ultimo_y = self.crear_rect_encriptados(enigma_juego, letras, vocales, letra)
+            ultimo_y = self.dibujar_rect_encriptados(enigma_juego, pista, letra, letras, vocales)
             
             self.dibujar_pista(pista, ultimo_y)
 
             for elemento in self.elementos: 
                 elemento.draw(self.screen)
 
-            self.bsiguiente.draw(self.screen)
+            self.bintroducir.draw(self.screen)
         
-            self.bsiguiente.update(mouse_pos) 
+            self.bintroducir.update(mouse_pos) 
             # Actualizar la pantalla
             pygame.display.flip()
  
@@ -125,4 +137,4 @@ if __name__ == "__main__":
     j1 = Jugador("Nadia")
     pygame.init()
     ventana = VentanaPanelEntrada(800, 600, j1)
-    print(ventana.ejecutar("__l_ __ ll___ n____", "Mi nombre"))
+    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", ["t", "h", "n", "i"],[]))
