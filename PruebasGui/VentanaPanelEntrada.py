@@ -66,22 +66,31 @@ class VentanaPanelEntrada:
             elif letra == " ": 
                 margen_x += 10
             else: 
-                sup_texto = self.tipo_fuente.render(letra, True, self.colores["negro"])
-                rect_texto = sup_texto.get_rect()
-                rect_texto.center = (x + margen_x * j + tamanho[0] // 2, y + tamanho[1] // 2)
-                pygame.draw.rect(self.screen, self.colores["azul"], (x + margen_x * j, y, tamanho[0], tamanho[1]))
-                self.screen.blit(sup_texto, rect_texto)
+                self.dibujar_rect_Letra(letra, x, y, margen_x, tamanho, j)
         return y
 
     @staticmethod
-    def filas(i,x , y, margen_y)->tuple[int,int]: 
+    def filas(i: int,x:int , y: int, margen_y: int)->tuple[int,int]: 
         if i >= 14: 
             y += margen_y * (i//14) #  define la fila en la que estamos 
             x = 100
         return x, y
              
+    def dibujar_rect_Letra(self, letra: str, x: int, y: int, margen_x: int, tamanho: tuple[int, int], j: int)-> None: 
+        sup_texto = self.tipo_fuente.render(letra, True, self.colores["negro"])
+        rect_texto = sup_texto.get_rect()
+        rect_texto.center = (x + margen_x * j + tamanho[0] // 2, y + tamanho[1] // 2)
+        pygame.draw.rect(self.screen, self.colores["azul"], (x + margen_x * j, y, tamanho[0], tamanho[1]))
+        self.screen.blit(sup_texto, rect_texto)
 
-    def ejecutar(self, enigma_juego, pista,  letras, vocales,letra=""):
+    def dibujar_pista(self, pista: str, y: int)->None: 
+        superficie_pista = self.fuente.render(pista, True, self.colores["blanco"])
+        rect_pista = superficie_pista.get_rect()
+        rect_pista.center = (100 + 500 // 2, y + 100 // 2)
+        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 500, 100))
+        self.screen.blit(superficie_pista, rect_pista)
+
+    def ejecutar(self, enigma_juego:str, pista: str,  letras: list[str], vocales: list[str],letra: str =""):
         siguiente = False
         while not siguiente:
 
@@ -98,13 +107,10 @@ class VentanaPanelEntrada:
                 self.entrada.update(mouse_pos, event)
 
             self.screen.fill(self.colores["fondo"])  
-            y = self.crear_rect_encriptados(enigma_juego, letras, vocales, letra)
+
+            ultimo_y = self.crear_rect_encriptados(enigma_juego, letras, vocales, letra)
             
-            superficie_pista = self.fuente.render(pista, True, self.colores["blanco"])
-            rect_pista = superficie_pista.get_rect()
-            rect_pista.center = (100 + 500 // 2, y + 100 // 2)
-            pygame.draw.rect(self.screen, self.colores["negro"], (100, y+100, 500, 100))
-            self.screen.blit(superficie_pista, rect_pista)
+            self.dibujar_pista(pista, ultimo_y)
 
             for elemento in self.elementos: 
                 elemento.draw(self.screen)

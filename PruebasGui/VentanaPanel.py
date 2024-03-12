@@ -82,7 +82,14 @@ class VentanaPanel:
             y += margen_y * (i//14) #  define la fila en la que estamos 
             x = 100
         return x, y
-             
+    
+
+    def dibujar_pista(self, pista: str, y: int)->None: 
+        superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
+        rect_pista = superficie_pista.get_rect()
+        rect_pista.center = (100 + 500 // 2, y + 300 // 2)
+        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 500, 100))
+        self.screen.blit(superficie_pista, rect_pista)       
 
     def ejecutar(self, enigma_juego: str, pista: str, letras: list[str], vocales: list[str], letra: str=""):
         siguiente = False 
@@ -101,13 +108,11 @@ class VentanaPanel:
 
             self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
 
-            y = self.dibujar_rect_encriptados(enigma_juego, letras, vocales, letra)
+            ultimo_y = self.dibujar_rect_encriptados(enigma_juego, letras, vocales, letra)
             
-            superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
-            rect_pista = superficie_pista.get_rect()
-            rect_pista.center = (100 + 500 // 2, y + 300 // 2)
-            pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 500, 100))
-            self.screen.blit(superficie_pista, rect_pista)
+            self.dibujar_pista(pista, ultimo_y)
+
+            
 
             self.bsiguiente.draw(self.screen)
         
