@@ -28,7 +28,8 @@ class VentanaResolucion:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.tamanho_imgs = (200, 200)
+        self.tamanho_imgs = (300, 300)
+        self.tamanho_botones = (90, 40)
         self.margen = 150
 
         self.fuente = 24
@@ -58,21 +59,27 @@ class VentanaResolucion:
     def dibujar_aviso_ganador(self,jugador: Jugador): 
         sup_aviso = self.tipo_fuente.render(self.vista.panel_resuelto(), True, self.colores["negro"])
         rect_aviso = sup_aviso.get_rect()
-        rect_aviso.center = (100 + 500 // 2, 100 + 100 // 2)
-        pygame.draw.rect(self.screen, self.colores["morado"], (100, 100, 500, 100))
+        rect_aviso.center = (125 + 500 // 2, 100 + 100 // 2)
+        pygame.draw.rect(self.screen, self.colores["morado"], (125, 100, 500, 100))
         self.screen.blit(sup_aviso, rect_aviso)
-        Label(200, 200, self.vista.has_ganado(jugador), self.fuente,(0,0,0)).draw(self.screen)
+        Label(200, 225, self.vista.has_ganado(jugador), self.fuente,self.colores["negro"]).draw(self.screen)
     
     def carga_img_trofeo(self): 
         self.imagen = pygame.image.load(self.directorio + "\\Multimedia\\trofeo.webp")
-        self.imagen = pygame.transform.scale(self.imagen, (300, 300))
-    
+        self.imagen = pygame.transform.scale(self.imagen, (self.tamanho_imgs[0], self.tamanho_imgs[1]))
+
+
     def dibujar_aviso_perdedor(self): 
         sup_aviso = self.tipo_fuente.render(self.vista.no_resolviste_panel(), True, self.colores["negro"])
         rect_aviso = sup_aviso.get_rect()
         rect_aviso.center = (100 + 500 // 2, 100 + 100 // 2)
         pygame.draw.rect(self.screen, self.colores["azul"], (100, 100, 500, 100))
         self.screen.blit(sup_aviso, rect_aviso)
+
+    def carga_img_triste(self): 
+        self.imagen = pygame.image.load(self.directorio + "\\Multimedia\\triste.png")
+        self.imagen = pygame.transform.scale(self.imagen, (self.tamanho_imgs[0], self.tamanho_imgs[1]))
+    
 
     def ejecutar(self,jugador: Jugador,  resuelto: bool)-> None:
 
@@ -96,8 +103,8 @@ class VentanaResolucion:
                 self.carga_img_trofeo()
             else: 
                 self.dibujar_aviso_perdedor()
-                # self.carga_img_triste()
-            self.screen.blit(self.imagen, (300, 350))
+                self.carga_img_triste()
+            self.screen.blit(self.imagen, (225, 250))
 
             self.bsiguiente.draw(self.screen)
         
@@ -109,4 +116,4 @@ if __name__ == "__main__":
     j1 = Jugador("Nadia")
     pygame.init()
     ventana = VentanaResolucion(800, 600)
-    print(ventana.ejecutar(j1, True))
+    print(ventana.ejecutar(j1, False))
