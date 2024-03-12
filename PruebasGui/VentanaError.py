@@ -154,9 +154,13 @@ class VentanaError:
 
             if error != 0:
                 self.dibujar_error(error) 
+
             if error == 3: 
                 self.intletra.eliminado = True
                 self.entrada.eliminado = True
+            else: 
+                self.intletra.eliminado = False
+                self.entrada.eliminado = False
 
             self.bintroducir.draw(self.screen)
         

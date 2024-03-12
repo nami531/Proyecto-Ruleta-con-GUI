@@ -151,6 +151,9 @@ class Juego():
                             self.vista.vocal_sin_comprar()
                             self.error = 4
                             letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[index_jugador], self.error,self.letras, self.vocales)
+                            # if not self.comprobaciones_al_introducir(letra, index_jugador): 
+                            #     self.ventanaError.ejecutar((self.enigma_juego, self.pista_enigma, self.lista_jugadores[index_jugador], self.error,self.letras, self.vocales))
+
                         
     
                         elif self.comprobaciones_al_introducir(letra, index_jugador):  
