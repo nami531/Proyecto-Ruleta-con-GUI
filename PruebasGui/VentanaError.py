@@ -13,9 +13,7 @@ class VentanaError:
     width : int
     height : int
     screen : Surface
-    x_botones : int
     tamanho_botones: tuple[int,int]
-    margen :int
     fuente : int
     colores : dict[str, tuple[int,int,int]]
     # tipo_fuente : font
@@ -34,9 +32,8 @@ class VentanaError:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.x_botones = 75
         self.tamanho_botones = (80, 50)
-        self.margen = 150
+  
 
         self.fuente = 24
 
@@ -55,7 +52,8 @@ class VentanaError:
         
         self.entrada = EntradasTexto(275, 92, 200, 30, self.colores["negro"], self.colores["negro"], self.colores["blanco"], 24) 
 
-        self.bintroducir = Boton(700, 530, 100, 40, self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
+        self.bintroducir = Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
+
 
         self.__errores = ["", self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal(), self.vista.saldo_insuficiente()]
 
@@ -121,7 +119,7 @@ class VentanaError:
 
     def ejecutar(self, enigma_juego: str, pista: str,jugador: Jugador, error: int, letras: list[str], vocales: list[str], letra: str=""):
         self.id = Label(100, 50, f"Jugador {jugador.nombre}", 24,(0,0,0))
-        self.puntuacion = Label(300, 50, f"Puntuación: + {jugador.comprobar_puntuacion()}", 24, (0,0,0))
+        self.puntuacion = Label(300, 50, f"Puntuación: {jugador.comprobar_puntuacion()[0]}", 24, (0,0,0))
         self.elementos =  [self.id, self.puntuacion, self.intletra, self.entrada]
         
         self.enigma= enigma_juego

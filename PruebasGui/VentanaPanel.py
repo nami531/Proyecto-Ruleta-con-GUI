@@ -31,7 +31,7 @@ class VentanaPanel:
         pygame.display.set_caption("Ruleta de la suerte")
 
         self.x_botones = 100
-        self.tamanho_botones = (120, 50)
+        self.tamanho_botones = (100, 40)
         self.margen = 150
 
         self.fuente = 24
@@ -47,7 +47,7 @@ class VentanaPanel:
 
         self.tipo_fuente = pygame.font.Font(None, 36)
         
-        self.bsiguiente = Boton(700, 530, 100, 40, self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
+        self.bsiguiente = Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
         
 
  

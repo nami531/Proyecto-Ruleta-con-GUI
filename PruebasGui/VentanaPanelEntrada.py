@@ -14,9 +14,7 @@ class VentanaPanelEntrada:
     width : int
     height : int
     screen : Surface
-    x_botones : int
     tamanho_botones: tuple[int,int]
-    margen :int
     fuente : int
     colores : dict[str, tuple[int,int,int]]
     # tipo_fuente : font
@@ -46,9 +44,7 @@ class VentanaPanelEntrada:
 
         self.fuente = 24
         self.tipo_fuente = pygame.font.Font(None, 36)
-        self.x_botones = 50
-        self.tamanho_botones = 120
-        self.margen = 150
+        self.tamanho_botones = (100, 40)
         
         self.id = Label(100, 50, f"Jugador {jugador.nombre}", self.fuente ,self.colores["negro"])
         self.puntuacion = Label(300, 50, f"Puntuación: {jugador.comprobar_puntuacion()[0]}", self.fuente, self.colores["negro"])
@@ -57,7 +53,7 @@ class VentanaPanelEntrada:
         self.entrada = EntradasTexto(275, 92, 200, 30, self.colores["negro"], self.colores["negro"], self.colores["blanco"], self.fuente) 
         self.elementos =  [self.id, self.puntuacion, self.intletra, self.entrada]
 
-        self.bintroducir = Boton(700, 530, 100, 40, self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
+        self.bintroducir =  Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
 
     #Función que dibuja los rectangulos, del panel
     def dibujar_rect_encriptados(self,enigma : str, pista: str ,letra : str,letras : list[str],vocales : list[str])-> int:
