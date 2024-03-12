@@ -1,15 +1,23 @@
 import pygame
 import sys
 from Boton import Boton
-from Label import Label
-from EntradasTexto import EntradasTexto
 from Vista import Vista
 from Jugador import Jugador
+from pygame import Surface
 
-class VentanaResolucion:
+class VentanaAdios:
 
-    labels : list[Label]
-    inputs : list[EntradasTexto]
+    vista: Vista
+    width : int
+    height : int
+    screen : Surface
+    tamanho_botones: tuple[int,int]
+    margen :int
+    fuente : int
+    colores : dict[str, tuple[int,int,int]]
+    margen : int
+    # tipo_fuente : font
+    bsiguiente : Boton
 
     def __init__(self, width, height):
         self.vista = Vista()
@@ -18,19 +26,36 @@ class VentanaResolucion:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.font = pygame.font.Font(None, 36)
-        self.x_botones = 50
-        self.tamanho_botones = 120
+        self.tamanho_botones = (90, 40)
         self.margen = 150
 
-        self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
-                    
-    def ejecutar(self,jugador,  resuelto):
+        self.fuente = 24
+
+        self.colores = {"fondo" : (234,234,234),
+                        "negro" : (0,0,0),
+                        "blanco": (255,255,255),
+                        "morado": (204, 202, 234),
+                        "morado_hover" : (159, 149, 175),
+                        "azul" : (199, 228, 255) ,
+                        "azul_hover" : (46, 155, 255)
+        }
+
+        self.tipo_fuente = pygame.font.Font(None, 36)
+        self.bsiguiente = Boton(710, 520, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
+                 
+    def dibujar_aviso(self):
+        sup_aviso = self.tipo_fuente.render(self.vista.decir_adios(), True, self.colores["negro"])
+        rect_aviso = sup_aviso.get_rect()
+        rect_aviso.center = (100 + 550 // 2, 100 + 100 // 2)
+        pygame.draw.rect(self.screen, self.colores["azul"], (100, 100, 550, 100))
+        self.screen.blit(sup_aviso, rect_aviso)
+
+    def ejecutar(self):
 
         siguiente = False
         while not siguiente:
 
-            # Obtener la posición del cursor
+            #Obtener la posición del cursor
             mouse_pos = pygame.mouse.get_pos()
 
             for event in pygame.event.get():
@@ -40,22 +65,19 @@ class VentanaResolucion:
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
                     siguiente = True
 
-            self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
-             
-            sup_aviso = self.font.render(self.vista.decir_adios(jugador), True, (255,255,255))
-            rect_aviso = sup_aviso.get_rect()
-            rect_aviso.center = (100 + 500 // 2, 100 + 100 // 2)
-            pygame.draw.rect(self.screen, (0,0,0), (100, 100, 500, 100))
-            self.screen.blit(sup_aviso, rect_aviso)
+            self.screen.fill(self.colores["fondo"]) 
+
+            self.dibujar_aviso()
             
             self.bsiguiente.draw(self.screen)
         
             self.bsiguiente.update(mouse_pos) 
-            # Actualizar la pantalla
+
+            #Actualizar la pantalla
             pygame.display.flip()
  
 if __name__ == "__main__":
     j1 = Jugador("Nadia")
     pygame.init()
-    ventana = VentanaResolucion(800, 600)
-    print(ventana.ejecutar(j1, False))
+    ventana = VentanaAdios(800, 600)
+    print(ventana.ejecutar())

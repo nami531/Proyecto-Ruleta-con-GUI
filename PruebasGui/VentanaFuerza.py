@@ -3,7 +3,6 @@ import sys
 from Boton import Boton
 from Label import Label
 from Vista import Vista
-from os import path
 import os 
 from Jugador import Jugador
 from pygame import Surface
@@ -26,7 +25,7 @@ class VentanaFuerza:
     labels: list[Label]
 
 
-    def __init__(self, width : int, height: int, jugador: Jugador):
+    def __init__(self, width : int, height: int):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -55,16 +54,17 @@ class VentanaFuerza:
         
         self.bempezar = Boton(350, 470, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Empezar", self.colores["negro"], self.fuente)
         self.texto_fuerza = Label(70, 100, self.vista.aviso_medicion_fuerza(), self.fuente, self.colores["negro"]) 
-        self.texto_turno = Label(260, 50, self.vista.turno(jugador), self.fuente, self.colores["negro"])
-        self.labels = [self.texto_fuerza, self.texto_turno]
+        
         self.bsiguiente = Boton(710, 520, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
                  
     def girar_imagen(self, imagen: Surface, angulo: int):
         imagen_girada = pygame.transform.rotate(imagen, angulo)
         return imagen_girada
 
-    def ejecutar(self)->int:
+    def ejecutar(self, jugador: Jugador)->int:
         
+        self.texto_turno = Label(260, 50, self.vista.turno(jugador), self.fuente, self.colores["negro"])
+        self.labels = [self.texto_fuerza, self.texto_turno]
         imagen_girada = self.imagen
         velocidad_rotacion = 1
         angulo = 0 

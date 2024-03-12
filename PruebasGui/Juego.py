@@ -15,6 +15,8 @@ from VentanaFuerza import VentanaFuerza
 from VentanaPremio import VentanaPremio
 from VentanaPanelEntrada import VentanaPanelEntrada
 from VentanaError import VentanaError
+from VentanaResolucionEnigma import VentanaResolucion
+from VentanaAdios import VentanaAdios
 
 class Juego(): 
     vista : Vista
@@ -127,8 +129,8 @@ class Juego():
                     pygame.quit()
                     sys.exit()
             jugador = self.lista_jugadores[index_jugador]        
-            # # Aqui tiene que ir la ventana de fuerza
-            fuerza = VentanaFuerza(800, 600, jugador).ejecutar()
+
+            fuerza = VentanaFuerza(800, 600).ejecutar(jugador)
 
             jugador.girar_ruleta(self.ruleta, fuerza)  #Se tiene que pasar la ruleta con la que se esta iniciando el juego si no exisitirían 2 ruletas
             
@@ -154,8 +156,7 @@ class Juego():
                             # if not self.comprobaciones_al_introducir(letra, index_jugador): 
                             #     self.ventanaError.ejecutar((self.enigma_juego, self.pista_enigma, self.lista_jugadores[index_jugador], self.error,self.letras, self.vocales))
 
-                        
-    
+                            
                         elif self.comprobaciones_al_introducir(letra, index_jugador):  
                             self.letras.append(letra)
                             self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
@@ -189,16 +190,17 @@ class Juego():
                         resuelto = jugador.resolver_enigma(self.enigma_juego, enigma_jugador)
                         if resuelto: 
                             jugador.ganar_puntuacion(premio)
-                            self.vista.panel_resuelto() #Ventana
-                            self.vista.has_ganado(jugador) 
+                            VentanaResolucion(800, 600).ejecutar(jugador, resuelto)#Ventana
+                            # self.vista.has_ganado(jugador) 
                             jugador.comprobar_puntuacion() #Preguntar a marta
                             turno, mismo_jugador = False, False
                         else: 
                             self.vista.no_resolviste_panel() #Ventana
+                            VentanaResolucion(800, 600).ejecutar(jugador, resuelto)
                             index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
 
                     elif opcion == self.vista.SALIR:
-                        #Ventana adios
+                        VentanaAdios(800,600).ejecutar
                         turno, mismo_jugador = False, False
                 else:
                     index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores)

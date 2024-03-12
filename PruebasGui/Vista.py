@@ -137,8 +137,8 @@ class Vista:
     def longitud_incorrecta(self): 
         return "Entrada inválida, Introduce una letra"
     
-    def decir_adios(self, jugador: Jugador): 
-        return f"¡Adiós!, {jugador.nombre}\nTe esperamos de vuelta"
+    def decir_adios(self): 
+        return "¡Adiós! Os esperamos de vuelta"
         
 # if __name__ == "__main__": 
 #     vista = Vista()
