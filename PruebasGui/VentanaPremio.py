@@ -1,10 +1,12 @@
 import pygame
 import sys
+import os
 from pygame import Surface
 from Boton import Boton
 from Label import Label
 from Vista import Vista
 from Ruleta import Ruleta
+
 
 class VentanaPremio:
 
@@ -14,6 +16,12 @@ class VentanaPremio:
     screen : Surface
     colores : dict[str, tuple[int,int,int]]
     fuente : int
+    tamanho_botones : tuple[int,int]
+    caida: Label
+    pierdeTurno : Label
+    bsiguiente : Boton
+    imgPierdeTurno : Surface
+    texto_premio : Label
 
     def __init__(self, width, height):
         self.vista = Vista()
@@ -31,15 +39,19 @@ class VentanaPremio:
                         "azul_hover" : (46, 155, 255)
         }
 
-        self.fuente = 50
+        self.fuente = 35
         
         self.tamanho_botones = (100, 40) 
         self.margen = 275
 
-        self.caida = Label(self.margen, 200, self.vista.caer_en(), self.fuente,self.colores["negro"])
-        self.pierdeTurno = Label(self.margen, 400, self.vista.decir_letra_pierdeTurno(), self.fuente, self.colores["negro"])
+        self.caida = Label(self.margen, 50, self.vista.caer_en(), self.fuente,self.colores["negro"])
+        self.pierdeTurno = Label(125, 100, self.vista.decir_letra_pierdeTurno(), 24, self.colores["negro"])
         
         self.bsiguiente =  Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], 24)
+        
+        directorio_actual = os.path.dirname(os.path.abspath(__file__))
+        self.imgPierdeTurno = pygame.image.load(directorio_actual + "\\Multimedia\\pierdeTurno.jpg")
+        self.imgPierdeTurno = pygame.transform.scale(self.imgPierdeTurno, (300,300))
 
     def ejecutar(self, puntero, ruleta: Ruleta, premio: int):
 
@@ -60,19 +72,18 @@ class VentanaPremio:
             
             self.screen.fill(self.colores["fondo"])
 
-            if premio == -1: 
-                self.pierdeTurno.draw(self.screen)
-
-            # Dibujar elementos en la pantalla
-            
+            # Dibujar elementos en la pantalla    
             self.caida.draw(self.screen)
 
-            if tiempo > 5: 
-                self.texto_premio.draw(self.screen)
+            if tiempo > 2: 
+                if premio == -1: 
+                    self.pierdeTurno.draw(self.screen)
+                    self.screen.blit(self.imgPierdeTurno, (225, 250))
+                else: 
+                    self.texto_premio.draw(self.screen)
                 self.bsiguiente.draw(self.screen)
-
+                
             self.bsiguiente.update(mouse_pos) 
-           
 
             # Actualizar la pantalla
             pygame.display.flip()
@@ -84,4 +95,4 @@ if __name__ == "__main__":
     print(r1.devuelve_premio())
     pygame.init()
     ventana = VentanaPremio(800, 600)
-    print(ventana.ejecutar(3, r1, 50)) 
+    print(ventana.ejecutar(3, r1, -1)) 

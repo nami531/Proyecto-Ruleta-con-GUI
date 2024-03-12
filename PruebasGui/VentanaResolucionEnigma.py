@@ -66,4 +66,4 @@ if __name__ == "__main__":
     j1 = Jugador("Nadia")
     pygame.init()
     ventana = VentanaResolucion(800, 600)
-    print(ventana.ejecutar(j1, False))
+    print(ventana.ejecutar(j1, True))
