@@ -47,7 +47,7 @@ class VentanaPanel:
 
         self.tipo_fuente = pygame.font.Font(None, 36)
         
-        self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
+        self.bsiguiente = Boton(700, 530, 100, 40, self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
         
 
  
@@ -87,8 +87,8 @@ class VentanaPanel:
     def dibujar_pista(self, pista: str, y: int)->None: 
         superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
         rect_pista = superficie_pista.get_rect()
-        rect_pista.center = (100 + 500 // 2, y + 300 // 2)
-        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 500, 100))
+        rect_pista.center = (100 + 630 // 2, y + 300 // 2)
+        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 630, 100))
         self.screen.blit(superficie_pista, rect_pista)       
 
     def ejecutar(self, enigma_juego: str, pista: str, letras: list[str], vocales: list[str], letra: str=""):

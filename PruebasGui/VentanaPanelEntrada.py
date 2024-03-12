@@ -23,7 +23,7 @@ class VentanaPanelEntrada:
     bintroducir : Boton
     id : Label
     puntuacion : Label
-    letra : Label
+    intletra : Label
     entrada : EntradasTexto
     elementos : list[Label | EntradasTexto]
 
@@ -51,11 +51,11 @@ class VentanaPanelEntrada:
         self.margen = 150
         
         self.id = Label(100, 50, f"Jugador {jugador.nombre}", self.fuente ,self.colores["negro"])
-        self.puntuacion = Label(300, 50, f"Puntuación: + {jugador.comprobar_puntuacion()}", self.fuente, self.colores["negro"])
-        self.letra = Label(100, 100, self.vista.introducir_letra(), self.fuente, self.colores["negro"])
+        self.puntuacion = Label(300, 50, f"Puntuación: {jugador.comprobar_puntuacion()[0]}", self.fuente, self.colores["negro"])
+        self.intletra = Label(100, 100, self.vista.introducir_letra(), self.fuente, self.colores["negro"])
         
         self.entrada = EntradasTexto(275, 92, 200, 30, self.colores["negro"], self.colores["negro"], self.colores["blanco"], self.fuente) 
-        self.elementos =  [self.id, self.puntuacion, self.letra, self.entrada]
+        self.elementos =  [self.id, self.puntuacion, self.intletra, self.entrada]
 
         self.bintroducir = Boton(700, 530, 100, 40, self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
 

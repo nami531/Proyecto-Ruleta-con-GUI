@@ -2,47 +2,43 @@ import pygame
 import sys
 from Boton import Boton
 from Label import Label
-from EntradasTexto import EntradasTexto
 from Vista import Vista
 from os import path
 import os 
 from Jugador import Jugador
-import time
 from pygame import Surface
 
 class VentanaFuerza:
-
     vista: Vista
     width : int
     height : int
     screen : Surface
-    labels : list[Label]
-    inputs : list[EntradasTexto]
-    x_botones : int
     tamanho_botones: tuple[int,int]
     margen :int
     fuente : int
     colores : dict[str, tuple[int,int,int]]
-    labels : list[Label]
-    inputs : list[EntradasTexto]
+    contador : int
+    imagen : Surface
+    bempezar: Boton
+    bsiguiente : Boton
+    texto_fuerza: Label
+    texto_turno: Label
+    labels: list[Label]
 
-    def __init__(self, width, height,jugador):
+
+    def __init__(self, width : int, height: int, jugador: Jugador):
         self.vista = Vista()
         self.width = width
         self.height = height
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.__contador = 0 
-        directorio_actual = os.path.dirname(os.path.abspath(__file__))
-
-        self.x_botones = 100
-        self.tamanho_botones = (120, 50)
+        self.tamanho_botones = (90, 40)
         self.margen = 150
 
         self.fuente = 24
 
-        self.colores = { "fondo" : (234,234,234),
+        self.colores = {"fondo" : (234,234,234),
                         "negro" : (0,0,0),
                         "blanco": (255,255,255),
                         "morado": (204, 202, 234),
@@ -51,28 +47,24 @@ class VentanaFuerza:
                         "azul_hover" : (46, 155, 255)
         }
 
-        # Cargar la imagen
+        self.__contador = 0 
+        directorio_actual = os.path.dirname(os.path.abspath(__file__))
+
         self.imagen = pygame.image.load(directorio_actual + "\\Multimedia\\ruleta.png")
         self.imagen = pygame.transform.scale(self.imagen, (300, 300))
         
-        self.bempezar = Boton(0, 0, 100, 100, (0,0,0), (255,255,255), "Empezar", (233,243,1), 24)
-        self.texto_fuerza = Label(100, 100, self.vista.aviso_medicion_fuerza(), 24,(0,0,0)) 
-        self.texto_turno = Label(100, 50, self.vista.turno(jugador), 24, (0,0,0))
+        self.bempezar = Boton(350, 470, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Empezar", self.colores["negro"], self.fuente)
+        self.texto_fuerza = Label(70, 100, self.vista.aviso_medicion_fuerza(), self.fuente, self.colores["negro"]) 
+        self.texto_turno = Label(260, 50, self.vista.turno(jugador), self.fuente, self.colores["negro"])
         self.labels = [self.texto_fuerza, self.texto_turno]
-        self.bsiguiente = Boton(700, 500, 75, 25, (0,0,0), (23,233,65), "Siguiente", (255,255,255), 24)
-        
-        
-        
-
-    
-    def girar_imagen(self, imagen, angulo):
-        # Rotar la imagen
+        self.bsiguiente = Boton(710, 520, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
+                 
+    def girar_imagen(self, imagen: Surface, angulo: int):
         imagen_girada = pygame.transform.rotate(imagen, angulo)
         return imagen_girada
 
     def ejecutar(self)->int:
         
-       
         imagen_girada = self.imagen
         velocidad_rotacion = 1
         angulo = 0 
@@ -80,10 +72,12 @@ class VentanaFuerza:
         self.__contador = 0 
         tiempo =  int(pygame.time.get_ticks() / 1000)   #Lo devuelve en milisegundos, por eso se divide entre 1000
     
-        while not siguiente :
+        while not siguiente:
             
             mouse_pos = pygame.mouse.get_pos()
             tiempo2 = int(pygame.time.get_ticks() / 1000) 
+
+            self.screen.fill(self.colores["fondo"]) 
 
             for event in pygame.event.get(): 
                 if event.type == pygame.QUIT:
@@ -92,7 +86,6 @@ class VentanaFuerza:
                 elif self.bempezar.fue_presionado(mouse_pos, event): 
                     self.bempezar.eliminado = True
                     self.__contador = 0
-                    
                 elif event.type == pygame.KEYDOWN and tiempo2 - tiempo <= 5 : 
                     self.__contador +=1 
                 elif event.type == pygame.KEYUP:
@@ -100,7 +93,7 @@ class VentanaFuerza:
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
                     siguiente = True
 
-            self.screen.fill((0, 0, 255))  # Limpiar la pantalla con color blanco
+            
 
             sup_imagen_girada = imagen_girada.get_rect()
             sup_imagen_girada.center = (self.width // 2, self.height // 2)  #Obtenemos la superficie de la imagen
@@ -116,12 +109,13 @@ class VentanaFuerza:
                 
             if tiempo2 - tiempo >= 5: 
                 self.fuerza.draw(self.screen)
+                self.bsiguiente.draw(self.screen)
                 
                 
             self.texto_turno.draw(self.screen)  
             self.texto_fuerza.draw(self.screen)
             self.bempezar.draw(self.screen)  
-            self.bsiguiente.draw(self.screen)
+            
             self.bsiguiente.update(mouse_pos) 
 
             # Actualizar la pantalla
