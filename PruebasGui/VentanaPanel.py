@@ -20,7 +20,7 @@ class VentanaPanel:
     colores : dict[str, tuple[int,int,int]]
     tipo_fuente : font
     bsiguiente : Boton
-    
+
 
 
     def __init__(self, width, height):
@@ -77,7 +77,7 @@ class VentanaPanel:
         return y
 
     @staticmethod
-    def filas(i,x , y, margen_y)->tuple[int,int]: 
+    def filas(i: int, x: int , y: int, margen_y: int)->tuple[int,int]: 
         if i >= 14: 
             y += margen_y * (i//14) #  define la fila en la que estamos 
             x = 100
@@ -101,9 +101,9 @@ class VentanaPanel:
 
             self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
 
-            y = self.dibujar_rect_encriptados(enigma_juego, pista, letras, vocales, letra)
+            y = self.dibujar_rect_encriptados(enigma_juego, letras, vocales, letra)
             
-            superficie_pista = self.tipo_fuente.render(self.pista, True, self.colores["negro"])
+            superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
             rect_pista = superficie_pista.get_rect()
             rect_pista.center = (100 + 500 // 2, y + 300 // 2)
             pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 500, 100))
