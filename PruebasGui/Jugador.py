@@ -35,7 +35,7 @@ class Jugador():
     def comprar_vocal(self, letra: str , precio: int) -> bool | tuple[bool, int]:
         if self.controlador.es_vocal(letra):
             if self.puntuacion < precio: 
-                return False, 6
+                return False
             else: 
                 self.puntuacion -= precio
                 return True

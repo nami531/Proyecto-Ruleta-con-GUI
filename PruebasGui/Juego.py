@@ -165,23 +165,30 @@ class Juego():
                         else: 
                             index_jugador, mismo_jugador = jugador.perder_turno( index_jugador, self.lista_jugadores)
 
-                    elif opcion == 2: 
+                    elif opcion == 2:
+                        opcion2_ejecucion = True 
                         letra = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
-                        if not self.controlador.es_vocal(letra): 
-                            self.error = 5
-                            self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, letra)
-                            
-                        elif self.comprobaciones_al_introducir(letra, index_jugador): 
-                            vocal_comprada, self.error= jugador.comprar_vocal(letra, self.precio)
-                            if not vocal_comprada:
-                                self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, letra)
+                        while opcion2_ejecucion: 
+                           
+                            if not self.controlador.es_vocal(letra): 
+                                self.error = 5
+                                letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, letra)
+                                
+                            elif self.comprobaciones_al_introducir(letra, index_jugador): 
+                                vocal_comprada = jugador.comprar_vocal(letra, self.precio)
+                                if not vocal_comprada:
+                                    self.error = 6
+                                    letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, letra)
+                                    opcion2_ejecucion = False
+                                else: 
+                                    self.letras.append(letra) 
+                                    for j in self.vocales_tilde[letra]: 
+                                        self.letras.append(j)
+                                    self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
+                                    jugador.ganar_puntuacion(premio)
+                                mismo_jugador = False
                             else: 
-                                self.letras.append(letra) 
-                                for j in self.vocales_tilde[letra]: 
-                                    self.letras.append(j)
-                                self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
-                                jugador.ganar_puntuacion(premio)
-                            mismo_jugador = False
+                                opcion2_ejecucion = False
 
                     elif opcion == 3: 
                         enigma_jugador = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)

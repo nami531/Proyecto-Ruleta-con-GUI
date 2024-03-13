@@ -5,6 +5,7 @@ class EntradasTexto:
     def __init__(self, x, y, width, height, color, text_color, background_color, font_size):
         self.x = x
         self.y = y
+        self.width_old = width
         self.width = width
         self.height = height
         self.color = color
@@ -17,6 +18,7 @@ class EntradasTexto:
         self.activo = False
         self.hovered = False
         self.eliminado = False
+
 
     def draw(self, screen):
         if not self.eliminado: 
@@ -36,16 +38,23 @@ class EntradasTexto:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_BACKSPACE:
                         self.text = self.text[:-1]  # Eliminar el último carácter
+                        text_width = self.font.size(self.text)[0]
+                        self.width = max(self.width_old, text_width - 1)  # Ajustar el ancho mínimo
+                        self.rect.width = self.width
+
                     else:
                         self.text += event.unicode  # Agregar el carácter ingresado al texto
+                        text_width = self.font.size(self.text)[0]
+                        self.width = max(self.width_old, text_width + 10)  # Ajustar el ancho mínimo
+                        self.rect.width = self.width
 
 if __name__ == "__main__":
     pygame.init()
     screen = pygame.display.set_mode((400, 300))
     clock = pygame.time.Clock()
 
-    cuadro_texto = EntradasTexto(150, 100, 200, 50, (255, 255, 255), (0,0,0),(255,255,255), 24)
-    cuadro_texto2 = EntradasTexto(200, 200, 200, 50, (255, 255, 255), (255, 255, 255), (255,255,255), 24)
+    cuadro_texto = EntradasTexto(150, 100, 100, 50, (255, 255, 255), (0,0,0),(255,255,255), 24)
+    cuadro_texto2 = EntradasTexto(200, 200, 100, 50, (255, 255, 255), (255, 255, 255), (255,255,255), 24)
     
     running = True
     while running:

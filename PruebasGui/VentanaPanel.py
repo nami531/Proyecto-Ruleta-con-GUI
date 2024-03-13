@@ -52,28 +52,35 @@ class VentanaPanel:
 
  
     #Función que dibuja los rectangulos, del panel
-    def dibujar_rect_encriptados(self,enigma : str ,letra : str,letras : list[str],vocales : list[str])-> int:
-        enigma_cifrado = self.vista.mostrar_panel_cifrado(enigma,letra, letras, vocales)
-        margen_y = 120
-        x = 100
-       
-        tamanho = (25,50)
+    def dibujar_rect_encriptados(self, enigma: str, pista: str, letras: list[str], vocales: list[str]) -> int:
+        enigma_cifrado = self.vista.mostrar_panel_cifrado(enigma, pista, letras, vocales)
+        
+        # Calculamos el tamaño de cada rectángulo en función del tamaño de la ventana
+        tamanho_rect = (self.width // 40, self.height // 15)
+        
+        margen_y = self.height // 6  # Margen entre filas
+        margen_x = tamanho_rect[0] // 2  # Margen entre rectángulos dentro de una fila
+        
+        x = self.width // 10  # Posición inicial x
+        y = self.height // 4  # Posición inicial y
+        
         for i in range(len(enigma_cifrado)):
-            j = i % 14 #Reinicia la fila en la que nos encontramos, de tal forma que i= columna, j= fila
-            y = 200
-            margen_x = 50
-            x, y= self.filas(i,x, y , margen_y)
             letra = enigma_cifrado[i]
-            if letra == "_": 
-                pygame.draw.rect(self.screen, self.colores["azul"], (x + margen_x * j, y, tamanho[0], tamanho[1]))
+            if letra.lower() in letras:  # Calculamos j como el resto de la división de i por el número máximo de columnas
+                self.dibujar_rect_Letra(letra, x, y, tamanho_rect)
+                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
+            
             elif letra == " ": 
-                margen_x += 10
+                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
             else: 
-                sup_texto = self.tipo_fuente.render(letra, True, self.colores["negro"])
-                rect_texto = sup_texto.get_rect()
-                rect_texto.center = (x + margen_x * j + tamanho[0] // 2, y + tamanho[1] // 2)
-                pygame.draw.rect(self.screen, self.colores["azul"], (x + margen_x * j, y, tamanho[0], tamanho[1]))
-                self.screen.blit(sup_texto, rect_texto)
+                pygame.draw.rect(self.screen, self.colores["azul"], (x, y, tamanho_rect[0], tamanho_rect[1]))
+                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
+                
+            # Verificamos si hemos llegado al final de la fila para saltar a la siguiente
+            if x + tamanho_rect[0] > self.width - tamanho_rect[0]:
+                x = self.width // 10  # Reiniciamos la posición x
+                y += margen_y  # Incrementamos la posición y para la siguiente fila
+                
         return y
 
     @staticmethod
@@ -82,6 +89,14 @@ class VentanaPanel:
             y += margen_y * (i//14) #  define la fila en la que estamos 
             x = 100
         return x, y
+    
+    def dibujar_rect_Letra(self, letra: str, x: int, y: int, tamanho: tuple[int, int])-> None: 
+        rect = pygame.Rect(x, y, tamanho[0], tamanho[1])
+        pygame.draw.rect(self.screen, self.colores["azul"], rect)
+
+        sup_texto = self.tipo_fuente.render(letra, True, self.colores["negro"])
+        rect_texto = sup_texto.get_rect(center=rect.center)
+        self.screen.blit(sup_texto, rect_texto)
     
 
     def dibujar_pista(self, pista: str, y: int)->None: 
