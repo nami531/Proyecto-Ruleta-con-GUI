@@ -172,7 +172,7 @@ class Juego:
                             self.vista.no_resolviste_panel()
                             index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
 
-                    elif opcion == self.vista.SALIR:
+                    elif opcion == Vista.SALIR:
                         self.vista.decir_adios()
                         turno, mismo_jugador = False, False
                 else:

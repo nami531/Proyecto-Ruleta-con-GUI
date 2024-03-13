@@ -5,7 +5,7 @@ from Ruleta import Ruleta
 import os
 
 class Vista: 
-    SALIR = 5
+    SALIR: int = 4
     OPCIONES_TURNO_JUG: list[str] = ["1.Letra", "2.Comprar vocal", "3.Resolver enigma", "4.Salir"]
     tematicas_disponibles : list[str]
     enigma_generado : str
