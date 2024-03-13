@@ -183,12 +183,7 @@ class Juego():
                                 jugador.ganar_puntuacion(premio)
                             mismo_jugador = False
 
-                    elif opcion == Vista.SALIR:
-                        VentanaAdios(800,600).ejecutar()
-                        turno, mismo_jugador = False, False
-
                     elif opcion == 3: 
-
                         enigma_jugador = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                         resuelto = jugador.resolver_enigma(self.enigma_juego, enigma_jugador)
                         if resuelto: 
@@ -202,7 +197,9 @@ class Juego():
                             VentanaResolucion(800, 600).ejecutar(jugador, resuelto)
                             index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
 
-                    
+                    elif opcion == Vista.SALIR:
+                        VentanaAdios(800,600).ejecutar()
+                        turno, mismo_jugador = False, False
                 else:
                     index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores)
     

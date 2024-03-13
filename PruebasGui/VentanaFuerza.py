@@ -93,8 +93,6 @@ class VentanaFuerza:
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
                     siguiente = True
 
-            
-
             sup_imagen_girada = imagen_girada.get_rect()
             sup_imagen_girada.center = (self.width // 2, self.height // 2)  #Obtenemos la superficie de la imagen
             self.screen.blit(imagen_girada, sup_imagen_girada)
@@ -126,5 +124,5 @@ class VentanaFuerza:
 if __name__ == "__main__":
     j1 = Jugador("Nadia")
     pygame.init()
-    ventana = VentanaFuerza(800, 600, j1)
-    print(ventana.ejecutar())
+    ventana = VentanaFuerza(800, 600)
+    print(ventana.ejecutar(j1))

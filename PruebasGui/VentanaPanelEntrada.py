@@ -41,7 +41,6 @@ class VentanaPanelEntrada:
                         "azul_hover" : (46, 155, 255)
         }
 
-
         self.fuente = 24
         self.tipo_fuente = pygame.font.Font(None, 36)
         self.tamanho_botones = (100, 40)
