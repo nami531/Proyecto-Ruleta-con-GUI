@@ -50,7 +50,7 @@ class VentanaError:
         
         self.intletra = Label(100, 100, self.vista.introducir_letra(), self.fuente, self.colores["negro"])
         
-        self.entrada = EntradasTexto(275, 92, 200, 30, self.colores["negro"], self.colores["negro"], self.colores["blanco"], 24) 
+        self.entrada = EntradasTexto(275, 92, 200, 30, self.colores["negro"], self.colores["negro"], self.colores["blanco"], self.fuente) 
 
         self.bintroducir = Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
 
@@ -69,8 +69,8 @@ class VentanaError:
         margen_y = self.height // 6  # Margen entre filas
         margen_x = tamanho_rect[0] // 2  # Margen entre rectángulos dentro de una fila
         
-        x = self.width // 10  # Posición inicial x
-        y = self.height // 4  # Posición inicial y
+        x = self.width // 8  # Posición inicial x
+        y = self.height // 4 + 30 # Posición inicial y
         
         for i in range(len(enigma_cifrado)):
             letra = enigma_cifrado[i]
@@ -116,8 +116,8 @@ class VentanaError:
     def dibujar_error(self, error: int): 
         sup_error = self.tipo_fuente.render(self.errores[error], True, self.colores["negro"])
         rect_error = sup_error.get_rect()
-        rect_error.center = (100 + 630 // 2, 130 + 25 // 2)
-        pygame.draw.rect(self.screen, self.colores["morado_hover"], (100,130, 630, 25))
+        rect_error.center = (100 + 630 // 2, 140 + 25 // 2)
+        pygame.draw.rect(self.screen, self.colores["morado_hover"], (100,140, 630, 25))
         self.screen.blit(sup_error, rect_error)
 
     @property
@@ -153,10 +153,7 @@ class VentanaError:
                         return self.entrada.text
                 elif self.bintroducir.fue_presionado(mouse_pos, event):
                     siguiente = True 
-                
-                    
-                     
-                
+
                 self.entrada.update(mouse_pos, event)
 
             self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco

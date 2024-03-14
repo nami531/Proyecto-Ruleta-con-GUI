@@ -64,8 +64,8 @@ class VentanaPanelEntrada:
         margen_y = self.height // 6  # Margen entre filas
         margen_x = tamanho_rect[0] // 2  # Margen entre rectángulos dentro de una fila
         
-        x = self.width // 10  # Posición inicial x
-        y = self.height // 4  # Posición inicial y
+        x = self.width // 8  # Posición inicial x
+        y = self.height // 4 + 30 # Posición inicial y
         
         for i in range(len(enigma_cifrado)):
             letra = enigma_cifrado[i]
@@ -108,7 +108,19 @@ class VentanaPanelEntrada:
         pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 630, 100))
         self.screen.blit(superficie_pista, rect_pista)
 
+    def genera_pista_adaptada(self, pista: str):
+        pista_lista = pista.split()
+        pista_adaptada = ""
+        for i in range(len(pista_lista)): 
+            for j in range(i): 
+                if j == 5: 
+                    pista_adaptada += "\n"
+            pista_adaptada += pista_lista[i]
+        return pista_adaptada         
+
+
     def ejecutar(self, enigma_juego:str, pista: str,  letras: list[str], vocales: list[str],letra: str =""):
+        pista_adaptada = self.genera_pista_adaptada(pista)
         siguiente = False
         while not siguiente:
 
@@ -129,7 +141,7 @@ class VentanaPanelEntrada:
 
             ultimo_y = self.dibujar_rect_encriptados(enigma_juego, letra, letras, vocales)
             
-            self.dibujar_pista(pista, ultimo_y)
+            self.dibujar_pista(pista_adaptada, ultimo_y)
 
             for elemento in self.elementos: 
                 elemento.draw(self.screen)
@@ -144,4 +156,4 @@ if __name__ == "__main__":
     j1 = Jugador("Nadia")
     pygame.init()
     ventana = VentanaPanelEntrada(800, 600, j1)
-    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", ["t", "h", "n", "i"],[]))
+    print(ventana.ejecutar("Hola me llamo nadia", "Un texto muy largo del que te arrepentiras haber jugado a este juego, Mi nombre", ["t", "h", "n", "i"],[]))

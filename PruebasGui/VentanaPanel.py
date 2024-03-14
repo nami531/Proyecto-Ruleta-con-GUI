@@ -61,8 +61,8 @@ class VentanaPanel:
         margen_y = self.height // 6  # Margen entre filas
         margen_x = tamanho_rect[0] // 2  # Margen entre rectángulos dentro de una fila
         
-        x = self.width // 10  # Posición inicial x
-        y = self.height // 4  # Posición inicial y
+        x = self.width // 8  # Posición inicial x
+        y = self.height // 4 + 30 # Posición inicial y
         
         for i in range(len(enigma_cifrado)):
             letra = enigma_cifrado[i]
