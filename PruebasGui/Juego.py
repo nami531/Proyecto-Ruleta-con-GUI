@@ -200,7 +200,7 @@ class Juego():
                             jugador.ganar_puntuacion(premio)
                             VentanaResolucion(800, 600).ejecutar(jugador, resuelto)#Ventana
                             # self.vista.has_ganado(jugador) 
-                            jugador.comprobar_puntuacion() #Preguntar a marta
+                            jugador.comprobar_puntuacion()
                             turno, mismo_jugador = False, False
                         else: 
                             self.vista.no_resolviste_panel() #Ventana

@@ -57,8 +57,6 @@ class VentanaError:
 
         self.__errores = ["", self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal(), self.vista.saldo_insuficiente()]
 
-        
-    
     #Función que dibuja los rectangulos, del panel
     def dibujar_rect_encriptados(self, enigma: str, pista: str, letras: list[str], vocales: list[str]) -> int:
         enigma_cifrado = self.vista.mostrar_panel_cifrado(enigma, pista, letras, vocales)

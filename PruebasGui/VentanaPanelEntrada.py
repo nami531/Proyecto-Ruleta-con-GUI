@@ -7,6 +7,7 @@ from Vista import Vista
 from Jugador import Jugador
 from pygame import Surface
 from pygame import font
+import textwrap
 
 class VentanaPanelEntrada:
 
@@ -101,26 +102,26 @@ class VentanaPanelEntrada:
         rect_texto = sup_texto.get_rect(center=rect.center)
         self.screen.blit(sup_texto, rect_texto)
 
-    def dibujar_pista(self, pista: str, y: int)->None: 
-        superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
-        rect_pista = superficie_pista.get_rect()
-        rect_pista.center = (100 + 630 // 2, y + 300 // 2)
-        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 630, 100))
-        self.screen.blit(superficie_pista, rect_pista)
+    # def dibujar_pista(self, pista: str, y: int)->None: 
+    #     superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
+    #     rect_pista = superficie_pista.get_rect()
+    #     rect_pista.center = (100 + 630 // 2, y + 300 // 2)
+    #     pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 630, 100))
+    #     self.screen.blit(superficie_pista, rect_pista)
 
-    def genera_pista_adaptada(self, pista: str):
-        pista_lista = pista.split()
-        pista_adaptada = ""
-        for i in range(len(pista_lista)): 
-            for j in range(i): 
-                if j == 5: 
-                    pista_adaptada += "\n"
-            pista_adaptada += pista_lista[i]
-        return pista_adaptada         
-
+    def genera_pista_adaptada(self, pista: str, rectangulo):        
+        pista = textwrap.wrap(pista, width=50)
+        y = rectangulo.top
+        for linea in pista:
+            rendered_text = self.tipo_fuente.render(linea, True, self.colores["negro"])
+            self.screen.blit(rendered_text, (rectangulo.left + 10, y + 10))
+            y += rendered_text.get_height()
+         
+    def dibujar_pista(self, pista: str, ultimo_y: int): 
+        rectangulo = pygame.draw.rect(self.screen, self.colores["morado"], (100, ultimo_y+100, 630, 100))
+        self.genera_pista_adaptada(pista, rectangulo)
 
     def ejecutar(self, enigma_juego:str, pista: str,  letras: list[str], vocales: list[str],letra: str =""):
-        pista_adaptada = self.genera_pista_adaptada(pista)
         siguiente = False
         while not siguiente:
 
@@ -141,7 +142,7 @@ class VentanaPanelEntrada:
 
             ultimo_y = self.dibujar_rect_encriptados(enigma_juego, letra, letras, vocales)
             
-            self.dibujar_pista(pista_adaptada, ultimo_y)
+            self.dibujar_pista(pista, ultimo_y)
 
             for elemento in self.elementos: 
                 elemento.draw(self.screen)
