@@ -176,7 +176,7 @@ class Juego():
                                 self.error = 5
                                 self.letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, self.letra)
                                 
-                            elif self.comprobaciones_al_introducir(index_jugador): 
+                            if self.comprobaciones_al_introducir(index_jugador): 
                                 vocal_comprada = jugador.comprar_vocal(self.letra, self.precio)
                                 if not vocal_comprada:
                                     self.error = 6

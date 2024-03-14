@@ -71,7 +71,8 @@ class VentanaFuerza:
         siguiente = False
         self.__contador = 0 
         tiempo =  int(pygame.time.get_ticks() / 1000)   #Lo devuelve en milisegundos, por eso se divide entre 1000
-    
+
+
         while not siguiente:
             
             mouse_pos = pygame.mouse.get_pos()
@@ -118,9 +119,9 @@ class VentanaFuerza:
 
             # Actualizar la pantalla
             pygame.display.flip()
-       
+    
         return self.__contador
- 
+
 if __name__ == "__main__":
     j1 = Jugador("Nadia")
     pygame.init()

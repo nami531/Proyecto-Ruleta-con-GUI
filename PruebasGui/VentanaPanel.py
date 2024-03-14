@@ -46,7 +46,7 @@ class VentanaPanel:
                         "azul_hover" : (46, 155, 255)
         }
 
-        self.tipo_fuente = pygame.font.Font(None, 36)
+        self.tipo_fuente = pygame.font.Font(None, 24)
         
         self.bsiguiente = Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
         
@@ -83,13 +83,6 @@ class VentanaPanel:
                 y += margen_y  # Incrementamos la posición y para la siguiente fila
                 
         return y
-
-    @staticmethod
-    def filas(i: int, x: int , y: int, margen_y: int)->tuple[int,int]: 
-        if i >= 14: 
-            y += margen_y * (i//14) #  define la fila en la que estamos 
-            x = 100
-        return x, y
     
     def dibujar_rect_Letra(self, letra: str, x: int, y: int, tamanho: tuple[int, int])-> None: 
         rect = pygame.Rect(x, y, tamanho[0], tamanho[1])
@@ -101,7 +94,7 @@ class VentanaPanel:
     
 
     def genera_pista_adaptada(self, pista: str, rectangulo):        
-        pista = textwrap.wrap(pista, width=50)
+        pista = textwrap.wrap(pista, width=75)
         y = rectangulo.top
         for linea in pista:
             rendered_text = self.tipo_fuente.render(linea, True, self.colores["negro"])

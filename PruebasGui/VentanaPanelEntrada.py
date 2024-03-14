@@ -43,7 +43,7 @@ class VentanaPanelEntrada:
         }
 
         self.fuente = 24
-        self.tipo_fuente = pygame.font.Font(None, 36)
+        self.tipo_fuente = pygame.font.Font(None, 24)
         self.tamanho_botones = (100, 40)
         
         self.id = Label(100, 50, f"Jugador {jugador.nombre}", self.fuente ,self.colores["negro"])
@@ -86,13 +86,6 @@ class VentanaPanelEntrada:
                 y += margen_y  # Incrementamos la posición y para la siguiente fila
                 
         return y
-
-    # @staticmethod
-    # def filas(i: int,x:int , y: int, margen_y: int)->tuple[int,int]: 
-    #     if i >= 14: 
-    #         y += margen_y * (i//14) #  define la fila en la que estamos 
-    #         x = 100
-    #     return x, y
              
     def dibujar_rect_Letra(self, letra: str, x: int, y: int, tamanho: tuple[int, int])-> None: 
         rect = pygame.Rect(x, y, tamanho[0], tamanho[1])
@@ -103,7 +96,7 @@ class VentanaPanelEntrada:
         self.screen.blit(sup_texto, rect_texto)
 
     def genera_pista_adaptada(self, pista: str, rectangulo):        
-        pista = textwrap.wrap(pista, width=50)
+        pista = textwrap.wrap(pista, width=75)
         y = rectangulo.top
         for linea in pista:
             rendered_text = self.tipo_fuente.render(linea, True, self.colores["negro"])

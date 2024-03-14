@@ -15,6 +15,7 @@ class Boton:
         self.rect = pygame.Rect(x, y, width, height)
         self.hovered = False
         self.eliminado = False
+        self.presionado = False
         self.valor = valor
 
     def draw(self, screen):
@@ -35,6 +36,7 @@ class Boton:
     def fue_presionado(self, mouse_pos, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Verificar si se hizo clic con el botón izquierdo del ratón
             if self.rect.collidepoint(mouse_pos):  # Verificar si las coordenadas del clic están dentro del área del botón
+                self.presionado = True
                 return True
         return False
 

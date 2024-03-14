@@ -100,7 +100,7 @@ class VentanaError:
         self.screen.blit(sup_texto, rect_texto)
 
     def genera_pista_adaptada(self, pista: str, rectangulo):        
-        pista = textwrap.wrap(pista, width=50) #Esta libreria adapta el texto al width (nº caracteres) deseado
+        pista = textwrap.wrap(pista, width=75) #Esta libreria adapta el texto al width (nº caracteres) deseado
         y = rectangulo.top
         for linea in pista:
             rendered_text = self.tipo_fuente.render(linea, True, self.colores["negro"])
@@ -111,12 +111,19 @@ class VentanaError:
         rectangulo = pygame.draw.rect(self.screen, self.colores["morado"], (100, ultimo_y+100, 630, 100))
         self.genera_pista_adaptada(pista, rectangulo)  
     
-    def dibujar_error(self, error: int): 
-        sup_error = self.tipo_fuente.render(self.errores[error], True, self.colores["negro"])
-        rect_error = sup_error.get_rect()
-        rect_error.center = (100 + 630 // 2, 140 + 25 // 2)
-        pygame.draw.rect(self.screen, self.colores["morado_hover"], (100,140, 630, 25))
-        self.screen.blit(sup_error, rect_error)
+    def genera_error_adaptada(self, error: int, rectangulo):        
+        error = textwrap.wrap(self.errores[error], width=75) #Esta libreria adapta el texto al width (nº caracteres) deseado
+        y = rectangulo.top
+        fuente_error = pygame.font.Font(None, 24)
+        for linea in error:
+
+            rendered_text = fuente_error.render(linea, True, self.colores["negro"])
+            self.screen.blit(rendered_text, (rectangulo.left + 10, y + 10))
+            y += rendered_text.get_height()
+    
+    def dibujar_error(self, error: int):
+        rectangulo = pygame.draw.rect(self.screen, self.colores["morado_hover"], (100,140, 630, 30))
+        self.genera_error_adaptada(error, rectangulo)  
 
     @property
     def errores(self): 
