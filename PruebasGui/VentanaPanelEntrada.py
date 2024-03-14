@@ -102,13 +102,6 @@ class VentanaPanelEntrada:
         rect_texto = sup_texto.get_rect(center=rect.center)
         self.screen.blit(sup_texto, rect_texto)
 
-    # def dibujar_pista(self, pista: str, y: int)->None: 
-    #     superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
-    #     rect_pista = superficie_pista.get_rect()
-    #     rect_pista.center = (100 + 630 // 2, y + 300 // 2)
-    #     pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 630, 100))
-    #     self.screen.blit(superficie_pista, rect_pista)
-
     def genera_pista_adaptada(self, pista: str, rectangulo):        
         pista = textwrap.wrap(pista, width=50)
         y = rectangulo.top

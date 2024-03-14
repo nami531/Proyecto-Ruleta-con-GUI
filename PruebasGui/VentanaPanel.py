@@ -6,6 +6,7 @@ from EntradasTexto import EntradasTexto
 from Vista import Vista
 from pygame import Surface
 from pygame import font 
+import textwrap
 
 class VentanaPanel:
 
@@ -99,12 +100,17 @@ class VentanaPanel:
         self.screen.blit(sup_texto, rect_texto)
     
 
-    def dibujar_pista(self, pista: str, y: int)->None: 
-        superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
-        rect_pista = superficie_pista.get_rect()
-        rect_pista.center = (100 + 630 // 2, y + 300 // 2)
-        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 630, 100))
-        self.screen.blit(superficie_pista, rect_pista)       
+    def genera_pista_adaptada(self, pista: str, rectangulo):        
+        pista = textwrap.wrap(pista, width=50)
+        y = rectangulo.top
+        for linea in pista:
+            rendered_text = self.tipo_fuente.render(linea, True, self.colores["negro"])
+            self.screen.blit(rendered_text, (rectangulo.left + 10, y + 10))
+            y += rendered_text.get_height()
+         
+    def dibujar_pista(self, pista: str, ultimo_y: int): 
+        rectangulo = pygame.draw.rect(self.screen, self.colores["morado"], (100, ultimo_y+100, 630, 100))
+        self.genera_pista_adaptada(pista, rectangulo)    
 
     def ejecutar(self, enigma_juego: str, pista: str, letras: list[str], vocales: list[str], letra: str=""):
         siguiente = False 

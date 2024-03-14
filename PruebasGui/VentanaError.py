@@ -6,6 +6,7 @@ from EntradasTexto import EntradasTexto
 from Vista import Vista
 from pygame import Surface
 from Jugador import Jugador
+import textwrap
 
 class VentanaError:
 
@@ -89,12 +90,6 @@ class VentanaError:
                 
         return y
 
-    # @staticmethod
-    # def filas(i: int,x:int , y: int, margen_y: int)->tuple[int,int]: 
-    #     if i >= 14: 
-    #         y += margen_y * (i//14) #  define la fila en la que estamos 
-    #         x = 100
-    #     return x, y
              
     def dibujar_rect_Letra(self, letra: str, x: int, y: int, tamanho: tuple[int, int])-> None: 
         rect = pygame.Rect(x, y, tamanho[0], tamanho[1])
@@ -104,12 +99,17 @@ class VentanaError:
         rect_texto = sup_texto.get_rect(center=rect.center)
         self.screen.blit(sup_texto, rect_texto)
 
-    def dibujar_pista(self, pista: str, y: int)->None: 
-        superficie_pista = self.tipo_fuente.render(pista, True, self.colores["negro"])
-        rect_pista = superficie_pista.get_rect()
-        rect_pista.center = (100 + 630 // 2, y + 300 // 2)
-        pygame.draw.rect(self.screen, self.colores["morado"], (100, y+100, 630, 100))
-        self.screen.blit(superficie_pista, rect_pista)    
+    def genera_pista_adaptada(self, pista: str, rectangulo):        
+        pista = textwrap.wrap(pista, width=50) #Esta libreria adapta el texto al width (nº caracteres) deseado
+        y = rectangulo.top
+        for linea in pista:
+            rendered_text = self.tipo_fuente.render(linea, True, self.colores["negro"])
+            self.screen.blit(rendered_text, (rectangulo.left + 10, y + 10))
+            y += rendered_text.get_height()
+         
+    def dibujar_pista(self, pista: str, ultimo_y: int): 
+        rectangulo = pygame.draw.rect(self.screen, self.colores["morado"], (100, ultimo_y+100, 630, 100))
+        self.genera_pista_adaptada(pista, rectangulo)  
     
     def dibujar_error(self, error: int): 
         sup_error = self.tipo_fuente.render(self.errores[error], True, self.colores["negro"])
