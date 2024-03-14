@@ -161,6 +161,7 @@ class Juego():
                             self.letras.append(letra)
                             self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
                             jugador.ganar_puntuacion(premio, self.apariciones(letra))
+                            VentanaPanel(800,600).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                             mismo_jugador = False 
                         else: 
                             index_jugador, mismo_jugador = jugador.perder_turno( index_jugador, self.lista_jugadores)
@@ -181,6 +182,7 @@ class Juego():
                                     self.letras.append(j)
                                 self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
                                 jugador.ganar_puntuacion(premio)
+                                VentanaPanel(800,600).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                             mismo_jugador = False
 
                     elif opcion == 3: 
