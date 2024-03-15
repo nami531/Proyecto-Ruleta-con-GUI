@@ -2,7 +2,7 @@ import random
 from os import path
 
 
-class Tarjetas(): 
+class Tarjetas: 
     fichero_enigma : str
     __enigmas_pistas: dict[str, str]
     __enigma: str

@@ -1,28 +1,25 @@
-En este día especial, buscas mis palabras encriptadas, pero solo los corazones más astutos pueden descifrar mi verdadero significado. ¿Qué soy?
-Soy un mensajero silencioso que entrega secretos entre enamorados, pero solo aquellos con oídos agudos pueden captar mi susurro. ¿Qué soy?
-Me encuentras entre las sombras de la noche, tejiendo hilos invisibles que conectan corazones, pero solo los más valientes se aventuran a seguir mi camino. ¿Qué soy?
-Soy una chispa que enciende el fuego del amor, pero solo aquellos con ojos perspicaces pueden ver mi destello en la oscuridad. ¿Qué soy?
-Soy un rompecabezas de sentimientos entrelazados, pero solo los más hábiles pueden descifrar la complejidad de mi diseño. ¿Qué soy?
-En San Valentín, buscas mi reflejo en los sueños más profundos, pero solo los corazones más puros pueden reconocer mi verdadera forma. ¿Qué soy?
-Soy un susurro en el viento que lleva secretos de amor, pero solo aquellos con mente abierta pueden captar mi mensaje oculto. ¿Qué soy?
-Me encuentras entre las estrellas, trazando senderos de destino compartido, pero solo los viajeros más intrépidos pueden seguir mi curso. ¿Qué soy?
-Soy una melodía que flota en el aire, tejiendo historias de amor eterno, pero solo aquellos con oídos sensibles pueden escuchar mi armonía celestial. ¿Qué soy?
-Soy un tesoro escondido en el laberinto del amor, pero solo los corazones más valientes pueden enfrentar los desafíos de mi búsqueda. ¿Qué soy?
-Me encuentras en cada latido del corazón, pero solo los más enamorados pueden sentir mi ritmo apasionado. ¿Qué soy?
-Soy un faro en la oscuridad que guía los corazones perdidos, pero solo aquellos con visión clara pueden seguir mi luz hasta el final. ¿Qué soy?
-Soy una pista en el juego del amor, pero solo los más astutos pueden descifrar mi mensaje codificado. ¿Qué soy?
-Me encuentras en el reflejo de los ojos enamorados, pero solo aquellos con visión verdadera pueden ver mi verdadero significado. ¿Qué soy?
-Soy una llave que abre el cofre del amor eterno, pero solo aquellos con corazones puros pueden reclamar mi tesoro. ¿Qué soy?    
-Me encuentras en cada suspiro de amor, pero solo aquellos con almas sensibles pueden sentir mi aliento en la brisa. ¿Qué soy?   
-Soy una sombra en la noche que susurra promesas de afecto, pero solo aquellos con intuición pueden seguir mi camino oscuro. ¿Qué soy?
-Soy una estrella fugaz que ilumina el cielo del amor, pero solo aquellos con deseos verdaderos pueden ver mi resplandor efímero. ¿Qué soy?
-Me encuentras en cada rincón del corazón, pero solo aquellos con coraje pueden enfrentar los secretos que guardo. ¿Qué soy?     
-Soy una rosa en el jardín del amor, pero solo aquellos con manos hábiles pueden evitar mis espinas y alcanzar mi belleza interior. ¿Qué soy?      
-Soy un eco en la eternidad del amor, pero solo aquellos con oídos atentos pueden escuchar mi llamado desde el pasado. ¿Qué soy?
-Me encuentras en el fluir del tiempo, tejiendo historias de amor eterno, pero solo aquellos con paciencia pueden entender mi ritmo constante. ¿Qué soy?
-Soy una sombra en la pared del destino, pero solo aquellos con visión clara pueden ver mi silueta en la oscuridad. ¿Qué soy?
-Soy una melodía en el viento, llevando mensajes de amor, pero solo aquellos con corazones abiertos pueden sentir mi música en el alma. ¿Qué soy?  
-Me encuentras en el latido del corazón, pero solo aquellos con amor verdadero pueden entender mi idioma sin palabras. ¿Qué soy?
-
-
-Cambiar impooortanteeee 
+¿Qué herramienta se utiliza para escribir código de Python?
+¿Cómo se conoce a Python de forma coloquial en el mundo de la programación?
+¿Qué característica hace que Python sea adecuado para una amplia gama de aplicaciones?
+¿Cuál es el nombre de un módulo en Python que se utiliza para operaciones matemáticas?
+¿Qué aspecto de la sintaxis de Python es crucial para estructurar el código de manera adecuada?
+¿Cómo describirías la legibilidad de Python en comparación con otros lenguajes de programación?
+¿Cuáles son dos tipos de estructuras de datos comunes en Python?
+¿Quién es el creador original de Python?
+¿Qué ventaja ofrece Python en términos de su sintaxis y diseño?
+¿Qué biblioteca de Python se utiliza comúnmente para crear gráficos y visualizaciones?
+¿Qué aspecto de la comunidad de Python se destaca por su colaboración y apoyo?
+¿Qué se quiere decir cuando se dice que la sintaxis de Python es "clara"?
+¿Cómo se describe el ecosistema de herramientas y bibliotecas en torno a Python?
+¿En qué década fue creado Python?
+¿Por qué se considera a menudo a Python como un buen lenguaje para aprender a programar?
+¿Qué término se utiliza para describir la capacidad de Python para adaptarse a diferentes necesidades de programación?
+¿Cuál es uno de los paradigmas de programación admitidos por Python?
+¿En qué campo de la informática se utiliza ampliamente Python?
+¿Cuál es una característica clave de Python que lo hace accesible y poderoso para los programadores?
+¿Cómo se describe la naturaleza de la programación en Python en términos de su enfoque?
+¿Dónde se enseña a menudo Python como parte del plan de estudios educativo?
+¿En qué áreas específicas se aplica comúnmente Python en el desarrollo de software?
+¿Cómo se describe el proceso de desarrollo de software con Python en términos de velocidad?
+¿Qué rol desempeña Python en el ámbito de la ciencia de datos y el análisis de datos?
+¿Qué ventaja ofrece Python en términos de su capacidad para integrarse con otros lenguajes de programación como C/C++?

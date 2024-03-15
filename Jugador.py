@@ -4,6 +4,7 @@ from Controlador import Controlador
 
 
 class Jugador: 
+    controlador : Controlador
     nombre : str
     _puntuacion: list[float|int|str] 
 
@@ -12,14 +13,11 @@ class Jugador:
         self.controlador = Controlador()
         
         self.nombre = nombre
-        self._puntuacion = [0] #Hay que cifrarlo con propertys y demás 
+        self._puntuacion = [0]  
 
     def girar_ruleta(self, ruleta: Ruleta, fuerza : int)-> None: 
         ruleta.girar(fuerza)
         
-    # def introducir_letra_no_vocal(self): #Podemos comprobar que no sea vocal al introducir la letra def es_vocal e iria en jugada
-        
-        # return letra
     @property
     def puntuacion(self): 
         return self._puntuacion[0] 
@@ -34,7 +32,6 @@ class Jugador:
     def comprar_vocal(self, letra: str , precio: int) -> bool:
         if self.controlador.es_vocal(letra):
             if self.puntuacion < precio: 
-                print("Lo siento, no puedes comprar la vocal porque no tienes suficiente dinero")
                 return False
             else: 
                 self.puntuacion -= precio
@@ -62,7 +59,6 @@ class Jugador:
 
     def tiene_comodin(self): 
         if "Comodín" in self._puntuacion: 
-            print("Te salvaste por el comodín")
             self._puntuacion.remove("Comodín") 
             return True
         return False
@@ -85,24 +81,7 @@ class Jugador:
         else: 
             return False
     
-    # def ganar(self, vista: Vista):
-    #     Vista.has_ganado(vista, self)
-        
-    # def perder()
+    
     def __str__(self) -> str:
         return f"{self.nombre}"
     
-if __name__ == "__main__": 
-    r = Ruleta()
-    j1 = Jugador("Nadia")
-    print(j1.puntuacion)
-    j1.ganar_puntuacion(50, 5)
-    print(j1.puntuacion)
-    j1.ganar_puntuacion(1, 5)
-    print(j1._puntuacion)
-    j1.perder_mitad(0.5)
-    print(j1._puntuacion)
-    j1.en_quiebra(0)
-    print(j1._puntuacion)
-    l = Listener()
-    print(l.medir_fuerza())

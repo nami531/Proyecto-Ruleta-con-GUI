@@ -1,55 +1,5 @@
 from typing import Any
 import pygame
-# # from pynput import keyboard as kb
-
-# # def pulsa(tecla):
-# # 	print('Se ha pulsado la tecla ' + str(tecla))
-
-# # def suelta(tecla):
-# # 	print('Se ha soltado la tecla ' + str(tecla))
-# # 	if tecla == kb.KeyCode.from_char('q'):
-# # 		return False
-
-
-
-
-# # class Cursor(pygame.Rect): 
-# #     def __init__(self): 
-# #         pygame.Rect.__init__(self,0,0,1,1)
-
-# #     def update(self): 
-# #         self.left, self.top = pygame.mouse.get_pos()
-
-# # class Boton(pygame.sprite.Sprite):
-# #     def __init__(self, pantalla):
-# #         self.pantalla = pantalla
-# #         self.rect = (50,50,100,50)
-
-# #     def update(self, cursor):
-# #         if cursor.colliderect(self.rect): 
-# #             pygame.draw.rect(self.pantalla, (0,0,0), self.rect )
-# #         else: 
-# #             pygame.draw.rect(self.pantalla, (0,0,0), (5,20,100,50))
-
-# def main(): 
-#     contador = 0   
-#     pygame.init()
-
-#     pantalla= pygame.display.set_mode((1, 1))
-#     pygame.display.set_caption("Medidor de fuerza")
-#     fps = pygame.time.Clock()
-    
-#     # c1= Cursor()
-#     # b1 = Boton(pantalla)
-    
-
-#     # color = (255,255,255)
-#     # escuchador = kb.Listener()
-#     # escuchador.start() and escuchador.is_alive()   
- 
-
-# print(main())
-
 class Listener: 
     __contador : int       
     fps : pygame.time.Clock 
@@ -98,10 +48,5 @@ class Listener:
         return self.__contador
 
 
-    
-if __name__ == "__main__":
-    input("Hla")
-    pygame.init()
-    l = Listener()
    
         

@@ -18,7 +18,7 @@ from VentanaError import VentanaError
 from VentanaResolucionEnigma import VentanaResolucion
 from VentanaAdios import VentanaAdios
 
-class Juego(): 
+class Juego: 
     vista: Vista
     jugador: Jugador
     ruleta: Ruleta

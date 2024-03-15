@@ -152,8 +152,12 @@ class Juego:
                                     self.letras.append(j)
                                 self.vista.mostrar_panel_cifrado(self.enigma_juego, letra, self.letras, self.vocales)
                                 jugador.ganar_puntuacion(premio)
-                            mismo_jugador = False
-                            print(self.vocales)
+                                mismo_jugador = False
+                            else: 
+                                self.vista.comodin()
+
+                            
+            
 
                     elif opcion == 4: 
                         jugador.comprobar_puntuacion()
@@ -166,7 +170,7 @@ class Juego:
                             jugador.ganar_puntuacion(premio)
                             self.vista.panel_resuelto()
                             self.vista.has_ganado(jugador) 
-                            jugador.comprobar_puntuacion() #Preguntar a marta
+                            jugador.comprobar_puntuacion()
                             turno, mismo_jugador = False, False
                         else: 
                             self.vista.no_resolviste_panel()

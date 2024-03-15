@@ -4,6 +4,7 @@ from Controlador import Controlador
 
 
 class Jugador: 
+    controlador : Controlador
     nombre : str
     _puntuacion: list[float|int|str] 
 
@@ -12,15 +13,12 @@ class Jugador:
         self.controlador = Controlador()
         
         self.nombre = nombre
-        self._puntuacion = [0] #Hay que cifrarlo con propertys y demás 
+        self._puntuacion = [0] 
 
     def girar_ruleta(self, ruleta: Ruleta, fuerza : int)-> None: 
         print(fuerza)
         ruleta.girar(fuerza)
         
-    # def introducir_letra_no_vocal(self): #Podemos comprobar que no sea vocal al introducir la letra def es_vocal e iria en jugada
-        
-        # return letra
     @property
     def puntuacion(self): 
         return self._puntuacion[0] 

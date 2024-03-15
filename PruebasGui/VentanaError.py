@@ -114,7 +114,7 @@ class VentanaError:
     def genera_error_adaptada(self, error: int, rectangulo): #rectangulo: Rect            
         error = textwrap.wrap(self.errores[error], width=75) #Esta libreria adapta el texto al width (nº caracteres) deseado
         y = rectangulo.top
-        fuente_error = pygame.font.Font(None, 24)
+        fuente_error = pygame.font.Font(None, 18)
         for linea in error:
 
             texto_render = fuente_error.render(linea, True, self.colores["negro"])

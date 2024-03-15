@@ -62,11 +62,6 @@ class Ruleta:
     def devuelve_posicion_puntero(self)-> int:
         return self.__puntero 
     
-if __name__ == "__main__": 
-    ruleta = Ruleta()
-    ruleta.ver()
-    puntero = ruleta.girar(25)
-    print(ruleta.devuelve_premio())
-    ruleta.ver(puntero)
+
     
 

@@ -1,25 +1,20 @@
-Python
-El intérprete de Python
-Las bibliotecas de Python
-Un error de sintaxis
-Python
-La concatenación de cadenas
-Un bucle
-Python
-Python
-Python
-La función float() o int()
-Un bucle for o while
-La función len()
-La función shuffle() de la biblioteca random
-Un bucle while True
-La función sorted()
-Los métodos upper() o lower()
-La función copy()
-La función split()
-La biblioteca random
-Un diccionario
-El operador in
-Una tupla
-Las funciones max() o min()
-La función round()
+Lenguaje de programación
+Serpiente del código
+Lenguaje versátil
+Módulo para matemáticas
+Indentación clave
+Versátil y legible
+Listas y diccionarios
+Creado por Guido van Rossum
+Facilita la programación
+Librería para gráficos
+Comunidad activa
+Sintaxis clara
+Ecosistema robusto
+Creado en los 90
+Ideal para principiantes
+Características dinámicas
+Programación orientada a objetos
+Muy utilizado en IA
+Potente y fácil de aprender
+Itera

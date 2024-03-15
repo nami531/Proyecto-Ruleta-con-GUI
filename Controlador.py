@@ -1,9 +1,5 @@
 
 class Controlador: 
-
-
-    # def __init__(self) -> None:
-
     def __eq__(self, otro): 
         return self == otro
     
@@ -13,7 +9,3 @@ class Controlador:
             return True
         
         
-    # def respuesta_correcta(self)-> bool:
-    #     if enigma == respuesta_usuario: 
-    #         return True 
-    #     return False

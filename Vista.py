@@ -124,8 +124,6 @@ class Vista:
         self.borrar_pantalla(5)
     
 
- 
-        
     def decir_letra_esta_repetida(self, letra: str): 
         print(f"Lo siento, la letra {letra}, está repetida, has perdido el turno")
         self.borrar_pantalla(5)
@@ -169,11 +167,12 @@ class Vista:
     def decir_adios(self): 
         print("ADIÓS!")
 
+    def comodin(self): 
+        print("Te salvaste, tienes un comodin")
+        self.borrar_pantalla()
+
     def longitud_incorrecta(self): 
         print("Entrada inválida, Introduce una letra")
         self.borrar_pantalla()
     
         
-if __name__ == "__main__": 
-    vista = Vista()
-    vista.mostrar_premio(7)

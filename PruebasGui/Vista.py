@@ -23,25 +23,9 @@ class Vista:
     def bienvenida(self)-> str: 
         return "Bienvenido a la ruleta"
     
-#     def establecer_num_jugadores(self)-> int:
-#         num= int(input("¿Cuántos jugadores van a jugar?: "))
-#         self.borrar_pantalla(1)
-#         return num
-    
     def pedir_nombre_jugador(self, i:int)-> str:      
         return f"Jugador {i+1}"
     
-#     def mostrarJugadores(self, lista : list[Jugador])-> None:
-#         for i in range(len(lista)): 
-#             print(f"\nJugador {i+1}: {lista[i]}\n" )  
-#         self.borrar_pantalla()
-            
-#     def establecer_tematica(self)-> int: 
-#         for i in range(len(self.tematicas_disponibles)): 
-#             print(i+1,".", self.tematicas_disponibles[i], end="\n")
-#         tematica = int(input("De las temáticas anteriores elige una: "))
-#         self.borrar_pantalla()
-#         return tematica - 1 
     
     def turno(self, jugador: Jugador)-> str: 
         return f"Jugador {jugador.nombre} es tu turno, gira la ruleta"
@@ -56,15 +40,6 @@ class Vista:
     
     def caer_en(self): 
         return "Has caído en..."
-  
-
-#     def mostrar_ruleta(self, ruleta: list[str], __puntero: int = 0)-> None: 
-#         for i in range(len(ruleta)):
-#             if i == __puntero: 
-#                 print("->", end="")
-#             print(ruleta[i], end=", ")
-#         print()
-#         self.borrar_pantalla(5)
 
     def introducir_letra(self) -> str: 
         return "Introduce una letra: "
@@ -75,14 +50,6 @@ class Vista:
     def mostrar_pista(self, pista: str)-> None: 
         print(pista)
         self.borrar_pantalla(5)
-    
-    # def mostrar_enigma_encriptado(self, enigma)-> str: #Pylance da error si se pone el type hints en tal caso es enigma:str
-    #     enigma = enigma.split()
-    #     enigma_encriptado = "" #Lo convertimos en lista
-    #     for palabra in enigma:  
-    #         enigma_encriptado += (len(palabra)*"_")
-    #     enigma_encriptado += " " 
-    #     return enigma_encriptado
     
     def mostrar_panel_cifrado(self, enigma:str, letra:str, letras: list[str], vocales: list[str]):  
         lista_enigma = enigma.split()
@@ -141,6 +108,3 @@ class Vista:
     def decir_adios(self): 
         return "¡Adiós! Os esperamos de vuelta"
         
-# if __name__ == "__main__": 
-#     vista = Vista()
-#     vista.mostrar_premio(7)

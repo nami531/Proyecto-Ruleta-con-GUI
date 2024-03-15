@@ -1,6 +1,6 @@
 import random
 
-class Ruleta(): 
+class Ruleta: 
     premios: dict[str,list[float]]
     ruleta: list[str]
     __puntero : int
