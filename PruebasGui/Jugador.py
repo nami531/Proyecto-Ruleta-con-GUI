@@ -41,7 +41,7 @@ class Jugador:
                 return True
     
     def multiplicar_puntuacion(self, premio): 
-        self.puntuacion *= premio
+        int(self.puntuacion *= premio)
 
     def comprobar_puntuacion(self)-> list:
         return self._puntuacion

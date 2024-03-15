@@ -55,7 +55,7 @@ class VentanaError:
 
         self.bintroducir = Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
 
-        self.__errores = [self.vista.comodin(), self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal(), self.vista.saldo_insuficiente()]
+        self.__errores = [self.vista.comodin, self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal(), self.vista.saldo_insuficiente()]
 
     #Función que dibuja los rectangulos, del panel
     def dibujar_rect_encriptados(self, enigma: str, pista: str, letras: list[str], vocales: list[str]) -> int:
@@ -187,11 +187,3 @@ class VentanaError:
             # Actualizar la pantalla
             pygame.display.flip()
  
-if __name__ == "__main__":
-    j1 = Jugador("Nadia")
-    j1.ganar_puntuacion(100, 2)
-    j1.ganar_puntuacion(1)
-    print(j1.comprobar_puntuacion())
-    pygame.init()
-    ventana = VentanaError(800, 600)
-    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", j1, 0, ["h", "l", "y", "p"], ["i"]))

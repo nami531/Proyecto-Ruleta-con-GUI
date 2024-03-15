@@ -149,7 +149,7 @@ class Juego():
 
                     if opcion == 1: 
                         opcion1_ejecucion = True 
-                        self.letra = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
+                        self.letra = VentanaPanelEntrada().ejecutar(jugador, self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                         while opcion1_ejecucion: 
                             if self.controlador.es_vocal(self.letra): #Esto se encuentra aquí porque no debe estar en las comprobaciones comunes
                                 self.vista.vocal_sin_comprar()
@@ -161,7 +161,7 @@ class Juego():
                                 self.letras.append(self.letra)
                                 self.vista.mostrar_panel_cifrado(self.enigma_juego, self.letra, self.letras, self.vocales)
                                 jugador.ganar_puntuacion(premio, self.apariciones(self.letra))
-                                VentanaPanel(800,600).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
+                                VentanaPanel().ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                                 mismo_jugador = False 
                                 opcion1_ejecucion = False
                             else: 
@@ -170,7 +170,7 @@ class Juego():
 
                     elif opcion == 2:
                         opcion2_ejecucion = True 
-                        self.letra = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
+                        self.letra = VentanaPanelEntrada().ejecutar(jugador, self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                         while opcion2_ejecucion: 
                            
                             if not self.controlador.es_vocal(self.letra): 
@@ -195,7 +195,7 @@ class Juego():
                                 opcion2_ejecucion = False
 
                     elif opcion == 3: 
-                        enigma_jugador = VentanaPanelEntrada(800,600, jugador).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
+                        enigma_jugador = VentanaPanelEntrada().ejecutar(jugador, self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                         resuelto = jugador.resolver_enigma(self.enigma_juego, enigma_jugador)
                         if resuelto: 
                             jugador.ganar_puntuacion(premio)

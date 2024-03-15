@@ -23,7 +23,7 @@ class VentanaPremio:
     imgPierdeTurno : Surface
     texto_premio : Label
 
-    def __init__(self, width, height):
+    def __init__(self, width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -58,7 +58,7 @@ class VentanaPremio:
         self.texto_premio = Label(self.margen+75, 100, texto_premio, self.fuente, self.colores["negro"]) 
         
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
-        self.img = pygame.image.load(directorio_actual + f"\\Multimedia\\{texto_premio}.jpeg")
+        self.img = pygame.image.load(directorio_actual + f"\\Multimedia\\{texto_premio.capitalize()}.jpeg")
         self.img = pygame.transform.scale(self.img, (300,300))
 
         siguiente = False        
@@ -93,10 +93,3 @@ class VentanaPremio:
             pygame.display.flip()
         
  
-if __name__ == "__main__":
-    r1 = Ruleta()
-    print(r1.devuelve_ruleta())
-    print(r1.devuelve_premio())
-    pygame.init()
-    ventana = VentanaPremio(800, 600)
-    print(ventana.ejecutar(1, r1, 1)) 
