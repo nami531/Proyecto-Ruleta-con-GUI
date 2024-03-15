@@ -31,7 +31,7 @@ class Ventana:
     benviar : Boton
     imagen : Surface
 
-    def __init__(self, width, height):
+    def __init__(self, width=800, height=600):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -81,7 +81,6 @@ class Ventana:
             self.inputs.append(EntradasTexto(self.x_botones + self.margen * i, 550, 100, 25, self.colores["negro"], self.colores["negro"], self.colores["blanco"] , self.fuente))
         self.benviar.eliminado = False
    
-
     def devolver_nombres(self)-> list[str]: 
         return self.nombres_jug
 
@@ -142,9 +141,3 @@ class Ventana:
             # Actualizar la pantalla
             pygame.display.flip()
         return self.nombres_jug
-
- 
-if __name__ == "__main__":
-    pygame.init()
-    ventana = Ventana(800, 600)
-    print(ventana.ejecutar())
