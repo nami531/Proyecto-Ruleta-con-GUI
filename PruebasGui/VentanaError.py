@@ -107,11 +107,11 @@ class VentanaError:
             self.screen.blit(texto_render, (rectangulo.left + 10, y + 10))
             y += texto_render.get_height()
          
-    def dibujar_pista(self, pista: str, ultimo_y: int):  #rectangulo: Rect    
+    def dibujar_pista(self, pista: str, ultimo_y: int): 
         rectangulo = pygame.draw.rect(self.screen, self.colores["morado"], (100, ultimo_y+100, 630, 100))
         self.genera_pista_adaptada(pista, rectangulo)  
     
-    def genera_error_adaptada(self, error: int, rectangulo):        
+    def genera_error_adaptada(self, error: int, rectangulo): #rectangulo: Rect            
         error = textwrap.wrap(self.errores[error], width=75) #Esta libreria adapta el texto al width (nº caracteres) deseado
         y = rectangulo.top
         fuente_error = pygame.font.Font(None, 24)

@@ -1,8 +1,6 @@
 import pygame
 import sys
 from Boton import Boton
-from Label import Label
-from EntradasTexto import EntradasTexto
 from Vista import Vista
 from pygame import Surface
 from pygame import font 
@@ -24,7 +22,7 @@ class VentanaPanel:
 
 
 
-    def __init__(self, width, height):
+    def __init__(self, width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -56,44 +54,44 @@ class VentanaPanel:
     def dibujar_rect_encriptados(self, enigma: str, pista: str, letras: list[str], vocales: list[str]) -> int:
         enigma_cifrado = self.vista.mostrar_panel_cifrado(enigma, pista, letras, vocales)
         
-        # Calculamos el tamaño de cada rectángulo en función del tamaño de la ventana
+      
         tamanho_rect = (self.width // 40, self.height // 15)
         
-        margen_y = self.height // 6  # Margen entre filas
-        margen_x = tamanho_rect[0] // 2  # Margen entre rectángulos dentro de una fila
+        margen_y = self.height // 6  
+        margen_x = tamanho_rect[0] // 2 
         
-        x = self.width // 8  # Posición inicial x
-        y = self.height // 4 + 30 # Posición inicial y
+        x = self.width // 8  
+        y = self.height // 4 + 30 
         
         for i in range(len(enigma_cifrado)):
             letra = enigma_cifrado[i]
-            if letra.lower() in letras:  # Calculamos j como el resto de la división de i por el número máximo de columnas
+            if letra.lower() in letras:  
                 self.dibujar_rect_Letra(letra, x, y, tamanho_rect)
-                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
+                x += tamanho_rect[0] + margen_x  # Movemos los rectángulos con el tamaño del rectángulo y el margen
             
             elif letra == " ": 
-                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
+                x += tamanho_rect[0] + margen_x   # Incrementamos con tamaño del rectángulo y el margen
             else: 
                 pygame.draw.rect(self.screen, self.colores["azul"], (x, y, tamanho_rect[0], tamanho_rect[1]))
-                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
+                x += tamanho_rect[0] + margen_x 
                 
-            # Verificamos si hemos llegado al final de la fila para saltar a la siguiente
+            #comprobamos si hemos llegado al final de la fila para saltar a la siguiente
             if x + tamanho_rect[0] > self.width - tamanho_rect[0]:
-                x = self.width // 10  # Reiniciamos la posición x
-                y += margen_y  # Incrementamos la posición y para la siguiente fila
+                x = self.width // 10  # Se reinicia x
+                y += margen_y  
                 
         return y
     
     def dibujar_rect_Letra(self, letra: str, x: int, y: int, tamanho: tuple[int, int])-> None: 
         rect = pygame.Rect(x, y, tamanho[0], tamanho[1])
-        pygame.draw.rect(self.screen, self.colores["azul"], rect)
+        pygame.draw.rect(self.screen, self.colores["azul"], rect)  #Primero se crean los rectángulos a los que va a pertenecer
 
         sup_texto = self.tipo_fuente.render(letra, True, self.colores["negro"])
         rect_texto = sup_texto.get_rect(center=rect.center)
         self.screen.blit(sup_texto, rect_texto)
     
 
-    def genera_pista_adaptada(self, pista: str, rectangulo):        
+    def genera_pista_adaptada(self, pista: str, rectangulo):   #rectangulo: Rect          
         pista = textwrap.wrap(pista, width=75)
         y = rectangulo.top
         for linea in pista:
@@ -120,7 +118,7 @@ class VentanaPanel:
                     siguiente = True
             
 
-            self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
+            self.screen.fill(self.colores["fondo"])
 
             ultimo_y = self.dibujar_rect_encriptados(enigma_juego, letra, letras, vocales )
             
@@ -132,9 +130,3 @@ class VentanaPanel:
             # Actualiza la pantalla
             pygame.display.flip()
  
-if __name__ == "__main__":
-    pygame.init()
-    letras = ["a", "h"]
-    vocales = []
-    ventana = VentanaPanel(800, 600)
-    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", ["t", "h", "n", "i"],[]))

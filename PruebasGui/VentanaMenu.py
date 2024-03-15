@@ -21,7 +21,7 @@ class VentanaMenu:
     puntuacion : Label
     labels : list[Label]
 
-    def __init__(self, width : int, height: int):
+    def __init__(self, width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height
