@@ -131,7 +131,7 @@ class Juego():
                     sys.exit()
             jugador = self.lista_jugadores[index_jugador]        
 
-            fuerza = VentanaFuerza(800, 600).ejecutar(jugador)
+            fuerza = VentanaFuerza().ejecutar(jugador)
 
             jugador.girar_ruleta(self.ruleta, fuerza)  #Se tiene que pasar la ruleta con la que se esta iniciando el juego si no exisitirían 2 ruletas
             
@@ -145,7 +145,7 @@ class Juego():
             while mismo_jugador: 
                 if self.comprobaciones_juego(index_jugador, premio): #Esta comprobacion está para que se pueda ejecutar el juego aunque caigas en la mitad
                     self.error = 0 
-                    opcion = VentanaMenu(800, 600, jugador).ejecutar()
+                    opcion = VentanaMenu().ejecutar(jugador)
 
                     if opcion == 1: 
                         opcion1_ejecucion = True 

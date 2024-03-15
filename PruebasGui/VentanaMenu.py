@@ -21,7 +21,7 @@ class VentanaMenu:
     puntuacion : Label
     labels : list[Label]
 
-    def __init__(self, width : int, height: int, jugador: Jugador):
+    def __init__(self, width : int, height: int):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -50,15 +50,15 @@ class VentanaMenu:
             else: 
                 self.botones.append(Boton(self.x_botones+ self.margen * i, 200, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], self.vista.OPCIONES_TURNO_JUG[i], self.colores["negro"], self.fuente, i ))
 
+       
+
+
+    def ejecutar(self, jugador: Jugador)-> int | None:
+        accion = False
         self.turno = Label(90, 100, self.vista.turno(jugador), self.fuente, self.colores["negro"])
 
         self.puntuacion = Label(600, 100, f"Puntuación: {jugador.comprobar_puntuacion()[0]}" , self.fuente, self.colores["negro"])
-
         self.labels = [self.turno, self.puntuacion]
-
-
-    def ejecutar(self)-> int | None:
-        accion = False
         while not accion:
 
             # Obtener la posición del cursor
@@ -89,12 +89,5 @@ class VentanaMenu:
             # Actualiza la pantalla
             pygame.display.flip()
 
-if __name__ == "__main__":
-    j1 = Jugador("Nadia")
-    j2 = Jugador("Pepe")
-    lista_jugadores = [j1, j2]
-    pygame.init()
-    ventana = VentanaMenu(800, 600, j1)
-    print(ventana.ejecutar())
 
         
