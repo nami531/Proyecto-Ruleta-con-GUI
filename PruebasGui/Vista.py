@@ -124,7 +124,7 @@ class Vista:
     def no_resolviste_panel(self): 
         return "No has resuelto el panel :("
         
-    def comodin(): 
+    def comodin(self): 
         return "Te salvaste, tienes un comodin"
 
 
@@ -134,8 +134,6 @@ class Vista:
 
     def has_ganado(self, jugador: Jugador): 
         return f"{jugador.nombre} has ganado. Te llevas {jugador.puntuacion}"
-
-
 
     def longitud_incorrecta(self): 
         return "Entrada inválida, Introduce una letra"

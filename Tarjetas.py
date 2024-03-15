@@ -1,5 +1,5 @@
 import random
-random.seed(1)
+(1)
 
 class Tarjetas: 
     fichero_enigma : str

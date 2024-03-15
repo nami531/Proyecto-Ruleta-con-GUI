@@ -19,17 +19,22 @@ from VentanaResolucionEnigma import VentanaResolucion
 from VentanaAdios import VentanaAdios
 
 class Juego(): 
-    vista : Vista
-    jugador : Jugador
+    vista: Vista
+    jugador: Jugador
     ruleta: Ruleta
-    enigma : Tarjetas
-    enigma_juego : str
-    lista_jugadores: list[Jugador] #Hay que protegerlo
-    letras : list[str]
-    vocales : list[str]
+    enigma: Tarjetas
+    enigma_juego: str
+    lista_jugadores: list[Jugador]
+    letras: list[str]
+    vocales: list[str]
     vocales_tilde: dict[str, str]
-    ventana : Ventana
-    ventanaError : VentanaError
+    ventana: Ventana
+    controlador: Controlador
+    error: int
+    precio: int
+    letra: str
+    perder_turno: bool
+    opcion_ejecucion: bool
 
 
     def __init__(self):  
@@ -44,8 +49,58 @@ class Juego():
                               "u" : "úü"
                               }
         self.precio = 100 
-        self.ventana = Ventana(800, 600)
-        self.ventanaError = VentanaError(800,600)
+        self.ventana = Ventana()
+
+    @property
+    def lista_jugadores(self) -> list[Jugador]:
+        return self._lista_jugadores
+    
+    @lista_jugadores.setter
+    def lista_jugadores(self, jugadores: list[Jugador]):
+        self._lista_jugadores = jugadores
+
+    @property
+    def error(self) -> int:
+        return self._error
+    
+    @error.setter
+    def error(self, valor: int):
+        self._error = valor
+
+    @property
+    def precio(self) -> int:
+        return self._precio
+    
+    @precio.setter
+    def precio(self, valor: int):
+        if valor >= 0:
+            self._precio = valor
+        else:
+            self._precio = 0
+
+    @property
+    def letra(self) -> str:
+        return self._letra
+    
+    @letra.setter
+    def letra(self, valor: str):
+        self._letra = valor
+
+    @property
+    def perder_turno(self) -> bool:
+        return self._perder_turno
+    
+    @perder_turno.setter
+    def perder_turno(self, valor: bool):
+        self._perder_turno = valor
+
+    @property
+    def opcion_ejecucion(self) -> bool:
+        return self._opcion_ejecucion
+    
+    @opcion_ejecucion.setter
+    def opcion_ejecucion(self, valor: bool):
+        self._opcion_ejecucion = valor
 
     def anhadirJugador(self, jugador: Jugador):
         self.lista_jugadores.append(jugador)
@@ -65,24 +120,25 @@ class Juego():
     def comprobaciones_al_introducir(self, i= 0)-> bool: #Comprueba todos los fallos, en caso de no ejecutarse ninguno, devolverá True
         if len(self.letra) > 1: 
             self.error = 1
-            self.letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)
+            self.letra = VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)
             return False
         
         elif self.letra_repetida(self.letra): 
             self.error = 2
-            self.letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)
+            self.letra = VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)
+            self.opcion_ejecucion = False 
             return False
 
         elif self.letra_no_aparece(self.letra):      
             self.error = 3
-            self.letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)            
+            self.letra = VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales) 
+            self.opcion_ejecucion = False            
             return False 
         return True            
 
 
     def comprobaciones_juego(self,jugador:int,  premio: int |float)-> bool: #Comprueba el premio donde cayó el jugador
         if premio == -1: 
-            self.vista.decir_letra_pierdeTurno()
             return False
         elif premio == 0: 
             self.lista_jugadores[jugador].en_quiebra(premio)
@@ -99,12 +155,7 @@ class Juego():
             jugadorCreado = Jugador(nombre)
             self.anhadirJugador(jugadorCreado)
 
-        print(self.lista_jugadores)
-        # self.vista.mostrarJugadores(self.lista_jugadores)
-        # Proceso de añadir jugadores al juego
-
-
-        tematica = VentanaTematica(800,600).ejecutar()
+        tematica = VentanaTematica().ejecutar()
         self.enigma = Tarjetas(tematica)
         self.enigma_juego = self.enigma.devolver_enigma_aleatorio()
         self.pista_enigma = self.enigma.devolver_pista()
@@ -113,13 +164,9 @@ class Juego():
         self.vocales = []
         self.enigma_encriptado = self.vista.mostrar_panel_cifrado(self.enigma_juego, "", self.letras, self.vocales)
         
-        # self.vista.mostrar_enigma(self.enigma_juego) #Habría que quitar esto, pq si no no tiene gracia jeje
-        self.vista.mostrar_pista(self.pista_enigma) 
-        
-        
         turno = True 
         index_jugador = 0 
-        VentanaPanel(800, 600).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
+        VentanaPanel().ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
         
         # Proceso de establecer el enigma y la temática de este, se repetirá según las rondas que se jueguen
 
@@ -134,82 +181,86 @@ class Juego():
             fuerza = VentanaFuerza().ejecutar(jugador)
 
             jugador.girar_ruleta(self.ruleta, fuerza)  #Se tiene que pasar la ruleta con la que se esta iniciando el juego si no exisitirían 2 ruletas
-            
-            # self.vista.mostrar_ruleta(self.ruleta.devuelve_ruleta(), self.ruleta.puntero)
+
             premio = self.ruleta.devuelve_premio()
-            VentanaPremio(800,600).ejecutar(self.ruleta.puntero, self.ruleta, premio)
+            VentanaPremio().ejecutar(self.ruleta.puntero, self.ruleta, premio)
             # Proceso de girar la ruleta
             
             mismo_jugador = True
 
             while mismo_jugador: 
-                if self.comprobaciones_juego(index_jugador, premio): #Esta comprobacion está para que se pueda ejecutar el juego aunque caigas en la mitad
+                if self.comprobaciones_juego(index_jugador, premio): #Esta comprobacion está para que se pueda ejecutar el juego aunque caigas en el premio mitad
                     self.error = 0 
                     opcion = VentanaMenu().ejecutar(jugador)
 
                     if opcion == 1: 
-                        opcion1_ejecucion = True 
+                        self.perder_turno = True
+                        self.opcion_ejecucion = True 
                         self.letra = VentanaPanelEntrada().ejecutar(jugador, self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
-                        while opcion1_ejecucion: 
+                        while self.opcion_ejecucion: 
                             if self.controlador.es_vocal(self.letra): #Esto se encuentra aquí porque no debe estar en las comprobaciones comunes
                                 self.vista.vocal_sin_comprar()
                                 self.error = 4
-                                self.letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[index_jugador], self.error,self.letras, self.vocales)
+                                self.letra = VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[index_jugador], self.error,self.letras, self.vocales)
 
-                                
                             elif self.comprobaciones_al_introducir(index_jugador):  
                                 self.letras.append(self.letra)
                                 self.vista.mostrar_panel_cifrado(self.enigma_juego, self.letra, self.letras, self.vocales)
                                 jugador.ganar_puntuacion(premio, self.apariciones(self.letra))
                                 VentanaPanel().ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                                 mismo_jugador = False 
-                                opcion1_ejecucion = False
-                            else: 
-                                index_jugador, mismo_jugador = jugador.perder_turno( index_jugador, self.lista_jugadores)
-                                opcion1_ejecucion = False
+                                self.opcion_ejecucion = False
+                                self.perder_turno = False
+                        if self.perder_turno:   
+                            index_jugador, mismo_jugador = jugador.perder_turno( index_jugador, self.lista_jugadores)
+                        
 
                     elif opcion == 2:
-                        opcion2_ejecucion = True 
+                        self.opcion_ejecucion = True 
+                        self.perder_turno = True
                         self.letra = VentanaPanelEntrada().ejecutar(jugador, self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
-                        while opcion2_ejecucion: 
+                        while self.opcion_ejecucion: 
                            
                             if not self.controlador.es_vocal(self.letra): 
                                 self.error = 5
-                                self.letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, self.letra)
+                                self.letra = VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, self.letra)
                                 
                             if self.comprobaciones_al_introducir(index_jugador): 
                                 vocal_comprada = jugador.comprar_vocal(self.letra, self.precio)
                                 if not vocal_comprada:
                                     self.error = 6
-                                    self.letra = self.ventanaError.ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, self.letra)
-                                    opcion2_ejecucion = False
+                                    VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, jugador, self.error, self.letras, self.vocales, self.letra)
+                                    self.opcion_ejecucion = False
                                 else: 
                                     self.letras.append(self.letra) 
                                     for j in self.vocales_tilde[self.letra]: 
                                         self.letras.append(j)
                                     self.vista.mostrar_panel_cifrado(self.enigma_juego, self.letra, self.letras, self.vocales)
                                     jugador.ganar_puntuacion(premio)
-                                    VentanaPanel(800,600).ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
+                                    VentanaPanel().ejecutar(self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                                     mismo_jugador = False
+                                    self.opcion_ejecucion = False
+                                    self.perder_turno = False
                             else: 
-                                opcion2_ejecucion = False
+                                self.opcion_ejecucion = False
+                        if self.perder_turno: 
+                            index_jugador, mismo_jugador = jugador.perder_turno( index_jugador, self.lista_jugadores)
 
                     elif opcion == 3: 
                         enigma_jugador = VentanaPanelEntrada().ejecutar(jugador, self.enigma_juego, self.pista_enigma, self.letras, self.vocales)
                         resuelto = jugador.resolver_enigma(self.enigma_juego, enigma_jugador)
                         if resuelto: 
                             jugador.ganar_puntuacion(premio)
-                            VentanaResolucion(800, 600).ejecutar(jugador, resuelto)#Ventana
-                            # self.vista.has_ganado(jugador) 
+                            VentanaResolucion().ejecutar(jugador, resuelto)
                             jugador.comprobar_puntuacion()
                             turno, mismo_jugador = False, False
                         else: 
-                            self.vista.no_resolviste_panel() #Ventana
-                            VentanaResolucion(800, 600).ejecutar(jugador, resuelto)
+                            self.vista.no_resolviste_panel()
+                            VentanaResolucion().ejecutar(jugador, resuelto)
                             index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores) 
 
                     elif opcion == Vista.SALIR:
-                        VentanaAdios(800,600).ejecutar()
+                        VentanaAdios().ejecutar()
                         turno, mismo_jugador = False, False
                 else:
                     index_jugador, mismo_jugador = jugador.perder_turno(index_jugador, self.lista_jugadores)

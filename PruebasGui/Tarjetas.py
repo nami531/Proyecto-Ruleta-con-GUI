@@ -1,6 +1,6 @@
 import random
 from os import path
-random.seed(1)
+
 
 class Tarjetas(): 
     fichero_enigma : str

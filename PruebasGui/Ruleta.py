@@ -1,5 +1,5 @@
 import random
-random.seed(1)
+
 class Ruleta(): 
     premios: dict[str,list[float]]
     ruleta: list[str]

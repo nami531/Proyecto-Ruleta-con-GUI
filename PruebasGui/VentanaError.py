@@ -186,4 +186,5 @@ class VentanaError:
             self.bintroducir.update(mouse_pos) 
             # Actualizar la pantalla
             pygame.display.flip()
+        return ""
  
