@@ -73,7 +73,7 @@ class Tarjetas():
         for i in range(len(self.lista_enigmas)): 
             self.enigmas_pistas[self.lista_pistas[i]] = self.lista_enigmas[i] 
 
-    def devolver_enigma_aleatorio(self):
+    def devolver_enigma_aleatorio(self)-> str:
         num = random.randint(1, len(self.enigmas_pistas)-1)
         
         self.pista = list(self.__enigmas_pistas)[num]

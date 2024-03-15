@@ -85,22 +85,5 @@ class Jugador:
         else: 
             return False
     
-    # def ganar(self, vista: Vista):
-    #     Vista.has_ganado(vista, self)
-        
-    # def perder()
     def __str__(self) -> str:
         return f"{self.nombre}"
-    
-if __name__ == "__main__": 
-    r = Ruleta()
-    j1 = Jugador("Nadia")
-    print(j1.puntuacion)
-    j1.ganar_puntuacion(50, 5)
-    print(j1.puntuacion)
-    j1.ganar_puntuacion(1, 5)
-    print(j1._puntuacion)
-    j1.perder_mitad(0.5)
-    print(j1._puntuacion)
-    j1.en_quiebra(0)
-    print(j1._puntuacion)

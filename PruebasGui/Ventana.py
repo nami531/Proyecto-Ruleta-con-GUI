@@ -38,9 +38,9 @@ class Ventana:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.x_botones = 100
+        self.x_botones = 80
         self.tamanho_botones = (100, 50)
-        self.margen = 175
+        self.margen = 150
 
         self.fuente = 24
 
@@ -141,3 +141,7 @@ class Ventana:
             # Actualizar la pantalla
             pygame.display.flip()
         return self.nombres_jug
+
+if __name__ == "__main__": 
+    pygame.init()
+    Ventana().ejecutar()
