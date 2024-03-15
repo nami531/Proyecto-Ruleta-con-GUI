@@ -17,7 +17,7 @@ class VentanaFuerza:
     fuente : int
     colores : dict[str, tuple[int,int,int]]
     contador : int
-    imagen : Surface
+    imagen_ruleta : Surface
     bempezar: Boton
     bsiguiente : Boton
     texto_fuerza: Label
@@ -47,16 +47,25 @@ class VentanaFuerza:
         }
 
         self.__contador = 0 
-        directorio_actual = os.path.dirname(os.path.abspath(__file__))
-
-        self.imagen = pygame.image.load(directorio_actual + "\\Multimedia\\ruleta.png")
-        self.imagen = pygame.transform.scale(self.imagen, (300, 300))
         
+        self.cargar_ajustar_img()
+            
         self.bempezar = Boton(350, 470, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Empezar", self.colores["negro"], self.fuente)
         self.texto_fuerza = Label(70, 100, self.vista.aviso_medicion_fuerza(), self.fuente, self.colores["negro"]) 
         
         self.bsiguiente = Boton(710, 520, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
                  
+    def cargar_ajustar_img(self): 
+        directorio_actual = os.path.dirname(os.path.abspath(__file__))
+        self.imagen_ruleta = pygame.image.load(directorio_actual + "\\Multimedia\\ruleta.png")
+        self.imagen_ruleta = pygame.transform.scale(self.imagen_ruleta, (300, 300))
+
+        self.imagen_puntero = pygame.image.load(directorio_actual + "\\Multimedia\\puntero.png")
+        self.imagen_puntero = pygame.transform.scale(self.imagen_puntero, (300, 300))
+
+        self.imagen_baseruleta = pygame.image.load(directorio_actual + "\\Multimedia\\base_ruleta.png")
+        self.imagen_baseruleta = pygame.transform.scale(self.imagen_baseruleta, (300, 300))
+
     def girar_imagen(self, imagen: Surface, angulo: int):
         imagen_girada = pygame.transform.rotate(imagen, angulo)
         return imagen_girada
@@ -65,18 +74,17 @@ class VentanaFuerza:
         
         self.texto_turno = Label(260, 50, self.vista.turno(jugador), self.fuente, self.colores["negro"])
         self.labels = [self.texto_fuerza, self.texto_turno]
-        imagen_girada = self.imagen
+        imagen_girada = self.imagen_ruleta
         velocidad_rotacion = 1
         angulo = 0 
         siguiente = False
         self.__contador = 0 
-        tiempo =  int(pygame.time.get_ticks() / 1000)   #Lo devuelve en milisegundos, por eso se divide entre 1000
-
+        tiempo_inicio =  None  
 
         while not siguiente:
             
             mouse_pos = pygame.mouse.get_pos()
-            tiempo2 = int(pygame.time.get_ticks() / 1000) 
+            tiempo_actual = int(pygame.time.get_ticks() / 1000)  #Lo devuelve en milisegundos, por eso se divide entre 1000
 
             self.screen.fill(self.colores["fondo"]) 
 
@@ -87,30 +95,40 @@ class VentanaFuerza:
                 elif self.bempezar.fue_presionado(mouse_pos, event): 
                     self.bempezar.eliminado = True
                     self.__contador = 0
-                elif event.type == pygame.KEYDOWN and tiempo2 - tiempo <= 5 : 
-                    self.__contador +=1 
+                    tiempo_inicio = tiempo_actual
+                elif event.type == pygame.KEYDOWN and tiempo_inicio is not None :
+                    tiempo_transcurrido = (tiempo_actual - tiempo_inicio) 
+                    if tiempo_transcurrido <= 5:  # Solo contar las pulsaciones de teclas dentro de los primeros 5 segundos
+                        self.__contador += 1 
                 elif event.type == pygame.KEYUP:
                     print("Se ha levantado la tecla")
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
                     siguiente = True
 
-            sup_imagen_girada = imagen_girada.get_rect()
-            sup_imagen_girada.center = (self.width // 2, self.height // 2)  #Obtenemos la superficie de la imagen
+            sup_imagen_girada = imagen_girada.get_rect() #Obtenemos la superficie de la imagen
+            sup_imagen_girada.center = (self.width // 2, self.height // 2) 
+
+            sup_puntero_base = self.imagen_puntero.get_rect()
+            sup_puntero_base.center = (self.width // 2, self.height // 2) 
+
+            self.screen.blit(self.imagen_baseruleta, sup_puntero_base ) # Puntero y base tienen la misma superficie ya que queremos que estén en capas superpuestas e independientes a la superficie de la ruleta
             self.screen.blit(imagen_girada, sup_imagen_girada)
+            self.screen.blit(self.imagen_puntero, sup_puntero_base) 
+            #IMPORTANTE EL ORDEN
 
             angulo %= 360 
 
-            self.fuerza = Label(100, 500 , f"¡Guau! Has presionado {self.__contador} veces, ¡increíble!", 24, (0,0,0))
+            self.fuerza = Label(100, 500 , f"¡Guau! Has presionado {self.__contador} veces, ¡increíble!", self.fuente, self.colores["negro"])
+            
+            if tiempo_inicio is not None: 
+                tiempo_transcurrido = (tiempo_actual - tiempo_inicio)
+                if tiempo_transcurrido > 4: #> 4 para que el usuario pueda ver la renderización del texto 
+                    self.fuerza.draw(self.screen)
+                    self.bsiguiente.draw(self.screen)
+                if 6 <= tiempo_transcurrido < 10:  
+                    angulo += velocidad_rotacion
+                    imagen_girada = self.girar_imagen(self.imagen_ruleta, angulo)
 
-            if tiempo2 - tiempo > 6 and tiempo2 - tiempo< 12: 
-                angulo += velocidad_rotacion
-                imagen_girada = self.girar_imagen(self.imagen, angulo)
-                
-            if tiempo2 - tiempo >= 5: 
-                self.fuerza.draw(self.screen)
-                self.bsiguiente.draw(self.screen)
-                
-                
             self.texto_turno.draw(self.screen)  
             self.texto_fuerza.draw(self.screen)
             self.bempezar.draw(self.screen)  
