@@ -17,7 +17,7 @@ class VentanaTematica:
     fuente : int
     colores : dict[str, tuple[int,int,int]]
 
-    def __init__(self, width, height):
+    def __init__(self, width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -66,9 +66,7 @@ class VentanaTematica:
                         return boton.valor
                     
             for boton in self.botones:
-                boton.update(mouse_pos) 
-
-            
+                boton.update(mouse_pos)             
 
             self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
 
@@ -80,13 +78,7 @@ class VentanaTematica:
             # Actualizar la pantalla
             pygame.display.flip()
 
-if __name__ == "__main__":
-    j1 = Jugador("Nadia")
-    j2 = Jugador("Jorge")
-    jugadores = [j1, j2]
-    pygame.init()
-    ventana = VentanaTematica(800, 600)
-    print(ventana.ejecutar())
+
         
 
  

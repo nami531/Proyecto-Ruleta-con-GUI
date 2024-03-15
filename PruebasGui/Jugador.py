@@ -40,8 +40,9 @@ class Jugador:
                 self.puntuacion -= precio
                 return True
     
-    def multiplicar_puntuacion(self, premio): 
-        int(self.puntuacion *= premio)
+    def multiplicar_puntuacion(self, premio : int|float): 
+        self.puntuacion *= premio
+        round(self.puntuacion,0)
 
     def comprobar_puntuacion(self)-> list:
         return self._puntuacion

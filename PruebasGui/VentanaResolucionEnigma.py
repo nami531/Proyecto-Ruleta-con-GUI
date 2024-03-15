@@ -21,7 +21,7 @@ class VentanaResolucion:
     # tipo_fuente : font
     bsiguiente : Boton
 
-    def __init__(self, width, height):
+    def __init__(self, width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -58,11 +58,10 @@ class VentanaResolucion:
 
     def dibujar_aviso_ganador(self,jugador: Jugador): 
         sup_aviso = self.tipo_fuente.render(self.vista.panel_resuelto(), True, self.colores["negro"])
-        rect_aviso = sup_aviso.get_rect()
-        rect_aviso.center = (125 + 500 // 2, 100 + 100 // 2)
+        rect_aviso = sup_aviso.get_rect(center = (125 + 500 // 2, 100 + 100 // 2))
         pygame.draw.rect(self.screen, self.colores["morado"], (125, 100, 500, 100))
         self.screen.blit(sup_aviso, rect_aviso)
-        Label(200, 225, self.vista.has_ganado(jugador), self.fuente,self.colores["negro"]).draw(self.screen)
+        Label(250, 225, self.vista.has_ganado(jugador), self.fuente,self.colores["negro"]).draw(self.screen)
     
     def carga_img_trofeo(self): 
         self.imagen = pygame.image.load(self.directorio + "\\Multimedia\\trofeo.webp")
@@ -71,8 +70,7 @@ class VentanaResolucion:
 
     def dibujar_aviso_perdedor(self): 
         sup_aviso = self.tipo_fuente.render(self.vista.no_resolviste_panel(), True, self.colores["negro"])
-        rect_aviso = sup_aviso.get_rect()
-        rect_aviso.center = (100 + 500 // 2, 100 + 100 // 2)
+        rect_aviso = sup_aviso.get_rect(center = (100 + 500 // 2, 100 + 100 // 2))
         pygame.draw.rect(self.screen, self.colores["azul"], (100, 100, 500, 100))
         self.screen.blit(sup_aviso, rect_aviso)
 
@@ -111,9 +109,3 @@ class VentanaResolucion:
             self.bsiguiente.update(mouse_pos) 
             # Actualizar la pantalla
             pygame.display.flip()
- 
-if __name__ == "__main__":
-    j1 = Jugador("Nadia")
-    pygame.init()
-    ventana = VentanaResolucion(800, 600)
-    print(ventana.ejecutar(j1, False))
