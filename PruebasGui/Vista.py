@@ -124,6 +124,9 @@ class Vista:
     def no_resolviste_panel(self): 
         return "No has resuelto el panel :("
         
+    def comodin(): 
+        return "Te salvaste, tienes un comodin"
+
 
     def panel_resuelto(self):
         return "Has resuelto el panel!"

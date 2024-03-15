@@ -25,7 +25,7 @@ class VentanaFuerza:
     labels: list[Label]
 
 
-    def __init__(self, width : int, height: int):
+    def __init__(self,  width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -106,11 +106,8 @@ class VentanaFuerza:
                 elif self.bsiguiente.fue_presionado(mouse_pos, event): 
                     siguiente = True
 
-            sup_imagen_girada = imagen_girada.get_rect() #Obtenemos la superficie de la imagen
-            sup_imagen_girada.center = (self.width // 2, self.height // 2) 
-
-            sup_puntero_base = self.imagen_puntero.get_rect()
-            sup_puntero_base.center = (self.width // 2, self.height // 2) 
+            sup_imagen_girada = imagen_girada.get_rect(center=(self.width // 2, self.height // 2) ) #Obtenemos la superficie de la imagen
+            sup_puntero_base = self.imagen_puntero.get_rect(center= (self.width // 2, self.height // 2) )
 
             self.screen.blit(self.imagen_baseruleta, sup_puntero_base ) # Puntero y base tienen la misma superficie ya que queremos que estén en capas superpuestas e independientes a la superficie de la ruleta
             self.screen.blit(imagen_girada, sup_imagen_girada)
@@ -140,9 +137,3 @@ class VentanaFuerza:
             pygame.display.flip()
     
         return self.__contador
-
-if __name__ == "__main__":
-    j1 = Jugador("Nadia")
-    pygame.init()
-    ventana = VentanaFuerza(800, 600)
-    print(ventana.ejecutar(j1))

@@ -3,7 +3,7 @@ from Ruleta import Ruleta
 from Controlador import Controlador
 
 
-class Jugador(): 
+class Jugador: 
     nombre : str
     _puntuacion: list[float|int|str] 
 
@@ -62,7 +62,6 @@ class Jugador():
 
     def tiene_comodin(self): 
         if "Comodín" in self._puntuacion: 
-            print("Te salvaste por el comodín")
             self._puntuacion.remove("Comodín") 
             return True
         return False

@@ -31,7 +31,7 @@ class Ventana:
     benviar : Boton
     imagen : Surface
 
-    def __init__(self, width=800, height=600):
+    def __init__(self, width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height

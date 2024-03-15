@@ -7,6 +7,7 @@ from Vista import Vista
 from pygame import Surface
 from Jugador import Jugador
 import textwrap
+import os
 
 class VentanaError:
 
@@ -26,7 +27,7 @@ class VentanaError:
     elementos : list[Label | EntradasTexto]
     __errores : list[str | None]
 
-    def __init__(self, width: int, height: int):
+    def __init__(self,  width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -35,7 +36,6 @@ class VentanaError:
 
         self.tamanho_botones = (80, 50)
   
-
         self.fuente = 24
 
         self.colores = { "fondo" : (234,234,234),
@@ -55,8 +55,7 @@ class VentanaError:
 
         self.bintroducir = Boton(700, 530, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Introducir", self.colores["negro"], self.fuente)
 
-
-        self.__errores = ["", self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal(), self.vista.saldo_insuficiente()]
+        self.__errores = [self.vista.comodin(), self.vista.longitud_incorrecta(), self.vista.decir_letra_esta_repetida(self.entrada.text), self.vista.decir_letra_no_aparece(self.entrada.text), self.vista.vocal_sin_comprar(), self.vista.letra_en_comprar_vocal(), self.vista.saldo_insuficiente()]
 
     #Función que dibuja los rectangulos, del panel
     def dibujar_rect_encriptados(self, enigma: str, pista: str, letras: list[str], vocales: list[str]) -> int:
@@ -65,49 +64,50 @@ class VentanaError:
         # Calculamos el tamaño de cada rectángulo en función del tamaño de la ventana
         tamanho_rect = (self.width // 40, self.height // 15)
         
-        margen_y = self.height // 6  # Margen entre filas
-        margen_x = tamanho_rect[0] // 2  # Margen entre rectángulos dentro de una fila
+        margen_y = self.height // 6  
+        margen_x = tamanho_rect[0] // 2 
         
-        x = self.width // 8  # Posición inicial x
-        y = self.height // 4 + 30 # Posición inicial y
+        x = self.width // 8  
+        y = self.height // 4 + 30 
+
+        #Todas las posiciones en este caso son relativas a la ventana
         
         for i in range(len(enigma_cifrado)):
             letra = enigma_cifrado[i]
-            if letra.lower() in letras:  # Calculamos j como el resto de la división de i por el número máximo de columnas
+            if letra.lower() in letras:  
                 self.dibujar_rect_Letra(letra, x, y, tamanho_rect)
-                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
+                x += tamanho_rect[0] + margen_x  # Movemos los rectángulos con el tamaño del rectángulo y el margen
             
             elif letra == " ": 
-                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
+                x += tamanho_rect[0] + margen_x  # Incrementamos con tamaño del rectángulo y el margen
             else: 
                 pygame.draw.rect(self.screen, self.colores["azul"], (x, y, tamanho_rect[0], tamanho_rect[1]))
-                x += tamanho_rect[0] + margen_x  # Incrementamos la posición x con el tamaño del rectángulo y el margen
+                x += tamanho_rect[0] + margen_x  
                 
-            # Verificamos si hemos llegado al final de la fila para saltar a la siguiente
+            #comprobamos si hemos llegado al final de la fila para saltar a la siguiente
             if x + tamanho_rect[0] > self.width - tamanho_rect[0]:
-                x = self.width // 10  # Reiniciamos la posición x
-                y += margen_y  # Incrementamos la posición y para la siguiente fila
-                
+                x = self.width // 10  # Se reinicia x
+                y += margen_y 
         return y
 
              
     def dibujar_rect_Letra(self, letra: str, x: int, y: int, tamanho: tuple[int, int])-> None: 
         rect = pygame.Rect(x, y, tamanho[0], tamanho[1])
-        pygame.draw.rect(self.screen, self.colores["azul"], rect)
+        pygame.draw.rect(self.screen, self.colores["azul"], rect) #Primero se crean los rectángulos a los que va a pertenecer
 
         sup_texto = self.tipo_fuente.render(letra, True, self.colores["negro"])
         rect_texto = sup_texto.get_rect(center=rect.center)
         self.screen.blit(sup_texto, rect_texto)
 
-    def genera_pista_adaptada(self, pista: str, rectangulo):        
+    def genera_pista_adaptada(self, pista: str, rectangulo): #rectangulo: Rect       
         pista = textwrap.wrap(pista, width=75) #Esta libreria adapta el texto al width (nº caracteres) deseado
         y = rectangulo.top
         for linea in pista:
-            rendered_text = self.tipo_fuente.render(linea, True, self.colores["negro"])
-            self.screen.blit(rendered_text, (rectangulo.left + 10, y + 10))
-            y += rendered_text.get_height()
+            texto_render = self.tipo_fuente.render(linea, True, self.colores["negro"])
+            self.screen.blit(texto_render, (rectangulo.left + 10, y + 10))
+            y += texto_render.get_height()
          
-    def dibujar_pista(self, pista: str, ultimo_y: int): 
+    def dibujar_pista(self, pista: str, ultimo_y: int):  #rectangulo: Rect    
         rectangulo = pygame.draw.rect(self.screen, self.colores["morado"], (100, ultimo_y+100, 630, 100))
         self.genera_pista_adaptada(pista, rectangulo)  
     
@@ -117,9 +117,9 @@ class VentanaError:
         fuente_error = pygame.font.Font(None, 24)
         for linea in error:
 
-            rendered_text = fuente_error.render(linea, True, self.colores["negro"])
-            self.screen.blit(rendered_text, (rectangulo.left + 10, y + 10))
-            y += rendered_text.get_height()
+            texto_render = fuente_error.render(linea, True, self.colores["negro"])
+            self.screen.blit(texto_render, (rectangulo.left + 10, y + 10))
+            y += texto_render.get_height()
     
     def dibujar_error(self, error: int):
         rectangulo = pygame.draw.rect(self.screen, self.colores["morado_hover"], (100,140, 630, 30))
@@ -133,12 +133,11 @@ class VentanaError:
     def errores(self, valor): 
         self.__errores = self.__errores
 
-
-    def ejecutar(self, enigma_juego: str, pista: str,jugador: Jugador, error: int, letras: list[str], vocales: list[str], letra: str=""):
-        self.id = Label(100, 50, f"Jugador {jugador.nombre}", 24,(0,0,0))
-        self.puntuacion = Label(300, 50, f"Puntuación: {jugador.comprobar_puntuacion()[0]}", 24, (0,0,0))
+    def ejecutar(self, enigma_juego: str, pista: str, jugador: Jugador, error: int, letras: list[str], vocales: list[str], letra: str=""):
+        self.id = Label(100, 50, f"Jugador {jugador}", self.fuente, self.colores["negro"])
+        self.puntuacion = Label(300, 50, f"Puntuación: {jugador.comprobar_puntuacion()[0]}", self.fuente, self.colores["negro"])
         self.elementos =  [self.id, self.puntuacion, self.intletra, self.entrada]
-        
+
         self.enigma= enigma_juego
         self.pista = pista
         siguiente = False
@@ -161,7 +160,8 @@ class VentanaError:
 
                 self.entrada.update(mouse_pos, event)
 
-            self.screen.fill(self.colores["fondo"])  # Limpiar la pantalla con color blanco
+            self.screen.fill(self.colores["fondo"]) 
+
 
             ultimo_y = self.dibujar_rect_encriptados(enigma_juego, letra, letras, vocales)
             
@@ -189,6 +189,9 @@ class VentanaError:
  
 if __name__ == "__main__":
     j1 = Jugador("Nadia")
+    j1.ganar_puntuacion(100, 2)
+    j1.ganar_puntuacion(1)
+    print(j1.comprobar_puntuacion())
     pygame.init()
     ventana = VentanaError(800, 600)
-    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", j1, 6, ["h", "l", "y", "p"], ["i"]))
+    print(ventana.ejecutar("Hola me llamo nadia", "Mi nombre", j1, 0, ["h", "l", "y", "p"], ["i"]))

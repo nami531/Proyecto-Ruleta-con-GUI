@@ -19,7 +19,7 @@ class VentanaAdios:
     # tipo_fuente : font
     bsiguiente : Boton
 
-    def __init__(self, width, height):
+    def __init__(self,  width: int = 800, height: int = 600):
         self.vista = Vista()
         self.width = width
         self.height = height
@@ -51,11 +51,8 @@ class VentanaAdios:
         self.screen.blit(sup_aviso, rect_aviso)
 
     def ejecutar(self):
-
         siguiente = False
         while not siguiente:
-
-            #Obtener la posición del cursor
             mouse_pos = pygame.mouse.get_pos()
 
             for event in pygame.event.get():
@@ -76,8 +73,3 @@ class VentanaAdios:
             #Actualizar la pantalla
             pygame.display.flip()
  
-if __name__ == "__main__":
-    j1 = Jugador("Nadia")
-    pygame.init()
-    ventana = VentanaAdios(800, 600)
-    print(ventana.ejecutar())
