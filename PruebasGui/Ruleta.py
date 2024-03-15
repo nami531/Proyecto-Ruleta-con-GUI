@@ -39,14 +39,6 @@ class Ruleta():
     @puntero.setter
     def puntero(self, puntero): 
         self.__puntero = self.__puntero 
-
-
-    def ver(self, puntero:int= 0): 
-        for i in range(len(self.ruleta)):
-            if i == puntero: 
-                print("->", end="")
-            print(self.ruleta[i], end=", ")
-        print()
     
     def devuelve_ruleta(self)-> list[str]: 
         return self.ruleta
@@ -62,11 +54,6 @@ class Ruleta():
     def devuelve_posicion_puntero(self)-> int:
         return self.__puntero 
     
-if __name__ == "__main__": 
-    ruleta = Ruleta()
-    ruleta.ver()
-    puntero = ruleta.girar(25)
-    print(ruleta.devuelve_premio())
-    ruleta.ver(puntero)
+
     
 

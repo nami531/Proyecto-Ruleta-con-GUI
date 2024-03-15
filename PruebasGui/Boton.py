@@ -1,11 +1,27 @@
 import pygame
 
 class Boton:
+    x: int
+    y: int
+    __width: int
+    __height: int
+    color_normal: tuple[int, int, int]
+    color_hover: tuple[int, int, int]
+    text: str
+    text_color: tuple[int, int, int]
+    font_size: int
+    font: pygame.font.Font
+    rect: pygame.Rect
+    hovered: bool
+    eliminado: bool
+    presionado: bool
+    __valor: int
+
     def __init__(self, x, y, width, height, color_normal, color_hover, text, text_color, font_size, valor=0):
         self.x = x
         self.y = y
-        self.width = width
-        self.height = height
+        self.__width = width
+        self.__height = height
         self.color_normal = color_normal
         self.color_hover = color_hover
         self.text = text
@@ -16,7 +32,37 @@ class Boton:
         self.hovered = False
         self.eliminado = False
         self.presionado = False
-        self.valor = valor
+        self.__valor = valor
+
+    @property
+    def width(self) -> int:
+        return self.__width
+
+    @width.setter
+    def width(self, value: int):
+        if value >= 0:
+            self.__width = value
+        else:
+            self.__width = 0
+
+    @property
+    def height(self) -> int:
+        return self.__height
+
+    @height.setter
+    def height(self, value: int):
+        if value >= 0:
+            self.__height = value
+        else:
+            self.__height = 0
+
+    @property
+    def valor(self) -> int:
+        return self.__valor
+
+    @valor.setter
+    def valor(self, value: int):
+        self.__valor = value
 
     def draw(self, screen):
         if not self.eliminado: 
@@ -43,26 +89,3 @@ class Boton:
     def eliminar(self): 
         self.eliminado = True
 
-if __name__ == "__main__":
-    pygame.init()
-    screen = pygame.display.set_mode((400, 300))
-    clock = pygame.time.Clock()
-
-    button = Boton(150, 100, 100, 50, (0, 128, 0), (0, 255, 0), "Botón", (255, 255, 255), 24)
-
-    running = True
-    while running:
-        screen.fill((255, 255, 255))
-        mouse_pos = pygame.mouse.get_pos()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-
-        button.update(mouse_pos)
-        button.draw(screen)
-
-        pygame.display.flip()
-        clock.tick(60)
-
-    pygame.quit()

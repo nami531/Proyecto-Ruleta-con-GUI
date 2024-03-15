@@ -2,12 +2,29 @@ import pygame
 import sys
 
 class EntradasTexto:
+
+    x : int
+    y : int
+    __width_old: int
+    __width: int
+    __height: int
+    color: tuple[int, int, int]
+    text_color: tuple[int, int, int]
+    background_color: tuple[int, int, int]
+    font_size: int
+    rect: pygame.Rect
+    font: pygame.font.Font
+    text: str
+    activo: bool
+    hovered: bool
+    eliminado: bool
+
     def __init__(self, x, y, width, height, color, text_color, background_color, font_size):
         self.x = x
         self.y = y
-        self.width_old = width
-        self.width = width
-        self.height = height
+        self.__width_old = width
+        self.__width = width
+        self.__height = height
         self.color = color
         self.text_color = text_color
         self.background_color = background_color
@@ -18,7 +35,34 @@ class EntradasTexto:
         self.activo = False
         self.hovered = False
         self.eliminado = False
+    
+    @property
+    def width_old(self) -> int:
+        return self.__width_old
 
+    @property
+    def width(self) -> int:
+        return self.__width
+
+    @width.setter
+    def width(self, value: int):
+        if value >= 0:
+            self.__width_old = self.__width
+            self.__width = value
+        else:
+            self.__width_old = self.__width
+            self.__width = 0
+
+    @property
+    def height(self) -> int:
+        return self.__height
+
+    @height.setter
+    def height(self, value: int):
+        if value >= 0:
+            self.__height = value
+        else:
+            self.__height = 0
 
     def draw(self, screen):
         if not self.eliminado: 
@@ -47,30 +91,4 @@ class EntradasTexto:
                         text_width = self.font.size(self.text)[0]
                         self.width = max(self.width_old, text_width + 10)  # Ajustar el ancho mínimo
                         self.rect.width = self.width
-
-if __name__ == "__main__":
-    pygame.init()
-    screen = pygame.display.set_mode((400, 300))
-    clock = pygame.time.Clock()
-
-    cuadro_texto = EntradasTexto(150, 100, 100, 50, (255, 255, 255), (0,0,0),(255,255,255), 24)
-    cuadro_texto2 = EntradasTexto(200, 200, 100, 50, (255, 255, 255), (255, 255, 255), (255,255,255), 24)
-    
-    running = True
-    while running:
-        screen.fill((0, 0, 0))
-        mouse_pos = pygame.mouse.get_pos()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            cuadro_texto.update(mouse_pos, event)
-            cuadro_texto2.update(mouse_pos, event)
-
-        cuadro_texto.draw(screen)
-        cuadro_texto2.draw(screen)
-
-        pygame.display.flip()
-        clock.tick(60)
-
-    pygame.quit()
 

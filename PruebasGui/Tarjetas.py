@@ -12,7 +12,7 @@ class Tarjetas():
     
     def __init__(self, fichero: int) -> None:
         self.__tematicas_disponibles = ["Normal", "San Valentín", "Carnaval", "Comida", "Python"]
-        self.__enigma = "" #Hay que protegerlos
+        self.__enigma = ""
         self.__lista_enigmas = []
         self.__lista_pistas = []
         self.__enigmas_pistas = {}
@@ -88,9 +88,3 @@ class Tarjetas():
         return self.pista
     
     
-if __name__ == "__main__": 
-    t1 = Tarjetas(4)  
-    print(t1.devolver_enigma_aleatorio())
-    # print(t1.devolver_enigma_aleatorio())
-    print(t1.devolver_enigma())
-    print(t1.devolver_pista())

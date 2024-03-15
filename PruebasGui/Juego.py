@@ -24,24 +24,24 @@ class Juego():
     ruleta: Ruleta
     enigma: Tarjetas
     enigma_juego: str
-    lista_jugadores: list[Jugador]
+    __lista_jugadores: list[Jugador]
     letras: list[str]
     vocales: list[str]
     vocales_tilde: dict[str, str]
     ventana: Ventana
     controlador: Controlador
-    error: int
-    precio: int
-    letra: str
-    perder_turno: bool
-    opcion_ejecucion: bool
+    _error: int
+    _precio: int
+    _letra: str
+    _perder_turno: bool
+    _opcion_ejecucion: bool
 
 
     def __init__(self):  
         self.controlador = Controlador()
         self.vista = Vista()
         self.ruleta = Ruleta()
-        self.lista_jugadores = []
+        self.__lista_jugadores = []
         self.vocales_tilde = {"a": "á",
                               "e": "é",
                               "i": "í",
@@ -53,11 +53,11 @@ class Juego():
 
     @property
     def lista_jugadores(self) -> list[Jugador]:
-        return self._lista_jugadores
+        return self.__lista_jugadores
     
     @lista_jugadores.setter
     def lista_jugadores(self, jugadores: list[Jugador]):
-        self._lista_jugadores = jugadores
+        self.__lista_jugadores = jugadores
 
     @property
     def error(self) -> int:
@@ -125,13 +125,13 @@ class Juego():
         
         elif self.letra_repetida(self.letra): 
             self.error = 2
-            self.letra = VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)
+            VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales)
             self.opcion_ejecucion = False 
             return False
 
         elif self.letra_no_aparece(self.letra):      
             self.error = 3
-            self.letra = VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales) 
+            VentanaError().ejecutar(self.enigma_juego, self.pista_enigma, self.lista_jugadores[i], self.error,self.letras, self.vocales) 
             self.opcion_ejecucion = False            
             return False 
         return True            
