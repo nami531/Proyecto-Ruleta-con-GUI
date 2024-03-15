@@ -62,12 +62,12 @@ class Jugador:
 
     def tiene_comodin(self): 
         if "Comodín" in self._puntuacion: 
-            self._puntuacion.remove("Comodín") 
             return True
         return False
     
     def perder_turno(self, jugador: int, lista_jugadores: list)-> tuple[int,bool]: #SI LE PONES LIST[JUGADOR SE VUELVE LOCO]
         if self.tiene_comodin():
+            self._puntuacion.remove("Comodín") 
             mismo_jugador = True
             jugador = jugador
         else: 
