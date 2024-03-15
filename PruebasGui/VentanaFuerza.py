@@ -50,21 +50,22 @@ class VentanaFuerza:
         
         self.cargar_ajustar_img()
             
-        self.bempezar = Boton(350, 470, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Empezar", self.colores["negro"], self.fuente)
+        self.bempezar = Boton(350, 480, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Empezar", self.colores["negro"], self.fuente)
         self.texto_fuerza = Label(70, 100, self.vista.aviso_medicion_fuerza(), self.fuente, self.colores["negro"]) 
         
         self.bsiguiente = Boton(710, 520, self.tamanho_botones[0], self.tamanho_botones[1], self.colores["azul"], self.colores["azul_hover"], "Siguiente", self.colores["negro"], self.fuente)
                  
     def cargar_ajustar_img(self): 
+        tamanho = (350,350)
         directorio_actual = os.path.dirname(os.path.abspath(__file__))
         self.imagen_ruleta = pygame.image.load(directorio_actual + "\\Multimedia\\ruleta.png")
-        self.imagen_ruleta = pygame.transform.scale(self.imagen_ruleta, (300, 300))
+        self.imagen_ruleta = pygame.transform.scale(self.imagen_ruleta, tamanho )
 
         self.imagen_puntero = pygame.image.load(directorio_actual + "\\Multimedia\\puntero.png")
-        self.imagen_puntero = pygame.transform.scale(self.imagen_puntero, (300, 300))
+        self.imagen_puntero = pygame.transform.scale(self.imagen_puntero, tamanho   )
 
         self.imagen_baseruleta = pygame.image.load(directorio_actual + "\\Multimedia\\base_ruleta.png")
-        self.imagen_baseruleta = pygame.transform.scale(self.imagen_baseruleta, (300, 300))
+        self.imagen_baseruleta = pygame.transform.scale(self.imagen_baseruleta, tamanho )
 
     def girar_imagen(self, imagen: Surface, angulo: int):
         imagen_girada = pygame.transform.rotate(imagen, angulo)
@@ -116,7 +117,7 @@ class VentanaFuerza:
             self.screen.blit(self.imagen_puntero, sup_puntero_base) 
             #IMPORTANTE EL ORDEN
 
-            angulo %= 360 
+            angulo %= 360 # Se ajusta el giro para que no sea mayor de 360º
 
             self.fuerza = Label(100, 500 , f"¡Guau! Has presionado {self.__contador} veces, ¡increíble!", self.fuente, self.colores["negro"])
             
