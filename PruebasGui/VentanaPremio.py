@@ -99,4 +99,4 @@ if __name__ == "__main__":
     print(r1.devuelve_premio())
     pygame.init()
     ventana = VentanaPremio(800, 600)
-    print(ventana.ejecutar(13, r1, 1)) 
+    print(ventana.ejecutar(1, r1, 1)) 
