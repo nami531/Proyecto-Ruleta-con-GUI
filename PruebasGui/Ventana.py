@@ -28,7 +28,6 @@ class Ventana:
     b3jug: Boton
     b4jug: Boton
     b5jug: Boton
-    b6jug: Boton
     benviar : Boton
     imagen : Surface
 
@@ -39,9 +38,9 @@ class Ventana:
         self.screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption("Ruleta de la suerte")
 
-        self.x_botones = 75
-        self.tamanho_botones = (80, 50)
-        self.margen = 150
+        self.x_botones = 100
+        self.tamanho_botones = (100, 50)
+        self.margen = 175
 
         self.fuente = 24
 
@@ -61,11 +60,10 @@ class Ventana:
         self.b3jug = Boton(self.x_botones + self.margen,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "3", self.colores["negro"], self.fuente, 3 )
         self.b4jug = Boton(self.x_botones + self.margen * 2,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "4", self.colores["negro"], self.fuente, 4 )
         self.b5jug = Boton(self.x_botones + self.margen * 3,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "5", self.colores["negro"], self.fuente, 5)
-        self.b6jug = Boton(self.x_botones + self.margen * 4,500, self.tamanho_botones[0], self.tamanho_botones[1],self.colores["azul"], self.colores["azul_hover"], "6", self.colores["negro"], self.fuente, 6)
         self.benviar = Boton(420,430, self.tamanho_botones[0], self.tamanho_botones[1] , self.colores["azul"], self.colores["azul_hover"], "Enviar", self.colores["negro"], self.fuente)
         self.benviar.eliminado = True
         
-        self.botones = [self.b2jug, self.b3jug, self.b4jug, self.b5jug, self.b6jug, self.benviar]
+        self.botones = [self.b2jug, self.b3jug, self.b4jug, self.b5jug, self.benviar]
         self.labels = [self.jugadores]
         self.inputs = []
         self.nombres_jug = []
@@ -89,6 +87,7 @@ class Ventana:
 
     def ejecutar(self)-> list[str]:
         nombres = False
+        self.error = Label(0,0,"Todos los jugadores deben tener un nombre", self.fuente, self.colores["negro"])
         while not nombres:
 
             # Obtener la posición del cursor
@@ -108,13 +107,16 @@ class Ventana:
                         self.crear_inputs(num_jug)
                 if self.benviar.fue_presionado(mouse_pos, event): 
                     for entrada in self.inputs: 
-                        if entrada.text != "": 
+                        if entrada.text != "": #Si no esta vacia, se añade
                             self.nombres_jug.append(entrada.text.capitalize())
-                            nombres = True
                         else: 
-                            self.error = Label(0,0,"Todos los jugadores deben tener un nombre", self.fuente, self.colores["negro"])
                             self.labels.append(self.error)
-                    
+                            self.nombres_jug = [] #Se tiene que reiniciar porque si no se sobreañadirían los nombres ya introducidos
+                    if len(self.nombres_jug)<= 1: #Tiene que haber mín. 2 jugadores para iniciar la partida
+                        self.labels.append(self.error)
+                        self.nombres_jug = []
+                    else: 
+                        nombres = True
                
                 for entrada in self.inputs: 
                     entrada.update(mouse_pos, event)
@@ -122,7 +124,7 @@ class Ventana:
             for boton in self.botones:
                 boton.update(mouse_pos) 
 
-            self.screen.fill(self.colores["fondo"])  #Colorear de fondo la pantalla
+            self.screen.fill(self.colores["fondo"]) 
 
             # Dibujar los elementos en la pantalla
             for boton in self.botones:

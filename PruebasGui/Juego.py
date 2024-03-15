@@ -29,6 +29,7 @@ class Juego():
     vocales : list[str]
     vocales_tilde: dict[str, str]
     ventana : Ventana
+    ventanaError : VentanaError
 
 
     def __init__(self):  
